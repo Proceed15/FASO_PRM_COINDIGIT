@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\0031432412016\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj": {}
+    "C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\0031432412016\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj": {
+    "C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\0031432412016\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
+        "projectUniqueName": "C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
         "projectName": "userAPI",
-        "projectPath": "C:\\Users\\0031432412016\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
+        "projectPath": "C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
         "packagesPath": "C:\\Users\\0031432412016\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\0031432412016\\FASO_PRM_COINDIGIT\\backend\\userAPI\\obj\\",
+        "outputPath": "C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -53,6 +53,18 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[7.2.0, )"
             }
           },
           "imports": [
