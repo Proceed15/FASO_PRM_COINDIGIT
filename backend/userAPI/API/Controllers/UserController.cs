@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
+
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -33,21 +34,16 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(int id)
+    public IActionResult DeleteUser(int id)
     {
-        await _userService.DeleteUserAsync(id);
-        return NoContent();
+        var result = _userService.DeleteUser(id);
+        return result ? NoContent() : NotFound();
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateUser(int id, User user)
+    public IActionResult UpdateUser(int id, UserDTO userDto)
     {
-        if (id != user.Id)
-        {
-            return BadRequest();
-        }
-
-        await _userService.UpdateUserAsync(user);
-        return NoContent();
+        var updatedUser = _userService.UpdateUser(id, userDto);
+        return updatedUser != null ? Ok(updatedUser) : NotFound();
     }
 }

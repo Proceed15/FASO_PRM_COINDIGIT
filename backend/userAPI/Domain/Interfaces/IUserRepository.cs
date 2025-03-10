@@ -2,8 +2,9 @@ public interface IUserRepository
 {
     void Add(User user);
     User? GetById(int id);
-    List<User>? ListAll();
-    Task DeleteUserAsync(int userId);
-    Task UpdateUserAsync(User user);
+    List<User> GetAll();
+    void Update(User user);
+    void Delete(int id);
+    User? GetByEmail(string email);
     Task EditUserAsync(User user);
 }
