@@ -21,18 +21,18 @@ public class UserService : IUserService
             Email = userDto.Email,
             Phone = userDto.Phone,
             Address = userDto.Address,
-            Password = hashedPassword,
+            Password = userDto.Password,
             Photo = userDto.Photo
         };
         _userRepository.Add(user);
 
-        return new userDto
+        return new UserDTO
         {
             Name = user.Name,
             Email = user.Email,
             Phone = user.Phone,
             Address = user.Address,
-            PasswordHasher = user.PasswordH,
+            Password = user.Password,
             Photo = user.Photo
         };
     }
@@ -65,13 +65,6 @@ public class UserService : IUserService
         }).ToList();
     }
 
-    public bool DeleteUser(int userId)
-    {
-        var user = _userRepository.GetById(id);
-        if (user == null) return false;
-        _userRepository.Delete(id);
-        return true;
-    }
     public UserDTO? UpdateUser(int id, UserDTO userDto)
     {
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
@@ -87,7 +80,7 @@ public class UserService : IUserService
 
         _userRepository.Update(user);
 
-        return new userDTO
+        return new UserDTO
         {
             Name = user.Name,
             Email = user.Email,
@@ -95,13 +88,21 @@ public class UserService : IUserService
             Address = user.Address,
             Password = user.Password,
             Photo = user.Photo
-        }
+        };
     }
+    /*
     public async Task EditUserAsync( User user)
     {
         await _userRepository.EditUserAsync(user);
     }
-
+    */
+    public bool DeleteUser(int id)
+    {
+        var user = _userRepository.GetById(id);
+        if (user == null) return false;
+        _userRepository.Delete(id);
+        return true;
+    }
     public UserDTO? ValidateUser(string email, string password)
     {
         var user = _userRepository.GetByEmail(email);
@@ -111,7 +112,7 @@ public class UserService : IUserService
         return new UserDTO
         {
             Name = user.Name,
-            Email = user.EMail,
+            Email = user.Email,
             Phone = user.Phone,
             Address = user.Address,
             Photo = user.Photo

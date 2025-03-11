@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
         var user = _userService.ValidateUser(loginDto.Email, loginDto.Password);
         if (user == null)
         {
-            return Unauthorized(new { message = "Email ou senha inválidos." });
+            return Unauthorized(new { message = "Email ou Senha inválidos." });
         }
 
         var token = GenerateJwtToken(user);
