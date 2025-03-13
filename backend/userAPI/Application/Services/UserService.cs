@@ -21,7 +21,7 @@ public class UserService : IUserService
             Email = userDto.Email,
             Phone = userDto.Phone,
             Address = userDto.Address,
-            Password = userDto.Password,
+            Password = hashedPassword,
             Photo = userDto.Photo
         };
         _userRepository.Add(user);
@@ -103,6 +103,7 @@ public class UserService : IUserService
         _userRepository.Delete(id);
         return true;
     }
+    
     public UserDTO? ValidateUser(string email, string password)
     {
         var user = _userRepository.GetByEmail(email);
@@ -118,4 +119,5 @@ public class UserService : IUserService
             Photo = user.Photo
         };
     }
+    
 }

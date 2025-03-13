@@ -26,11 +26,14 @@ public class UserRepository : IUserRepository
         }
     }
     public User? GetByEmail(string email) => _context.Users.FirstOrDefault(u => u.Email == email);
+    
     public void Update(User user)
     {
         _context.Users.Update(user);
         _context.SaveChanges();
     }
+    //\função de Editar Assíncrona como Exemplo
+    /*
     public async Task EditUserAsync(User user)
     {
         var existingUser = await _context.Users.FindAsync(user.Id);
@@ -41,6 +44,6 @@ public class UserRepository : IUserRepository
             await _context.SaveChangesAsync();
         }
     }
-
+    */
 
 }

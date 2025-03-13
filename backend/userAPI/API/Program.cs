@@ -37,11 +37,11 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "User API",
         Version = "v1",
-        Description = "API para gerenciamento de usuários",
+        Description = "API para Gerenciamento de Usuários",
         Contact = new OpenApiContact
         {
-            Name = "Andre Souza",
-            Email = "andre.souza99@fatec.sp.gov.br"
+            Name = "JRLSF",
+            Email = "exemplo123@fatec.sp.gov.br"
         }
     });
 
