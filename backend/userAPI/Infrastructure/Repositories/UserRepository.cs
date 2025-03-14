@@ -15,26 +15,25 @@ public class UserRepository : IUserRepository
 
     public User? GetById(int id) => _context.Users.Find(id);
     
-    public List<User>? ListAll()
+    public List<User>? GetAll() => _context.Users.ToList();
+    public void Delete(int id)
     {
-        return _context.Users?.ToList() ?? new List<User>();
-    }
-
-    public async Task DeleteUserAsync(int userId)
-    {
-        var user = await _context.Users.FindAsync(userId);
+        var user = _context.Users.Find(id);
         if (user != null)
         {
             _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
-
-    public async Task UpdateUserAsync(User user)
+    public User? GetByEmail(string email) => _context.Users.FirstOrDefault(u => u.Email == email);
+    
+    public void Update(User user)
     {
         _context.Users.Update(user);
-        await _context.SaveChangesAsync();
+        _context.SaveChanges();
     }
+    //\função de Editar Assíncrona como Exemplo
+    /*
     public async Task EditUserAsync(User user)
     {
         var existingUser = await _context.Users.FindAsync(user.Id);
@@ -45,6 +44,6 @@ public class UserRepository : IUserRepository
             await _context.SaveChangesAsync();
         }
     }
-
+    */
 
 }

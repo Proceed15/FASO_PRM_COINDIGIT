@@ -1,6 +1,6 @@
 @userAPI_HostAddress = http://localhost:5120
 
-GET {{userAPI_HostAddress}}/weatherforecast/
+GET {{userAPI_HostAddress}}/coindigit/
 Accept: application/json
 
 ###
