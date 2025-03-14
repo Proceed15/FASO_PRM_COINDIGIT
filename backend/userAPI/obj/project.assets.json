@@ -3892,23 +3892,39 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\JRLSF\\.nuget\\packages\\": {},
+=======
+    "C:\\Users\\0031432412016\\.nuget\\packages\\": {},
+>>>>>>> caad2cf6496391d6080d78cf8ec119432a91011c
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\JRLSF\\Desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
       "projectName": "userAPI",
       "projectPath": "C:\\Users\\JRLSF\\Desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
       "packagesPath": "C:\\Users\\JRLSF\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\JRLSF\\Desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
+      "projectName": "userAPI",
+      "projectPath": "C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
+      "packagesPath": "C:\\Users\\0031432412016\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\obj\\",
+>>>>>>> caad2cf6496391d6080d78cf8ec119432a91011c
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\JRLSF\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+        "C:\\Users\\0031432412016\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> caad2cf6496391d6080d78cf8ec119432a91011c
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3991,8 +4007,20 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.103/PortableRuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+>>>>>>> caad2cf6496391d6080d78cf8ec119432a91011c
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema ao ler o arquivo de cache C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\obj\\project.nuget.cache: Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

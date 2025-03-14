@@ -1,6 +1,10 @@
 Debug/
 bin/
 obj/
-obj/Debug/
+obj/Debug
+node_modules//
 node_modules/
 obj/Debug/net9.0/
+userAPI/bin/
+userAPI/obj/
+userAPI/bin

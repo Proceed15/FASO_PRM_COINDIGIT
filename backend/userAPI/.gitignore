@@ -4,3 +4,6 @@ obj/
 obj/Debug/
 node_modules/
 obj/Debug/net9.0/
+userAPI/bin/
+userAPI/obj/
+userAPI/bin
