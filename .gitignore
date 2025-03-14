@@ -2,3 +2,4 @@ Debug/
 bin/
 obj/
 obj/Debug
+node_modules/
