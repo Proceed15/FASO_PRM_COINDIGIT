@@ -1,8 +1,7 @@
 Debug/
 bin/
 obj/
-obj/Debug
-node_modules//
+obj/Debug/
 node_modules/
 obj/Debug/net9.0/
 userAPI/bin/
