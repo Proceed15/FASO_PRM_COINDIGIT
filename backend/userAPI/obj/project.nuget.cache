@@ -71,7 +71,7 @@
 =======
   "dgSpecHash": "xF2vD0ORcTI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
+  "projectFilePath": "C:\\Users\\JRLSF\\Desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\0031432412016\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\0031432412016\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -138,12 +138,5 @@
     "C:\\Users\\0031432412016\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512"
 >>>>>>> caad2cf6496391d6080d78cf8ec119432a91011c
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problema ao ler o arquivo de cache C:\\Users\\0031432412016\\desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\obj\\project.nuget.cache: Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
