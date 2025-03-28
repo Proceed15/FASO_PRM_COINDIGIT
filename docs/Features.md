@@ -7,11 +7,11 @@ Iniciando o git flow:
 </p>
 Iniciando a Feature:
 <p>
-  git flow feature start <NomeFeature>
+  git flow feature start "<NomeFeature>"
 </p>
 Add com Commit na Feature:
 <p>
-  git add <NomeArquivo>
+  git add "<NomeArquivo>"
 </p>
 <p>
   git add .
