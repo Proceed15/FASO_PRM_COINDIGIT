@@ -1,27 +1,27 @@
 Comandos Para Features:
 
 Iniciando o git flow:
-<div>
+<p>
   git flow init
-</div>
+</p>
 Iniciando a Feature:
-<div>
+<p>
   git flow feature start <NomeFeature>
-</div>
+</p>
 Add com Commit na Feature:
-<div>
+<p>
   git add <NomeArquivo>
-</div>
-<div>
+</p>
+<p>
   git add .
-</div>
-<div>
+</p>
+<p>
   git commit -m "Alteração da Feature" - "NomeAutor"
-</div>
+</p>
 Completando a Feature:
-<div>
+<p>
   git flow feature finish <NomeFeature>
-</div>
+</p>
 Informações Adicionais: 
 1 git add pode adicionar um ou mais arquivos para estarem no commit (ponto da linha do tempo)
 2 Um commit ou mais
