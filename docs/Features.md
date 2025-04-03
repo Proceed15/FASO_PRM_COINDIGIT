@@ -1,5 +1,5 @@
 <p>
-Comandos Para Features:
+Comandos Para as Features:
 </p>
 Iniciando o git flow:
 <p>
