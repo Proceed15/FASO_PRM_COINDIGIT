@@ -4,4 +4,4 @@ git switch develop
 
 Comando Explicado: git (Operação do Git) switch (Comando de Troca de Branch) develop (nome da Branch que for trocar, pode ser main se precisarem)
 
-Obs.: Só vai funcionar se você não tiver alterações pendentes, lembrar disso a cada vez que for trocar de branch.
+Obs.: Rodar git pull antes. Funciona quando há solução para as alterações pendentes na branch atual, lembrar disso a cada vez que for trocar de branch.
