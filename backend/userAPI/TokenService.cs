@@ -14,7 +14,7 @@ using System.Text;
 //builder.Services.AddScoped<TokenService, TokenService>();
 public class TokenService
 {
-    // Specify how long until the token expires
+    // Specify how long until the token expires set up for 30 minutes
     private const int ExpirationMinutes = 30;
     private readonly ILogger<TokenService> _logger;
 
