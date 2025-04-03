@@ -7,3 +7,5 @@ obj/Debug/net9.0/
 userAPI/bin/
 userAPI/obj/
 userAPI/bin
+backend/userAPI/bin
+backend/userAPI/obj
