@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import userService, { User } from "@/services/userService";
+import userService, {User} from "@/services/userService";
 
 export default function UsersPage() {
     const [users, setUsers] = useState<User[]>([]);
@@ -23,12 +23,12 @@ export default function UsersPage() {
             <h1>Lista de Usuários</h1>
             <p>{error}</p>
             <ul>
-                {users.map((user) => (
-                    <li key={user.Id}>
-                        {user.Name}
+                {users.map((User) => (
+                    <li key={User.Id}>
+                        {User.Name}
                     </li>
                 ))}
             </ul>
         </div>
-    )
+    );
 }

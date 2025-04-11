@@ -1,5 +1,6 @@
-import { userAPI } from "./api";
 import axios from "axios";
+import { userAPI } from "./api";
+
 
 export interface User {
     Id?: number;
@@ -14,7 +15,7 @@ export interface User {
 const userService = {
     async getAll(): Promise<User[]> {
         const header = {
-            Headers: {
+            headers: {
                 'Accept': 'application/json',
                 'Access-Control-Allow-Origin': "*"
             }
