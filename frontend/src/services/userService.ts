@@ -14,7 +14,7 @@ export interface User {
 const userService = {
     async getAll(): Promise<User[]> {
         const header = {
-            Headers: {
+            headers: {
                 'Accept': 'application/json',
                 'Access-Control-Allow-Origin': "*"
             }
