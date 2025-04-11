@@ -3,13 +3,13 @@ import { userAPI } from "./api";
 
 
 export interface User {
-    Id?: number;
-    Name: string;
-    Email: string;
-    Phone: string;
-    Address: string;
-    Password?: string;
-    Photo: string;
+    id?: number;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    password?: string;
+    photo: string;
 }
 
 const userService = {

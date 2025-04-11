@@ -11,8 +11,8 @@ export default function UsersPage() {
             try {
                 const data = await userService.getAll();
                 setUsers(data);
-            } catch (err) {
-                setError(`Erro ao buscar usuários ${err}`);
+            } catch (error) {
+                setError(`Erro ao buscar usuários ${error}`);
             }
         }
         fetchUsers();
@@ -24,8 +24,8 @@ export default function UsersPage() {
             <p>{error}</p>
             <ul>
                 {users.map((User) => (
-                    <li key={User.Id}>
-                        {User.Name}
+                    <li key={User.id}>
+                        {User.name}
                     </li>
                 ))}
             </ul>
