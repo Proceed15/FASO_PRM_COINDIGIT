@@ -11,4 +11,4 @@ CoinDigit @2025
 
 Programação Multiplaforma Fatec Sorocaba
 
-Link Repositório de Caracteres: https://jandreh.com/caracteres-especiais/
+Link de um Repositório de Caracteres: https://jandreh.com/caracteres-especiais/

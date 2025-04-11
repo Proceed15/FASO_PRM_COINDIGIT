@@ -1,3 +1,4 @@
+# Explicação Geral da estruturação CoinDigit:
 
 ## **1. API (Interface de Entrada)**
 Esta camada é responsável por expor os endpoints da Web API e interagir com os casos de uso da aplicação.
