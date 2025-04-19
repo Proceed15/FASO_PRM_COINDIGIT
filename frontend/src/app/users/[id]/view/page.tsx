@@ -4,6 +4,8 @@ import Header from "@/components/common/Header";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import userService, { User } from "@/services/userService";
 
 interface UserViewpageProps {
     params: { 
@@ -20,6 +22,9 @@ export default function UserViewPage({ params }: UserViewpageProps) {
     const userId = params.id;
 
     const user = params;
+
+    const [users, setUsers] = useState<User[]>([]);
+    const [error, setError] = useState<String>("");
 
     if (!user) return notFound();
 

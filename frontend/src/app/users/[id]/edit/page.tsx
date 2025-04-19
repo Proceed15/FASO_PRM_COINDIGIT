@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/common/Header";
+import userService, { User } from "@/services/userService";
 
 interface UserEditPageProps {
     params: {
@@ -18,6 +19,7 @@ interface UserEditPageProps {
 
 export default function UserEditPage({ params }: UserEditPageProps) {
     const router = useRouter();
+    
     const userId = params.id;
 
     const [user, setUsers] = useState({

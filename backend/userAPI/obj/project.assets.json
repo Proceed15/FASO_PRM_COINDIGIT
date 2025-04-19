@@ -3892,19 +3892,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\isame\\.nuget\\packages\\": {}
+    "C:\\Users\\JRLSF\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\isame\\OneDrive\\Documentos\\MeuPc\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
+      "projectUniqueName": "C:\\Users\\JRLSF\\Desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
       "projectName": "userAPI",
-      "projectPath": "C:\\Users\\isame\\OneDrive\\Documentos\\MeuPc\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
-      "packagesPath": "C:\\Users\\isame\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\isame\\OneDrive\\Documentos\\MeuPc\\FASO_PRM_COINDIGIT\\backend\\userAPI\\obj\\",
+      "projectPath": "C:\\Users\\JRLSF\\Desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\userAPI.csproj",
+      "packagesPath": "C:\\Users\\JRLSF\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\JRLSF\\Desktop\\FASO_PRM_COINDIGIT\\backend\\userAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\isame\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\JRLSF\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -3984,7 +3984,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

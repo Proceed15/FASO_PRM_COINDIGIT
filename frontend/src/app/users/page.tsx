@@ -12,7 +12,7 @@ export default function UserListPage() {
   const router = useRouter();
 
   const [users, setUsers] = useState<User[]>([]);
-    const [error, setError] = useState<String>("");
+  const [error, setError] = useState<String>("");
 
     useEffect(() => {
         async function fetchUsers() {
@@ -33,6 +33,8 @@ export default function UserListPage() {
   return (
     <>
       <Header pageName="Usuários" />
+      <p>p</p>
+      <p>p</p>
       <div className="p-6 space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold">Usuários</h1>
@@ -58,8 +60,8 @@ export default function UserListPage() {
               <tr>
                 <th className="text-left px-4 py-2">Nome</th>
                 <th className="text-left px-4 py-2">Email</th>
-                <th className="text-left px-4 py-2">Papel</th>
-                <th className="text-left px-4 py-2">Status</th>
+                <th className="text-left px-4 py-2">Telefone</th>
+                <th className="text-left px-4 py-2">Endereço</th>
                 <th className="text-left px-4 py-2">Ações</th>
               </tr>
             </thead>
@@ -70,7 +72,7 @@ export default function UserListPage() {
                         <td className="border border-gray-300 px-4 py-2">{user.email}</td>
                         <td className="border border-gray-300 px-4 py-2">{user.phone}</td>
                         <td className="border border-gray-300 px-4 py-2">{user.address}</td>
-                        <td className="px-4 py-2 space-x-2">
+                        <td className="border border-gray-300 px-4 py-2 space-x-2">
                     <Button
                         variant="outline"
                         className="border-blue-600 text-blue-600 hover:bg-transparent"
