@@ -33,3 +33,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# dotnet 9 backend
+/bin/
+/obj/
+
+# https://help.github.com/articles/ignoring-files/ for more about ignoring files.
