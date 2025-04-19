@@ -21,7 +21,7 @@ export default function UsersPage() {
 
     return (
         <div>
-            <Header pageName="Página Inicial" ></Header>
+            <Header pageName="Página Inicial"></Header>
             <div>
                 <h1 className="text-3xl font-semibold text-gray-800 mb-2 mt-8 text-center">
                     Lista de Usuários
@@ -36,6 +36,9 @@ export default function UsersPage() {
                             <th className="border border-gray-300 px-4 py-2 text-left">Email</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Telefone</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Endereço</th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">Visualizar</th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">Editar</th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">Deletar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,6 +48,9 @@ export default function UsersPage() {
                                 <td className="border border-gray-300 px-4 py-2">{user.email}</td>
                                 <td className="border border-gray-300 px-4 py-2">{user.phone}</td>
                                 <td className="border border-gray-300 px-4 py-2">{user.address}</td>
+                                <td className="border border-gray-300 px-4 py-2">Visualizar</td>
+                                <td className="border border-gray-300 px-4 py-2">Editar</td>
+                                <td className="border border-gray-300 px-4 py-2">Deletar</td>
                             </tr>
                         ))}
                     </tbody>

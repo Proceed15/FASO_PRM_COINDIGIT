@@ -1,5 +1,5 @@
 const BASE_URL = 'http://localhost:5120/api';
-
+//
 const crudAPI = (basePath: string) => ({
   create: () => `${basePath}`,
   getAll: () => `${basePath}`,
