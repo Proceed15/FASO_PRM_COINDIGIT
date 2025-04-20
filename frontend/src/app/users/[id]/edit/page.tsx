@@ -15,6 +15,14 @@ interface UserEditPageProps {
         address: string;
         password: string;
     };
+    User: {
+        id: string;
+        name: string;
+        email: string;
+        phone: string;
+        address: string;
+        password: string;
+    }
 }
 
 export default function UserEditPage({ params }: UserEditPageProps) {
@@ -22,8 +30,7 @@ export default function UserEditPage({ params }: UserEditPageProps) {
     
     const userId = params.id;
 
-    const [user, setUsers] = useState({
-        id: userId,
+    const [User, setUsers] = useState({
         name: params.name,
         email: params.email,
         phone: params.phone,
@@ -34,16 +41,17 @@ export default function UserEditPage({ params }: UserEditPageProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Lógica para enviar dados para a API
-        console.log("Atualizando Usuário: ", user);
-        router.push(`/users/${userId}/view´`);
+        console.log("Atualizando Usuário: ", User);
+        router.push(`/users/${userId}/view`);
     };
 
     return (
         <>
         <p>p</p>
+        <p>p</p>
         <Header pageName="Usuários" />
         <div className="p-6 space-y-6 max-w-4xl mx-auto">
-            <h1 className="p-6 space-y-6 max-w-4xl mx-auto">
+            <h1 className="text-2xl font bold">
                 Editar Usuário:
             </h1>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -51,43 +59,43 @@ export default function UserEditPage({ params }: UserEditPageProps) {
                 type="text"
                 placeholder="Nome"
                 className="w-full border rounded px-4 py-2"
-                value={user.name}
-                onChange={(e) => setUsers({...user, name: e.target.value})}
+                value={User.name}
+                onChange={(e) => setUsers({...User, name: e.target.value})}
                 /> 
                 <input
                 type="email"
                 placeholder="Email"
                 className="w-full border rounded px-4 py-2"
-                value={user.email}
-                onChange={(e) => setUsers({...user, email: e.target.value})}
+                value={User.email}
+                onChange={(e) => setUsers({...User, email: e.target.value})}
                 />
                 <input
                 type="text"
                 placeholder="Telefone"
                 className="w-full border rounded px-4 py-2"
-                value={user.phone}
-                onChange={(e) => setUsers({...user, phone: e.target.value})}
+                value={User.phone}
+                onChange={(e) => setUsers({...User, phone: e.target.value})}
                 />
                 <input
                 type="text"
                 placeholder="Endereço"
                 className="w-full border rounded px-4 py-2"
-                value={user.address}
-                onChange={(e) => setUsers({...user, address: e.target.value})}
+                value={User.address}
+                onChange={(e) => setUsers({...User, address: e.target.value})}
                 />
                 <input
                 type="text"
                 placeholder="Senha"
                 className="w-full border rounded px-4 py-2"
-                value={user.password}
-                onChange={(e) => setUsers({...user, password: e.target.value})}
+                value={User.password}
+                onChange={(e) => setUsers({...User, password: e.target.value})}
                 />
                 <input
                 type="text"
                 placeholder="Confirmar Senha"
                 className="w-full border rounded px-4 py-2"
-                value={user.password}
-                onChange={(e) => setUsers({...user, password: e.target.value})}
+                value={User.password}
+                onChange={(e) => setUsers({...User, password: e.target.value})}
                 />
 
                 <div className="flex justify-end space-x-2">
