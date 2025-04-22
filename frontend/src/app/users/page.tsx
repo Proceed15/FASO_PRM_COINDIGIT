@@ -27,7 +27,7 @@ export default function UserListPage() {
     }, []);
 
   const handleDelete = (id: string) => {
-    setUsers((prev) => prev.filter((user) => user.id !== id));
+    setUsers((prev) => prev.filter((user) => user.id !== Number(id)));
   };
 
   return (
@@ -88,7 +88,7 @@ export default function UserListPage() {
                         Editar
                     </Button>
                     <DeleteUserDialog
-                      userId={user.id}
+                      userId={String(user.id)}//no lo se
                       userName={user.name}
                       onDelete={handleDelete}
                       className="border-red-600 text-red-600 hover:bg-transparent"
