@@ -40,7 +40,7 @@ export default function UserListPage() {
           <h1 className="text-2xl font-bold">Usuários</h1>
           <Button
             className="bg-blue-600 hover:bg-blue-700 text-white"
-            onClick={() => router.push("/users/register")}
+            onClick={() => router.push("/register")}
           >
             Adicionar Usuário
           </Button>

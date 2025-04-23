@@ -1,7 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+    const router = useRouter();
     return (
         <div className="flex flex-col md:flex-row min-h-screen text-white">
             {/* Lado esquerdo*/}
@@ -50,11 +53,12 @@ export default function LoginPage() {
                         </div>
                     </div>
 
-                    <button className="w-full py-2 bg-purple-700 hover:bg-[#300052] rounded text-white font-mono">
+                    <button className="w-full py-2 bg-purple-700 hover:bg-[#300052] rounded text-white font-mono" onClick={() => router.push("/users")}>
                         Login
                     </button>
 
-                    <button className="w-full py-2 border border-white hover:bg-white hover:text-black rounded font-mono transition-colors duration-300">
+                    <button className="w-full py-2 border border-white hover:bg-white hover:text-black rounded font-mono transition-colors duration-300"
+                    onClick={() => router.push("/register")}>
                         Crie sua conta
                     </button>
                 </div>

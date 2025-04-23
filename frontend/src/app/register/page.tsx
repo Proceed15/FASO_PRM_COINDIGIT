@@ -1,7 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+    const router = useRouter();
     return (
         <div className="flex flex-col md:flex-row min-h-screen text-white">
             {/* Lado esquerdo */}
@@ -71,6 +74,7 @@ export default function RegisterPage() {
                         <button
                             type="submit"
                             className="w-full py-2 bg-purple-700 hover:bg-[#300052] rounded text-white font-mono"
+                            onClick={() => router.push("/users")}
                         >
                             Criar Conta
                         </button>
@@ -79,9 +83,13 @@ export default function RegisterPage() {
                     <div className="text-center">
                         <p className="text-sm">
                             Já tem uma conta?{" "}
-                            <a href="/" className="text-purple-500 hover:underline">
+                            <button className="w-full py-2 bg-purple-100 hover:bg-[#300052] rounded text-white font-mono"
+                            onClick={() => router.push("/login")}>
+                            <a href="/" className="text-purple-500 hover:underline"
+                            >
                                 Faça login
                             </a>
+                            </button>
                         </p>
                     </div>
                 </div>
