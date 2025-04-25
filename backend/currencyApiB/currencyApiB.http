@@ -1,0 +1,6 @@
+@currencyApiB_HostAddress = http://localhost:5075
+
+GET {{currencyApiB_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
