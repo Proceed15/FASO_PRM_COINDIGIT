@@ -9,33 +9,75 @@ import userService, { User } from "@/services/userService";
 
 interface UserViewpageProps {
     params: { 
-        id :string
+        id : string;
     };
-    User: {
-        id: string;
-        name: string;
-        email: string;
-        phone: string;
-        address: string;
-        password: string;
-    }
 }
+
 export default function UserViewPage({ params }: UserViewpageProps) {
     const router = useRouter();
     const userId = params.id;
 
-    const user = params;
+    const [user, setUser] = useState<User | null>(null);
+    const [error, setError] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(true);
+    const [loggedUser, setLoggedUser] = useState<User | null>(null);
 
-    const [users, setUsers] = useState<User[]>([]);
-    const [error, setError] = useState<String>("");
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setLoggedUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    useEffect(() => {
+        async function fetchUser() {
+            setLoading(true);
+            setError("");
+            try {
+                const data = await userService.getById(parseInt(userId));
+                if (data) {
+                    setUser(data);
+                } else {
+                    setUser(null);
+                }
+            } catch (error) {
+                setError(`Erro ao buscar usuário: ${error}`);
+                setUser(null);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchUser();
+    }, [userId]);
+
+    if (loading) {
+        return (
+            <>
+                <Header pageName="Usuários" userName={loggedUser?.name} userId={loggedUser?.id} />
+                <div className="p-6 max-w-4xl mx-auto">Carregando usuário...</div>
+            </>
+        );
+    }
+
+    if (error) {
+        return (
+            <>
+                <Header pageName="Usuários" userName={loggedUser?.name} userId={loggedUser?.id} />
+                <div className="p-6 max-w-4xl mx-auto text-red-600">{error}</div>
+                <Button variant="outline" onClick={() => router.push("/users")}>
+                    Voltar
+                </Button>
+            </>
+        );
+    }
 
     if (!user) return notFound();
 
     return (
         <>
-            <Header pageName="Usuários" />
-            <p>p</p>
-            <p>p</p>
+            <Header pageName="Usuários" userName={loggedUser?.name} userId={loggedUser?.id} />
+            <p>User</p>
+            <p>A</p>
             <div className="p-6 space-y-6 max-w-4xl mx-auto">
                 <h1 className="text-2xl font-bold">Perfil</h1>
 

@@ -28,6 +28,7 @@ public class UserService : IUserService
 
         return new UserDTO
         {
+            Id = user.Id,
             Name = user.Name,
             Email = user.Email,
             Phone = user.Phone,
@@ -42,6 +43,7 @@ public class UserService : IUserService
         var user = _userRepository.GetById(id);
         return user != null ? new UserDTO 
         { 
+            Id = user.Id,
             Name = user.Name, 
             Email = user.Email,
             Phone = user.Phone,
@@ -65,6 +67,23 @@ public class UserService : IUserService
         }).ToList();
     }
 
+    /*
+    public UserDTO? GetUserByEmail(string email)
+    {
+        var user = _userRepository.GetByEmail(email);
+        return user != null ? new UserDTO
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Email = user.Email,
+            Phone = user.Phone,
+            Address = user.Address,
+            Password = user.Password,
+            Photo = user.Photo
+        } : null;
+    }
+    */
+
     public UserDTO? UpdateUser(int id, UserDTO userDto)
     {
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
@@ -82,6 +101,7 @@ public class UserService : IUserService
 
         return new UserDTO
         {
+            Id = user.Id,
             Name = user.Name,
             Email = user.Email,
             Phone = user.Phone,
@@ -112,6 +132,7 @@ public class UserService : IUserService
 
         return new UserDTO
         {
+            Id = user.Id,
             Name = user.Name,
             Email = user.Email,
             Phone = user.Phone,
