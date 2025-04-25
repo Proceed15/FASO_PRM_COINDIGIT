@@ -33,6 +33,13 @@ public class UserController : ControllerBase
         return user != null ? Ok(user) : NotFound();
     }
 
+    // [HttpGet("email/{email}")]
+    // public IActionResult GetUserByEmail(string email)
+    // {
+    //     var user = _userService.GetUserByEmail(email);
+    //     return user != null ? Ok(user) : NotFound();
+    // }
+
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(int id)
     {
