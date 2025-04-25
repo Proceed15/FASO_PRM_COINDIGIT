@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        gradientMove: "gradientMove 10s ease infinite",
+        gradientMove: "gradientMove 7s ease infinite",
       },
       keyframes: {
         gradientMove: {
