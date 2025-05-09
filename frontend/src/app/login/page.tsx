@@ -64,8 +64,8 @@ export default function LoginPage() {
             <div
                 className="flex items-center justify-center md:w-1/2 bg-gradient-to-br from-[#1e1e3f] to-[#2c2c54] p-8 relative overflow-hidden"
             >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#1e1e3f] via-[#2c2c54] to-[#1e1e3f] opacity-70 z-10 animate-gradientMove bg-[length:400%_400%]" />
-                <div className="absolute inset-0 bg-[url('/images/texture.png')] bg-cover bg-center opacity-50 z-0" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#1e1e3f] via-[#2c2c54] to-[#1e1e5c] opacity-70 z-10 animate-gradientMove bg-[length:400%_400%]" />
+                <div className="absolute inset-0 bg-[url('/images/texture3.png')] bg-cover bg-center opacity-100 z-0" />
                 <div className="flex items-center gap-6 relative z-10">
                     <img
                         src="/images/Logo_CoinDigit.png"
