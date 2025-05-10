@@ -29,7 +29,7 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
   };
 
   return (
-    <div className="header flex items-center p-4 bg-gradient-to-b from-[#443e60] to-[#060c39] text-white">
+    <div className="z-20 header flex items-center p-4 bg-gradient-to-b from-[#443e60] to-[#060c39] text-white">
       <div className="flex-shrink-0">
         <div className="text-light text-lg font-bold">{siteName}</div>
       </div>
