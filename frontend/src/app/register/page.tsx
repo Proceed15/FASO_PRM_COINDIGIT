@@ -155,27 +155,19 @@ export default function RegisterPage() {
                                 type="password"
                                 name="confirmPassword"
                                 placeholder="Confirme sua senha"
-                                className=" mb-6 w-full px-4 py-2 bg-[#0c0c1a] border border-[#2c2c3f] rounded text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+                                className="mb-2 w-full px-4 py-2 bg-[#0c0c1a] border border-[#2c2c3f] rounded text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                             />
                         </div>
 
                         {error && <p className="text-red-500 text-sm">{error}</p>}
-
-                        {/* button*/}
-                        <button
-                            type="submit"
-                            className="w-full py-2 bg-purple-700 hover:bg-[#300052] rounded text-white font-mono"
-                        >
-                            Criar Conta
-                        </button>
                     </form>
 
                     <div className="text-center">
                         <p className="text-sm">
                             Já tem uma conta?{" "}
-                            <button className="w-full py-2 bg-purple-100 hover:bg-[#300052] rounded text-white font-mono"
+                            <button className="mt-2 border border-purple-200 w-full py-2 bg-transparent hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
                             onClick={() => router.push("/login")}>
                             <a href="/" className="text-purple-500 hover:underline"
                             >

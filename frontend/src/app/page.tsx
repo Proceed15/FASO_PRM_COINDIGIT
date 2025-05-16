@@ -6,7 +6,6 @@ export default function Home() {
     <div>
       <Header pageName="Página Inicial" />
       <div className="flex flex-col md:flex-row min-h-screen text-white">
-        {/* Left side */}
         <div
           className="flex items-center justify-center md:w-1/2 bg-gradient-to-br from-[#1e1e3f] to-[#2c2c54] p-8 relative overflow-hidden"
         >

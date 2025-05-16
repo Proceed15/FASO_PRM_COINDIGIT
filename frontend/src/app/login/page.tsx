@@ -92,7 +92,7 @@ export default function LoginPage() {
                             <input
                                 type="text"
                                 name="email"
-                                placeholder="Usuário"
+                                placeholder="E-mail"
                                 className="w-full px-4 py-2 bg-[#0c0c1a] border border-[#2c2c3f] rounded text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
                                 value={formData.email}
                                 onChange={handleChange}

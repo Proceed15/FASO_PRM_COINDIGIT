@@ -1,8 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../../contexts/UserContext";
+import { FaUserCircle, FaSignOutAlt, FaUser } from "react-icons/fa";
 
 const Header: React.FC<{ siteName?: string; pageName: string }> = ({
   siteName = "Trade Holding AMS",
@@ -29,27 +31,50 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
   };
 
   return (
-    <div className="z-20 header flex items-center p-4 bg-gradient-to-b from-[#443e60] to-[#060c39] text-white">
-      <div className="flex-shrink-0">
-        <div className="text-light text-lg font-bold">{siteName}</div>
+    <div className="z-20 header flex items-center justify-between px-6 py-4 bg-[#1e1e3f] text-white border-b border-white-200">
+      <div className="flex items-center gap-2">
+        <img
+          src="/images/Logo_CoinDigit.png"
+          alt="ICON"
+          className="w-10 h-10"
+        />
+
+        <span className="text-lg font-semibold">{siteName}</span>
       </div>
-      <div className={`flex-grow text-center ${!user?.id ? "ml-24" : ""}`}>
-        <div className="text-white font-bold text-3xl">{pageName}</div>
+      <div className="text-center flex-grow">
+        <div className="text-white font-bold text-2xl">{pageName}</div>
       </div>
-      <div className="flex items-center gap-4 flex-shrink-0">
+
+      <div className="flex items-center gap-4">
         {user?.id ? (
           <>
-            <button className="btn" onClick={handleLogout}>Logout</button>
-            {user?.name && (
-              <div className="text-white font-semibold ml-2">Olá, {user.name}</div>
-            )}
-            <button className="btn" onClick={goToProfile}>
-              Perfil
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1 hover:text-purple-300 transition"
+              title="Logout"
+            >
+              <FaSignOutAlt size={24} />
+            </button>
+
+            <div className="text-white font-semibold hidden sm:block">
+              Olá, {user.name}
+            </div>
+
+            <button
+              onClick={goToProfile}
+              className="flex items-center gap-1 hover:text-purple-300 transition"
+              title="Perfil"
+            >
+              <FaUser size={24}/>
             </button>
           </>
         ) : (
-          <button className="btn" onClick={handleLogin}>
-            Logar
+          <button
+            onClick={handleLogin}
+            className="flex items-center gap-1 hover:text-purple-300 transition"
+            title="Logar"
+          >
+            <FaUserCircle size={30}/>
           </button>
         )}
       </div>
