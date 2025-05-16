@@ -1,5 +1,19 @@
 const BASE_URL = 'http://localhost:5120/api';
-
+// Rezerve the first 2 segments for the API
+//                 placeholder="Confirmação de Senha"
+//                 value={user.password}
+//                 onChange={(e) => setUsers({...user, password: e.target.value})}
+//                 className="w-full border rounded px-4 py-2"
+//                 placeholder="Senha"
+//                 value={user.password}
+//                 onChange={(e) => setUsers({...user, password: e.target.value})}
+//                 className="w-full border rounded px-4 py-2"
+//                 placeholder="Endereço"
+//                 value={user.address}
+//                 onChange={(e) => setUsers({...user, address: e.target.value})}
+//                 className="w-full border rounded px-4 py-2"
+//                 placeholder="Telefone"
+//                 value={user.phone}         // <--- HERE
 const crudAPI = (basePath: string) => ({
   create: () => `${basePath}`,
   getAll: () => `${basePath}`,
