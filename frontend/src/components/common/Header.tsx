@@ -3,7 +3,7 @@
 import React, { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../../contexts/UserContext";
-
+//Teste 1
 const Header: React.FC<{ siteName?: string; pageName: string }> = ({
   siteName = "Trade Holding AMS",
   pageName,
