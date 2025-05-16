@@ -1,49 +1,56 @@
 using Microsoft.AspNetCore.Mvc;
+using currencyAPI.Application.Services;
+using currencyAPI.API.DTOs;
 
-[ApiController]
-[Route("api/[controller]")]
-
-public class CurrencyrController : ControllerBase
+namespace currencyAPI.Controller
 {
-    private readonly ICurrencyService _currencyService;
 
-    public CurrencyController(ICurrencyService currencyService)
+    [ApiController]
+    [Route("api/[controller]")]
+
+    public class CurrencyController : ControllerBase
     {
-        _currencyService = currencyService;
+        private readonly ICurrencyService _currencyService;
+
+        public CurrencyController(ICurrencyService currencyService)
+        {
+            _currencyService = currencyService;
+        }
+
+        [HttpPost]
+        public IActionResult RegisterCurrency(CurrencyDTO currencyDto)
+        {
+            var result = _currencyService.RegisterCurrency(currencyDto);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        // public IActionResult getAllCurrencies()
+        // {
+        //     // var currencies = _currencyService.GetAllCurrencies();
+        //     // return Ok(currencies);
+        // }
+
+        [HttpGet("{id}")]
+        public IActionResult GetCurrencyDetails(int id)
+        {
+            var currency = _currencyService.GetCurrencyDetails(id);
+            return currency != null ? Ok(currency) : NotFound();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCurrency(int id)
+        {
+            var result = _currencyService.DeleteCurrency(id);
+            return result ? NoContent() : NotFound();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateCurrency(int id, CurrencyDTO currencyDto)
+        {
+            var updatedCurrency = _currencyService.UpdateCurrency(id, currencyDto);
+            return updatedCurrency != null ? Ok(updatedCurrency) : NotFound();
+        }
     }
 
-    [HttpPost]
-    public IActionResult RegisterCurrency(CurrencyDTO currencyDto)
-    {
-        var result = _currencyService.RegisterCurrency(currencyDto);
-        return Ok(result);
-    }
-
-    [HttpGet]
-    public IActionResult getAllCurrencies()
-    {
-        var currencies = _currencyService.GetAllCurrencies();
-        return Ok(currencies);
-    }
-
-    [HttpGet("{id}")]
-    public IActionResult GetCurrencyDetails(int id)
-    {
-        var currency = _currencyService.GetCurrencyDetails(id);
-        return currency != null ? Ok(currency) : NotFound();
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult DeleteCurrency(int id)
-    {
-        var result = _currencyService.DeleteCurrency(id);
-        return result ? NoContent() : NotFound();
-    }
-
-    [HttpPut("{id}")]
-    public IActionResult UpdateCurrency(int id, CurrencyDTO currencyDto)
-    {
-        var updatedCurrency = _currencyService.UpdateCurrency(id, currencyDto);
-        return updatedCurrency != null ? Ok(updatedCurrency) : NotFound();
-    }
 }

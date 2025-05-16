@@ -3,28 +3,33 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using currencyAPI.Infrastructure.Data;
 
 #nullable disable
 
-namespace userApi.Migrations
+namespace currencyApiB.Migrations
 {
-    [DbContext(typeof(UserDbContext))]
-    [Migration("20250228012531_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(CurrencyDbContext))]
+    [Migration("20250516195447_currency")]
+    partial class currency
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
 
-            modelBuilder.Entity("User", b =>
+            modelBuilder.Entity("currencyAPI.Domain.Models.Currency", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Backing")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -32,9 +37,13 @@ namespace userApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Currencies");
                 });
 #pragma warning restore 612, 618
         }

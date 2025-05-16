@@ -1,3 +1,5 @@
+using currencyAPI.API.DTOs;
+
 public class GetCurrencyDetailsUseCase
 {
     private readonly ICurrencyService _currencyService;

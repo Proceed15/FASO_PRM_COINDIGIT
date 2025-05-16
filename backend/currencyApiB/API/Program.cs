@@ -51,8 +51,9 @@ builder.Services.AddSwaggerGen(options =>
         Description = "API para Gerenciamento de Moedas",
         Contact = new OpenApiContact
         {
-            Name = "BitCoin",
-            Description = "Moeda virtual"
+            Name = "BitCoin"
+            // ,
+            // Description = "Moeda virtual"
         }
     });
 

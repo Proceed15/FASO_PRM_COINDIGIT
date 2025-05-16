@@ -1,3 +1,5 @@
+using currencyAPI.API.DTOs;
+
 public interface ICurrencyService
 {
     CurrencyDTO RegisterCurrency(CurrencyDTO currencyDto);
