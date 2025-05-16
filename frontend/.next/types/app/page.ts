@@ -1,4 +1,4 @@
-// File: C:\Users\0031432312011\Documents\FASO_PRM_COINDIGIT\frontend\src\app\page.tsx
+// File: D:\Projetos\FASO_PRM_COINDIGIT\frontend\src\app\page.tsx
 import * as entry from '../../../src/app/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
