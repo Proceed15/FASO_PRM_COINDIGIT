@@ -162,6 +162,13 @@ export default function RegisterPage() {
                         </div>
 
                         {error && <p className="text-red-500 text-sm">{error}</p>}
+
+                        <button
+                            type="submit"
+                            className="w-full py-2 bg-purple-700 hover:bg-[#300052] rounded text-white font-mono"
+                        >
+                            Criar Conta
+                        </button>
                     </form>
 
                     <div className="text-center">
@@ -169,7 +176,7 @@ export default function RegisterPage() {
                             Já tem uma conta?{" "}
                             <button className="mt-2 border border-purple-200 w-full py-2 bg-transparent hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
                             onClick={() => router.push("/login")}>
-                            <a href="/" className="text-purple-500 hover:underline"
+                            <a href="/login" className="text-purple-500 hover:underline"
                             >
                                 Faça login
                             </a>

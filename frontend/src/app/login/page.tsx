@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import userService from "@/services/userService";
 
-function parseJwt (token: string) {
+function parseJwt(token: string) {
     try {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
         return JSON.parse(jsonPayload);
@@ -38,18 +38,22 @@ export default function LoginPage() {
         try {
             const response = await userService.login(formData.email, formData.password);
             const token = response.token || response.Token || response;
+
             if (token) {
                 localStorage.setItem("token", token);
                 const decoded = parseJwt(token);
+                
+                console.log("Token decodificado:", decoded);
+
                 if (decoded) {
                     const user = {
-                        id: decoded.nameid || decoded.NameIdentifier || null,
+                        id: decoded.sub || decoded.nameid || decoded.NameIdentifier || null,
                         name: decoded.unique_name || decoded.Name || decoded.name || "",
                         email: decoded.email || ""
                     };
                     localStorage.setItem("user", JSON.stringify(user));
+                    router.push("/users");
                 }
-                router.push("/users");
             } else {
                 setError("Token inválido recebido.");
             }
@@ -121,7 +125,7 @@ export default function LoginPage() {
                         </button>
 
                         <button className="w-full py-2 border border-white hover:bg-white hover:text-black rounded font-mono transition-colors duration-300"
-                        onClick={() => router.push("/register")}>
+                            onClick={() => router.push("/register")}>
                             Crie sua conta
                         </button>
                     </form>

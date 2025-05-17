@@ -47,31 +47,36 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
 
       <div className="flex items-center gap-4">
         {user?.id ? (
-          <>
+          <div className="flex items-center gap-4">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-1 hover:text-purple-300 transition"
+              className="btn flex items-center gap-1 hover:text-purple-300 transition"
               title="Logout"
             >
-              <FaSignOutAlt size={24} />
+              LOGOUT
             </button>
 
-            <div className="text-white font-semibold hidden sm:block">
-              Olá, {user.name}
-            </div>
+            {user?.name && (
+              <div className="text-white font-semibold ml-2">Olá, {user.name}</div>
+            )}
+
+           {/*<div className="text-white font-semibold hidden sm:block"> */ }
+              {/* Olá, {user.name}*/ }
+            {/* </div> */ }
 
             <button
               onClick={goToProfile}
-              className="flex items-center gap-1 hover:text-purple-300 transition"
+              className="btn flex items-center gap-1 hover:text-purple-300 transition"
               title="Perfil"
             >
-              <FaUser size={24}/>
+              PERFIL
             </button>
-          </>
+          </div>
+
         ) : (
           <button
             onClick={handleLogin}
-            className="flex items-center gap-1 hover:text-purple-300 transition"
+            className="btn flex items-center gap-1 hover:text-purple-300 transition"
             title="Logar"
           >
             <FaUserCircle size={30}/>
