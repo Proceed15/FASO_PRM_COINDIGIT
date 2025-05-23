@@ -86,7 +86,6 @@ public class UserService : IUserService
 
     public UserDTO? UpdateUser(int id, UserDTO userDto)
     {
-        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
         var user = _userRepository.GetById(id);
         if (user == null) return null;
 
@@ -94,7 +93,12 @@ public class UserService : IUserService
         user.Email = userDto.Email;
         user.Phone = userDto.Phone;
         user.Address = userDto.Address;
-        user.Password = hashedPassword;
+
+        if (!string.IsNullOrEmpty(userDto.Password))
+        {
+            user.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+        }
+
         user.Photo = userDto.Photo;
 
         _userRepository.Update(user);
