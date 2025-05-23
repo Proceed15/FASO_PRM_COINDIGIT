@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "../../../../components/ui/button";
 import Header from "../../../../components/common/Header";
 import userService, { User } from "../../../../services/userService";
+import { UserContext } from "../../../../contexts/UserContext";
 
 interface UserEditPageProps {
     params: {
@@ -15,6 +16,7 @@ interface UserEditPageProps {
 export default function UserEditPage({ params }: UserEditPageProps) {
     const router = useRouter();
     const userId = params.id;
+    const { user: loggedInUser } = useContext(UserContext);
 
     const [user, setUser] = useState<User | null>(null);
     const [formData, setFormData] = useState({
@@ -81,20 +83,23 @@ export default function UserEditPage({ params }: UserEditPageProps) {
         try {
             const updatedUser: User = {
                 id: user.id,
-                name: formData.name,
-                email: formData.email,
-                phone: formData.phone,
-                address: formData.address,
-                photo: user.photo,
+                name: formData.name || "",
+                email: formData.email || "",
+                phone: formData.phone || "",
+                address: formData.address || "",
+                password: formData.password && formData.password.trim() !== "" ? formData.password : "",
+                photo: user.photo || "",
             };
-            if (formData.password.trim() !== "") {
-                updatedUser.password = formData.password;
-            }
             // Call API to update user
             await userService.update(user.id!, updatedUser);
-            router.push(`/users/${userId}/view`);
-        } catch (error) {
-            setError(`Erro ao atualizar usuário: ${error}`);
+            if (loggedInUser && loggedInUser.id) {
+                router.push(`/users/${loggedInUser.id}/view`);
+            } else {
+                router.push(`/users/${userId}/view`);
+            }
+        } catch (error: any) {
+            console.error("Erro ao atualizar usuário:", error);
+            setError(`Erro ao atualizar usuário: ${error.message || error}`);
         }
     };
 
