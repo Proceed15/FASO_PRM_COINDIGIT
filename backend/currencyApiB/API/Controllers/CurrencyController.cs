@@ -4,10 +4,8 @@ using currencyAPI.API.DTOs;
 
 namespace currencyAPI.Controller
 {
-
     [ApiController]
     [Route("api/[controller]")]
-
     public class CurrencyController : ControllerBase
     {
         private readonly ICurrencyService _currencyService;
@@ -25,11 +23,11 @@ namespace currencyAPI.Controller
         }
 
         [HttpGet]
-        // public IActionResult getAllCurrencies()
-        // {
-        //     // var currencies = _currencyService.GetAllCurrencies();
-        //     // return Ok(currencies);
-        // }
+        public IActionResult GetAllCurrencies()
+        {
+            var currencies = _currencyService.GetAllCurrencies();
+            return Ok(currencies);
+        }
 
         [HttpGet("{id}")]
         public IActionResult GetCurrencyDetails(int id)
@@ -52,5 +50,4 @@ namespace currencyAPI.Controller
             return updatedCurrency != null ? Ok(updatedCurrency) : NotFound();
         }
     }
-
 }

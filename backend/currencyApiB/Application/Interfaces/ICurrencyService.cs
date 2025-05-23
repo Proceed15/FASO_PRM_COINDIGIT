@@ -1,12 +1,11 @@
 using currencyAPI.API.DTOs;
 
+// Exemplo de ICurrencyService
 public interface ICurrencyService
 {
     CurrencyDTO RegisterCurrency(CurrencyDTO currencyDto);
-    CurrencyDTO? GetCurrencyDetails(int Id);
-    List<CurrencyDTO> GetAllCurrency();
-    // UserDTO? GetUserByEmail(string email);
-    CurrencyDTO? UpdateCurrency(int Id, CurrencyDTO currencyDto);
-    // CurrencyDTO? ValidateUser(string email, string password);
-    bool DeleteCurrency(int Id);
+    CurrencyDTO? GetCurrencyDetails(int id);
+    List<CurrencyDTO> GetAllCurrencies();
+    CurrencyDTO? UpdateCurrency(int id, CurrencyDTO currencyDto);
+    bool DeleteCurrency(int id);
 }
