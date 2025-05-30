@@ -1,8 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-//npm install lucide-react
 import { LogOut, UserCircle } from "lucide-react";
-//inporticon
 import { FaUserCircle } from 'react-icons/fa';
 import React, { useContext } from "react";
 import { useRouter } from "next/navigation";
@@ -33,36 +31,31 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
   };
 
   return (
-    <div className="z-20 header flex items-center justify-between px-6 py-4 bg-[#1e1e3f] text-white border-b border-white-200">
+    <div className="z-20 header flex items-center justify-between px-6 py-4 bg-[#1e1e3f] text-white border-b border-white-200 relative">
+      
       <div className="flex items-center gap-2">
-
-        <a href="/" className="inline-block"> <img
-          src="/images/Logo_CoinDigit.png"
-          alt="ICON"
-          className="w-10 h-10 cursor-pointer rounded-full hover:scale-105 active:scale-100 transition-transform duration-150"
-        />
+        <a href="/" className="inline-block">
+          <img
+            src="/images/Logo_CoinDigit.png"
+            alt="ICON"
+            className="w-10 h-10 cursor-pointer rounded-full hover:scale-105 active:scale-100 transition-transform duration-150"
+          />
         </a>
-
         <span className="text-lg font-semibold">{siteName}</span>
       </div>
-      <div className="text-center flex-grow">
+
+      <div className="absolute left-1/2 transform -translate-x-1/2 text-center">
         <div className="text-white font-bold text-2xl">{pageName}</div>
       </div>
 
       <div className="flex items-center gap-4">
         {user?.id ? (
           <div className="flex items-center gap-4">
-
             {user?.name && (
               <div className="mr-3 text-white font-semibold text-lg">
                 Olá, <span className="text-yellow-300 font-bold text-xl">{user.name}</span>
               </div>
             )}
-
-
-            {/*<div className="text-white font-semibold hidden sm:block"> */}
-            {/* Olá, {user.name}*/}
-            {/* </div> */}
 
             <button
               onClick={goToProfile}
@@ -79,11 +72,7 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
             >
               <LogOut size={26} />
             </button>
-
           </div>
-
-
-
         ) : (
           <button
             onClick={handleLogin}
