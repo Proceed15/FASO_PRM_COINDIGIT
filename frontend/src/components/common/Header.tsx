@@ -86,7 +86,7 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
         ) : (
           <button
             onClick={handleLogin}
-            className="btn flex items-center gap-1 hover:text-purple-300 transition"
+            className="mr-2 hover:scale-105 active:scale-100 btn p-2 rounded-full bg-transparent hover:bg-yellow-500 transition-all"
             title="Logar"
           >
             <FaUserCircle size={30} />
