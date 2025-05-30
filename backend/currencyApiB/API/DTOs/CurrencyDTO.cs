@@ -1,4 +1,4 @@
-namespace currencyAPI.API.DTOs
+namespace currencyApiB.API.DTOs
 {
     public class CurrencyDTO
     {

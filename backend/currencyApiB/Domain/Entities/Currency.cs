@@ -1,4 +1,4 @@
-namespace currencyAPI.Domain.Models
+namespace currencyApiB.Domain.Entities
 {
     public class Currency
     {
@@ -8,5 +8,4 @@ namespace currencyAPI.Domain.Models
         public string Backing { get; set; }
         public string Status { get; set; }
     }
-
 }

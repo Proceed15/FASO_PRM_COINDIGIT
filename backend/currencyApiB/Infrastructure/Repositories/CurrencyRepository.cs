@@ -1,10 +1,10 @@
-using currencyAPI.Domain.Models;
-using currencyAPI.Domain.Interfaces;
-using currencyAPI.Infrastructure.Data;
+using currencyApiB.Domain.Entities;
+using currencyApiB.Application.Interfaces;
+using currencyApiB.Infrastructure.Data;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace currencyAPI.Infrastructure.Repositories
+namespace currencyApiB.Infrastructure.Repositories
 {
     public class CurrencyRepository : ICurrencyRepository
     {

@@ -1,16 +1,14 @@
-using currencyAPI.Domain.Models;
+using System.Collections.Generic;
+using currencyApiB.Domain.Entities;
 
-namespace currencyAPI.Domain.Interfaces
+namespace currencyApiB.Application.Interfaces
 {
     public interface ICurrencyRepository
     {
         void Add(Currency currency);
-        Currency? GetById(int id);
+        Currency GetById(int id);
         List<Currency> GetAll();
         void Update(Currency currency);
         void Delete(int id);
-        Currency? GetByName(string name);
-        //Task EditUserAsync(User user);
     }
-
 }

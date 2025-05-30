@@ -1,11 +1,15 @@
-using currencyAPI.API.DTOs;
+using currencyApiB.API.DTOs;
+using System.Collections.Generic;
 
 // Exemplo de ICurrencyService
-public interface ICurrencyService
+namespace currencyApiB.Application.Interfaces
 {
-    CurrencyDTO RegisterCurrency(CurrencyDTO currencyDto);
-    CurrencyDTO? GetCurrencyDetails(int id);
-    List<CurrencyDTO> GetAllCurrencies();
-    CurrencyDTO? UpdateCurrency(int id, CurrencyDTO currencyDto);
-    bool DeleteCurrency(int id);
+    public interface ICurrencyService
+    {
+        CurrencyDTO RegisterCurrency(CurrencyDTO currencyDto);
+        CurrencyDTO? GetCurrencyDetails(int id);
+        List<CurrencyDTO> GetAllCurrencies();
+        CurrencyDTO? UpdateCurrency(int id, CurrencyDTO currencyDto);
+        bool DeleteCurrency(int id);
+    }
 }
