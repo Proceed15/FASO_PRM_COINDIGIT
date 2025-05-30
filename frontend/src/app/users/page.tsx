@@ -49,7 +49,7 @@ export default function UserListPage() {
       <Header pageName="Lista de Usuários" />
       {error && <div className="text-red-500 my-4">{error}</div>}
 
-      <div className="w-full max-w-6xl bg-[#1e1e3f] border border-white-500 rounded-xl p-6 shadow-lg">
+      <div className="mt-5 w-full max-w-6xl bg-[#1e1e3f] border border-white-500 rounded-xl p-6 shadow-lg">
         <div className="flex justify-left items-center mb-6">
           <input
             type="text"

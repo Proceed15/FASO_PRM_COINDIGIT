@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-
+//npm install lucide-react
+import { LogOut, UserCircle } from "lucide-react";
 import React, { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../../contexts/UserContext";
@@ -33,11 +34,13 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
   return (
     <div className="z-20 header flex items-center justify-between px-6 py-4 bg-[#1e1e3f] text-white border-b border-white-200">
       <div className="flex items-center gap-2">
-        <img
+
+        <a href="/" className="inline-block"> <img
           src="/images/Logo_CoinDigit.png"
           alt="ICON"
-          className="w-10 h-10"
+          className="w-10 h-10 cursor-pointer rounded-full hover:scale-105 active:scale-100 transition-transform duration-150"
         />
+        </a>
 
         <span className="text-lg font-semibold">{siteName}</span>
       </div>
@@ -48,30 +51,37 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
       <div className="flex items-center gap-4">
         {user?.id ? (
           <div className="flex items-center gap-4">
-            <button
-              onClick={handleLogout}
-              className="btn flex items-center gap-1 hover:text-purple-300 transition"
-              title="Logout"
-            >
-              LOGOUT
-            </button>
 
             {user?.name && (
-              <div className="text-white font-semibold ml-2">Olá, {user.name}</div>
+              <div className="mr-3 text-white font-semibold text-lg">
+                Olá, <span className="text-yellow-300 font-bold text-xl">{user.name}</span>
+              </div>
             )}
 
-           {/*<div className="text-white font-semibold hidden sm:block"> */ }
-              {/* Olá, {user.name}*/ }
-            {/* </div> */ }
+
+            {/*<div className="text-white font-semibold hidden sm:block"> */}
+            {/* Olá, {user.name}*/}
+            {/* </div> */}
 
             <button
               onClick={goToProfile}
-              className="btn flex items-center gap-1 hover:text-purple-300 transition"
+              className="btn p-2 rounded-full bg-transparent hover:bg-purple-700 transition-all"
               title="Perfil"
             >
-              PERFIL
+              <UserCircle size={28} />
             </button>
+
+            <button
+              onClick={handleLogout}
+              className="mr-1 btn p-2 rounded-full bg-transparent hover:bg-red-600 transition-all"
+              title="Logout"
+            >
+              <LogOut size={26} />
+            </button>
+
           </div>
+
+
 
         ) : (
           <button
@@ -79,7 +89,7 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
             className="btn flex items-center gap-1 hover:text-purple-300 transition"
             title="Logar"
           >
-            <FaUserCircle size={30}/>
+            <FaUserCircle size={30} />
           </button>
         )}
       </div>
