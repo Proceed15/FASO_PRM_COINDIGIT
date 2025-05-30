@@ -2,6 +2,8 @@
 "use client";
 //npm install lucide-react
 import { LogOut, UserCircle } from "lucide-react";
+//inporticon
+import { FaUserCircle } from 'react-icons/fa';
 import React, { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../../contexts/UserContext";
