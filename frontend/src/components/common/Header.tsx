@@ -65,7 +65,7 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
 
             <button
               onClick={goToProfile}
-              className="btn p-2 rounded-full bg-transparent hover:bg-purple-700 transition-all"
+              className="btn hover:scale-105 active:scale-100 p-2 rounded-full bg-transparent hover:bg-purple-700 transition-all"
               title="Perfil"
             >
               <UserCircle size={28} />
@@ -73,7 +73,7 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
 
             <button
               onClick={handleLogout}
-              className="mr-1 btn p-2 rounded-full bg-transparent hover:bg-red-600 transition-all"
+              className="mr-1 hover:scale-105 active:scale-100 btn p-2 rounded-full bg-transparent hover:bg-red-600 transition-all"
               title="Logout"
             >
               <LogOut size={26} />
