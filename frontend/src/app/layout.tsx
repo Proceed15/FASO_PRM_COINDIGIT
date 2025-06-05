@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Trade Holding',
   description: 'by AMS-ADS 5 JRLSF FESR ADPM ISAA LGRF',
+  icons: {
+    icon: '/favicon.ico', // Isso é o que adiciona o ícone na aba
+  },
 }
 
 export default function RootLayout({
