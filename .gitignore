@@ -8,6 +8,7 @@ obj/Debug/net9.0/
 userAPI/bin/
 userAPI/obj/
 userAPI/bin
+backend/userAPI/userdb.sqlite
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
