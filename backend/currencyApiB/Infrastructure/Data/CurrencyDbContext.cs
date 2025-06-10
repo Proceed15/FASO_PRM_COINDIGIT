@@ -17,7 +17,7 @@ namespace currencyApiB.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<History>()
-                .HasKey(h => new { h.Id, h.Date, h.Price });
+                .HasKey(h => h.Id);
 
             modelBuilder.Entity<History>()
                 .HasOne(h => h.Currency)

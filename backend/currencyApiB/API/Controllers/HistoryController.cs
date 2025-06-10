@@ -20,6 +20,8 @@ namespace currencyApiB.API.Controllers
         [HttpPost]
         public IActionResult AddHistory(History history)
         {
+            // Ensure Id is not set to avoid conflict with auto-increment
+            history.Id = 0;
             _historyService.AddHistory(history);
             return Ok();
         }

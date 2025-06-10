@@ -47,21 +47,19 @@ namespace currencyApiB.Migrations
             modelBuilder.Entity("currencyApiB.Domain.Entities.History", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("INTEGER")
-                        .HasColumnOrder(0);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT")
-                        .HasColumnOrder(1);
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("TEXT")
-                        .HasColumnOrder(2);
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("CurrencyId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id", "Date", "Price");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CurrencyId");
 
