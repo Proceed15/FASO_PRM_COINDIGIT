@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
-using currencyAPI.Domain.Models;
-using currencyAPI.API.DTOs;
-using currencyAPI.Domain.Interfaces;
+using currencyApiB.Domain.Entities;
+using currencyApiB.Application.Interfaces;
+using currencyApiB.API.DTOs;
 
 
-namespace currencyAPI.Application.Services
+namespace currencyApiB.Application.Services
 {
     public class CurrencyService : ICurrencyService
     {
@@ -92,4 +92,4 @@ namespace currencyAPI.Application.Services
             return true;
         }
     }
-}
+} 

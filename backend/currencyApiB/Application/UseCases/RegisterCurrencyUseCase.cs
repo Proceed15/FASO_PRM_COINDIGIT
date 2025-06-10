@@ -1,5 +1,5 @@
-using currencyAPI.API.DTOs;
-
+using currencyApiB.API.DTOs;
+using currencyApiB.Application.Interfaces;
 public class RegisterCurrencyUseCase
 {
     private readonly ICurrencyService _currencyService;

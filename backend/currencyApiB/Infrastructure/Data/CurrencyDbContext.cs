@@ -1,16 +1,29 @@
 using Microsoft.EntityFrameworkCore;
-using currencyAPI.Domain.Models;
+using currencyApiB.Domain.Entities;
 
-namespace currencyAPI.Infrastructure.Data
+namespace currencyApiB.Infrastructure.Data
 {
-    // DbContext for the Currency API
-    // This class is responsible for interacting with the database
-    // and managing the Currency entities.
-    // It inherits from DbContext, which is part of Entity Framework Core.
-
     public class CurrencyDbContext : DbContext
     {
-        public CurrencyDbContext(DbContextOptions<CurrencyDbContext> options) : base(options) { }
+        public CurrencyDbContext(DbContextOptions<CurrencyDbContext> options) : base(options)
+        {
+        }
+
         public DbSet<Currency> Currencies { get; set; }
+        public DbSet<History> Histories { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<History>()
+                .HasKey(h => h.Id);
+
+            modelBuilder.Entity<History>()
+                .HasOne(h => h.Currency)
+                .WithMany()
+                .HasForeignKey(h => h.CurrencyId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using currencyAPI.Application.Services;
-using currencyAPI.API.DTOs;
+using currencyApiB.Application.Services;
+using currencyApiB.Application.Interfaces;
+using currencyApiB.API.DTOs;
 
-namespace currencyAPI.Controller
+namespace currencyApiB.Controller
 {
     [ApiController]
     [Route("api/[controller]")]

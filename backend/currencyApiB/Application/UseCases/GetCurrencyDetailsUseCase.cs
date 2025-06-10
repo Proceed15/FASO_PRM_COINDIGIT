@@ -1,4 +1,5 @@
-using currencyAPI.API.DTOs;
+using currencyApiB.API.DTOs;
+using currencyApiB.Application.Interfaces;
 
 public class GetCurrencyDetailsUseCase
 {
