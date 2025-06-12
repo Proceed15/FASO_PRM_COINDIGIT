@@ -100,7 +100,9 @@ export default function CurrencyEditPage({ params }: CurrencyEditProps) {
             <label className="text-sm text-purple-200">Status</label>
             <select
               name="status"
-              className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white mt-1"
+              className="w-full bg-[#2a184e] border border-purple-400 rounded px-4 py-2 text-white mt-1
+               hover:border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500
+               transition-all duration-200 ease-in-out cursor-pointer"
               value={formData.status}
               onChange={handleChange}
             >
@@ -108,6 +110,7 @@ export default function CurrencyEditPage({ params }: CurrencyEditProps) {
               <option value="Inativo">Inativo</option>
             </select>
           </div>
+
 
           {error && (
             <div className="text-red-500 font-semibold border border-red-500 rounded p-2 bg-red-900/20">
