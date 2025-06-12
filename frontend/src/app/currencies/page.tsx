@@ -40,20 +40,20 @@ export default function CurrencyListPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white pt-[100px]">
+    <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
       <Header pageName="Moedas" />
 
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="flex justify-between items-center mb-6">
+      <div className="border border-white-500 rounded-xl mt-[75px] max-w-6xl mx-auto p-6">
+        <div className="flex justify-left items-center mb-6">
           <input
             type="text"
             placeholder="Buscar moeda..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-[#1e1e3f] border border-purple-500 px-4 py-2 rounded text-white"
+            className="bg-[#0e0e2f] border border-white-400 text-white rounded-lg px-4 py-2 w-full max-w-md outline-none"
           />
           <Button
-            className="ml-4 bg-purple-700 hover:bg-purple-800"
+            className="ml-4 border border-white-400 bg-tranparent text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
             onClick={() => router.push("/currencies/create")}
           >
             Nova Moeda
@@ -62,60 +62,62 @@ export default function CurrencyListPage() {
 
         {error && <div className="text-red-500 mb-4">{error}</div>}
 
-        <table className="w-full text-left border border-purple-700">
-          <thead className="bg-[#2a184e] text-purple-300">
-            <tr>
-              <th className="p-3 border border-purple-600">Nome</th>
-              <th className="p-3 border border-purple-600">Descrição</th>
-              <th className="p-3 border border-purple-600">Lastro</th>
-              <th className="p-3 border border-purple-600">Status</th>
-              <th className="p-3 border border-purple-600">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((currency) => (
-              <tr
-                key={currency.id}
-                className="hover:bg-[#32264f] border-t border-purple-600"
-              >
-                <td className="p-3">{currency.name}</td>
-                <td className="p-3">{currency.description}</td>
-                <td className="p-3">{currency.backing}</td>
-                <td className="p-3">{currency.status}</td>
-                <td className="p-3 space-x-2">
-                  <Button
-                    variant="outline"
-                    className="text-blue-400 border-blue-500 hover:bg-blue-900"
-                    onClick={() => router.push(`/currencies/${currency.id}/view`)}
-                  >
-                    Ver
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="text-yellow-400 border-yellow-500 hover:bg-yellow-900"
-                    onClick={() => router.push(`/currencies/${currency.id}/edit`)}
-                  >
-                    Editar
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="text-red-400 border-red-500 hover:bg-red-900"
-                    onClick={() => handleDelete(currency.id!)}
-                  >
-                    Excluir
-                  </Button>
-                </td>
-              </tr>
-            ))}
-            {filtered.length === 0 && (
+        <div className="border-2 border-purple-500 rounded-lg overflow-hidden">
+          <table className="w-full text-white bg-[#0e0e2f]">
+            <thead className="bg-[#2a184e] text-purple-300">
               <tr>
-                <td colSpan={5} className="p-6 text-center text-purple-300">
-                  Nenhuma moeda encontrada.
-                </td>
+                <th className="p-3 border-l border-r border-purple-600 text-left">Nome</th>
+                <th className="p-3 border-l border-r border-purple-600 text-left">Descrição</th>
+                <th className="p-3 border-l border-r border-purple-600 text-left">Lastro</th>
+                <th className="p-3 border-l border-r border-purple-600 text-left">Status</th>
+                <th className="p-3 border-l border-r border-purple-600 text-left">Ações</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filtered.map((currency) => (
+                <tr
+                  key={currency.id}
+                  className="hover:bg-[#32264f] border-t border-purple-600"
+                >
+                  <td className="p-3 border-l border-r border-purple-600">{currency.name}</td>
+                  <td className="p-3 border-l border-r border-purple-600">{currency.description}</td>
+                  <td className="p-3 border-l border-r border-purple-600">{currency.backing}</td>
+                  <td className="p-3 border-l border-r border-purple-600">{currency.status}</td>
+                  <td className="p-3 space-x-2 flex items-center justify-center">
+                    <Button
+                      variant="outline"
+                      className="text-blue-400 border-blue-500 hover:bg-blue-900"
+                      onClick={() => router.push(`/currencies/${currency.id}/view`)}
+                    >
+                      Visualizar
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="text-yellow-400 border-yellow-500 hover:bg-yellow-900"
+                      onClick={() => router.push(`/currencies/${currency.id}/edit`)}
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="text-red-400 border-red-500 hover:bg-red-900"
+                      onClick={() => handleDelete(currency.id!)}
+                    >
+                      Excluir
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+              {filtered.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="p-6 text-center text-purple-300">
+                    Nenhuma moeda encontrada.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

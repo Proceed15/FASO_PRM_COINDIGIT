@@ -45,11 +45,11 @@ export default function UserListPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white p-8 pt-[100px]">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
       <Header pageName="Lista de Usuários" />
       {error && <div className="text-red-500 my-4">{error}</div>}
 
-      <div className="mt-5 w-full max-w-6xl bg-[#1e1e3f] border border-white-500 rounded-xl p-6 shadow-lg">
+      <div className="mb-[75px] mt-[75px] w-full max-w-6xl bg-[#1e1e3f] border border-white-500 rounded-xl p-6 shadow-lg">
         <div className="flex justify-left items-center mb-6">
           <input
             type="text"
@@ -84,7 +84,7 @@ export default function UserListPage() {
                   <td className="px-4 py-2 border-t border-r border-purple-400">{user.email}</td>
                   <td className="px-4 py-2 border-t border-r border-purple-400">{user.phone}</td>
                   <td className="px-4 py-2 border-t border-r border-purple-400">{user.address}</td>
-                  <td className="px-4 py-2 border-t border-r border-purple-400 space-x-2">
+                  <td className="px-4 py-2 border-t border-r border-purple-400 flex flex-col md:flex-row items-center justify-center gap-2">
                     <Button
                       variant="outline"
                       className="border-blue-500 text-blue-400 hover:bg-blue-900 hover:text-white"

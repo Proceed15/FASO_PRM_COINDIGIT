@@ -8,7 +8,7 @@ export interface Currency {
   status: string;
 }
 
-const BASE_URL = "http://localhost:5120/api/Currency";
+const BASE_URL = "http://localhost:5075/api/Currency";
 
 const currencyService = {
   async getAll(): Promise<Currency[]> {

@@ -76,7 +76,7 @@ export default function UserViewPage({ params }: UserViewpageProps) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e]">
             <Header pageName="Usuários" userName={loggedUser?.name} userId={loggedUser?.id} />
-            <div className="p-6 smt-10pace-y-6 max-w-4xl mx-auto pt-[150px]">
+            <div className="pt-[100px] p-6 smt-10 space-y-6 max-w-4xl mx-auto">
                 <h1 className="text-2xl font-bold text-white">Perfil</h1>
 
                 <div className="mb-3 bg-[#1e1e3f] border border-purple-200 rounded-lg shadow-sm p-6 space-y-4">

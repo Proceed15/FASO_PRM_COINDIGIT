@@ -35,62 +35,81 @@ export default function CreateCurrencyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white pt-[100px]">
+    <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
       <Header pageName="Nova Moeda" />
-      <div className="max-w-3xl mx-auto p-6">
+      <div className="pt-[75px] p-6 space-y-6 max-w-4xl mx-auto">
+        <h1 className="text-2xl font-bold text-white">Cadastrar Nova Moeda</h1>
+
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 bg-[#1e1e3f] p-6 rounded-lg border border-purple-500"
+          className="bg-[#1e1e3f] border border-purple-200 rounded-lg shadow-sm p-6 space-y-4"
         >
-          <h2 className="text-xl font-bold">Cadastrar nova moeda</h2>
+          <div>
+            <label className="text-sm text-purple-200">Nome</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Nome"
+              className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white mt-1"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </div>
 
-          <input
-            type="text"
-            name="name"
-            placeholder="Nome"
-            className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400"
-            value={formData.name}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="description"
-            placeholder="Descrição"
-            className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400"
-            value={formData.description}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="backing"
-            placeholder="Lastro"
-            className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400"
-            value={formData.backing}
-            onChange={handleChange}
-          />
-          <select
-            name="status"
-            className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white"
-            value={formData.status}
-            onChange={handleChange}
-          >
-            <option value="Ativo">Ativo</option>
-            <option value="Inativo">Inativo</option>
-          </select>
+          <div>
+            <label className="text-sm text-purple-200">Descrição</label>
+            <input
+              type="text"
+              name="description"
+              placeholder="Descrição"
+              className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white mt-1"
+              value={formData.description}
+              onChange={handleChange}
+            />
+          </div>
 
-          {error && <div className="text-red-500">{error}</div>}
+          <div>
+            <label className="text-sm text-purple-200">Lastro</label>
+            <input
+              type="text"
+              name="backing"
+              placeholder="Lastro"
+              className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white mt-1"
+              value={formData.backing}
+              onChange={handleChange}
+            />
+          </div>
 
-          <div className="flex justify-between">
+          <div>
+            <label className="text-sm text-purple-200">Status</label>
+            <select
+              name="status"
+              className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white mt-1"
+              value={formData.status}
+              onChange={handleChange}
+            >
+              <option value="Ativo">Ativo</option>
+              <option value="Inativo">Inativo</option>
+            </select>
+          </div>
+
+          {error && (
+            <div className="text-red-500 font-semibold border border-red-500 rounded p-2 bg-red-900/20">
+              {error}
+            </div>
+          )}
+
+          <div className="flex justify-end space-x-2 pt-2">
             <Button
               type="button"
-              className="border border-purple-300 bg-transparent text-white hover:bg-purple-800"
+              className="border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform font-semibold rounded px-4 py-2"
               onClick={() => router.push("/currencies")}
             >
               Cancelar
             </Button>
             <Button
               type="submit"
-              className="bg-purple-700 hover:bg-[#52008b]"
+              className="border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform font-semibold rounded px-4 py-2"
             >
               Cadastrar
             </Button>

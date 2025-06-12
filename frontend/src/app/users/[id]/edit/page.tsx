@@ -153,7 +153,7 @@ export default function UserEditPage({ params }: UserEditPageProps) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e]">
             <Header pageName="Usuários" />
-            <div className="p-6 space-y-6 max-w-4xl mx-auto pt-[100px] pb-[50px]">
+            <div className="space-y-6 max-w-4xl mx-auto pt-[70px] pb-[75px] ">
                 <h1 className="text-2xl font-bold text-white">Editar Usuário</h1>
 
                 <form onSubmit={handleSubmit} className="space-y-4 bg-[#1e1e3f] border border-purple-200 rounded-lg shadow-sm p-6">
