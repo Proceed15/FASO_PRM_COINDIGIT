@@ -1,14 +1,14 @@
 import axios from "axios";
 
 export interface Currency {
-  id?: number;
+  id?: string;
+  symbol: string;
   name: string;
-  description: string;
   backing: string;
-  status: string;
+  reverse: boolean;
 }
 
-const BASE_URL = "http://localhost:5075/api/Currency";
+const BASE_URL = "http://localhost:5002/api/Currency";
 
 const currencyService = {
   async getAll(): Promise<Currency[]> {
@@ -19,7 +19,7 @@ const currencyService = {
     return response.data;
   },
 
-  async getById(id: number): Promise<Currency> {
+  async getById(id: string): Promise<Currency> {
     const token = localStorage.getItem("token");
     const response = await axios.get(`${BASE_URL}/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -35,15 +35,14 @@ const currencyService = {
     return response.data;
   },
 
-  async update(id: number, currency: Currency): Promise<Currency> {
+  async update(id: string, currency: Currency): Promise<void> {
     const token = localStorage.getItem("token");
-    const response = await axios.put(`${BASE_URL}/${id}`, currency, {
+    await axios.put(`${BASE_URL}/${id}`, currency, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    return response.data;
   },
 
-  async delete(id: number): Promise<void> {
+  async delete(id: string): Promise<void> {
     const token = localStorage.getItem("token");
     await axios.delete(`${BASE_URL}/${id}`, {
       headers: { Authorization: `Bearer ${token}` },

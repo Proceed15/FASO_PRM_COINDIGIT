@@ -28,7 +28,7 @@ export default function CurrencyListPage() {
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (confirm("Tem certeza que deseja excluir esta moeda?")) {
       try {
         await currencyService.delete(id);
@@ -40,10 +40,9 @@ export default function CurrencyListPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
+    <div className="min-h-[1200px] bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
       <Header pageName="Moedas" />
-
-      <div className="border border-white-500 rounded-xl mt-[75px] max-w-6xl mx-auto p-6">
+      <div className="mb-[75px] mt-[75px] border border-white-500 rounded-xl max-w-6xl mx-auto p-6">
         <div className="flex justify-left items-center mb-6">
           <input
             type="text"
@@ -66,23 +65,22 @@ export default function CurrencyListPage() {
           <table className="w-full text-white bg-[#0e0e2f]">
             <thead className="bg-[#2a184e] text-purple-300">
               <tr>
+                <th className="p-3 border-l border-r border-purple-600 text-left">Símbolo</th>
                 <th className="p-3 border-l border-r border-purple-600 text-left">Nome</th>
-                <th className="p-3 border-l border-r border-purple-600 text-left">Descrição</th>
                 <th className="p-3 border-l border-r border-purple-600 text-left">Lastro</th>
-                <th className="p-3 border-l border-r border-purple-600 text-left">Status</th>
+                <th className="p-3 border-l border-r border-purple-600 text-left">Reverse</th>
                 <th className="p-3 border-l border-r border-purple-600 text-left">Ações</th>
               </tr>
             </thead>
             <tbody>
               {filtered.map((currency) => (
-                <tr
-                  key={currency.id}
-                  className="hover:bg-[#32264f] border-t border-purple-600"
-                >
+                <tr key={currency.id} className="hover:bg-[#32264f] border-t border-purple-600">
+                  <td className="p-3 border-l border-r border-purple-600">{currency.symbol}</td>
                   <td className="p-3 border-l border-r border-purple-600">{currency.name}</td>
-                  <td className="p-3 border-l border-r border-purple-600">{currency.description}</td>
                   <td className="p-3 border-l border-r border-purple-600">{currency.backing}</td>
-                  <td className="p-3 border-l border-r border-purple-600">{currency.status}</td>
+                  <td className="p-3 border-l border-r border-purple-600">
+                    {currency.reverse ? "Sim" : "Não"}
+                  </td>
                   <td className="p-3 space-x-2 flex items-center justify-center">
                     <Button
                       variant="outline"
