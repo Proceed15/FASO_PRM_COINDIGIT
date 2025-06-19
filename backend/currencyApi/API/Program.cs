@@ -17,10 +17,12 @@ builder.Services.AddSwaggerWithJwt();
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();
+//é
 
 // Middleware Pipeline
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {

@@ -17,12 +17,14 @@ export default function CurrencyListPage() {
       try {
         const data = await currencyService.getAll();
         setCurrencies(data);
-      } catch (err) {
-        setError("Erro ao carregar moedas");
+      } catch (e) {
+        setError(`Erro ao carregar moedas:  ${e.message}`);
       }
     }
     fetchCurrencies();
   }, []);
+
+  
 
   const filtered = currencies.filter((c) =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
