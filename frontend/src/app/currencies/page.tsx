@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import currencyService, { Currency } from "@/services/currencyService";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/common/Header";
+import { DeleteCurrencyDialog } from "@/components/dialogs/DeleteCurrencyDialog"; // importe
 
 export default function CurrencyListPage() {
   const router = useRouter();
@@ -24,25 +25,22 @@ export default function CurrencyListPage() {
     fetchCurrencies();
   }, []);
 
-  
-
   const filtered = currencies.filter((c) =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleDelete = async (id: string) => {
-    if (confirm("Tem certeza que deseja excluir esta moeda?")) {
-      try {
-        await currencyService.delete(id);
-        setCurrencies((prev) => prev.filter((c) => c.id !== id));
-      } catch (err) {
-        setError("Erro ao excluir moeda");
-      }
+    setError("");
+    try {
+      await currencyService.delete(id);
+      setCurrencies((prev) => prev.filter((c) => c.id !== id));
+    } catch {
+      setError("Erro ao excluir moeda");
     }
   };
 
   return (
-    <div className="min-h-[1200px] bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
+    <div className="min-h-[1250px] bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
       <Header pageName="Moedas" />
       <div className="mb-[75px] mt-[75px] border border-white-500 rounded-xl max-w-6xl mx-auto p-6">
         <div className="flex justify-left items-center mb-6">
@@ -76,7 +74,10 @@ export default function CurrencyListPage() {
             </thead>
             <tbody>
               {filtered.map((currency) => (
-                <tr key={currency.id} className="hover:bg-[#32264f] border-t border-purple-600">
+                <tr
+                  key={currency.id}
+                  className="hover:bg-[#32264f] border-t border-purple-600"
+                >
                   <td className="p-3 border-l border-r border-purple-600">{currency.symbol}</td>
                   <td className="p-3 border-l border-r border-purple-600">{currency.name}</td>
                   <td className="p-3 border-l border-r border-purple-600">{currency.backing}</td>
@@ -98,13 +99,12 @@ export default function CurrencyListPage() {
                     >
                       Editar
                     </Button>
-                    <Button
-                      variant="outline"
+                    <DeleteCurrencyDialog
+                      currencyId={currency.id!}
+                      currencyName={currency.name}
+                      onDelete={handleDelete}
                       className="text-red-400 border-red-500 hover:bg-red-900"
-                      onClick={() => handleDelete(currency.id!)}
-                    >
-                      Excluir
-                    </Button>
+                    />
                   </td>
                 </tr>
               ))}

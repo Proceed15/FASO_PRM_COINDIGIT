@@ -51,6 +51,11 @@ namespace CurrencyAPI.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        //public async Task UpdateAsync(Currency currency)
+        //{
+          //  await _context.SaveChangesAsync();
+        //}
+
         public async Task DeleteAsync(Guid id)
         {
             var currency = await _context.Currencies.FindAsync(id);
