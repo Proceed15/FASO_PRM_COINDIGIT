@@ -25,7 +25,7 @@ export default function CurrencyEditPage({ params }: CurrencyEditProps) {
   useEffect(() => {
     currencyService.getById(params.id)
       .then(setFormData)
-      .catch(() => setError("Erro ao carregar moeda."));
+      .catch(() => setError(`Erro ao carregar moeda.`));
   }, [params.id]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,8 +38,8 @@ export default function CurrencyEditPage({ params }: CurrencyEditProps) {
     try {
       await currencyService.update(params.id, formData);
       router.push("/currencies");
-    } catch {
-      setError("Erro ao atualizar moeda.");
+    } catch (error: any) {
+      setError(`Erro ao atualizar moeda. ${error?.message || "Erro desconhecido"}`);
     }
   };
 

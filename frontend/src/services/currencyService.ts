@@ -18,14 +18,25 @@ const currencyService = {
     });
     return response.data;
   },
-
+  /*
   async getById(id: string): Promise<Currency> {
     const token = localStorage.getItem("token");
     const response = await axios.get(`${BASE_URL}/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
+  },*/
+
+  async getById(id: string): Promise<Currency> {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${BASE_URL}/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const { histories, ...safeCurrency } = response.data;
+    return safeCurrency;
   },
+
 
   async create(currency: Currency): Promise<Currency> {
     const token = localStorage.getItem("token");
