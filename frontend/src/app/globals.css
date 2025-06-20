@@ -54,3 +54,7 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+/* Adicionei para o fundo branco não grudar */
+html{
+  background-color: rgb(27, 37, 88);
+}

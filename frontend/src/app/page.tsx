@@ -34,12 +34,11 @@ export default function Home() {
           >
             Usuários
           </Button>
-
           <Button
             className="flex-1 min-w-[150px] border border-white-400 bg-transparent text-white hover:bg-purple-800 hover:opacity-90 active:scale-95 transition font-semibold rounded px-6 py-3"
             onClick={() => router.push("/currencies")}
           >
-            Moedas
+            Ativos
           </Button>
         </div>
       </div>

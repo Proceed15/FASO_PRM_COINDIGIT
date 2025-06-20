@@ -1,4 +1,4 @@
-#Backend .gitignore file for User API
+#Backend .gitignore file for Currency API
 Debug/
 bin/
 obj/

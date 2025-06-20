@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import userService, { User } from "@/services/userService";
-import Header from '../../components/common/Header';
+import Header from '../../../components/common/Header';
 
 export default function UsersPage() {
     const [users, setUsers] = useState<User[]>([]);

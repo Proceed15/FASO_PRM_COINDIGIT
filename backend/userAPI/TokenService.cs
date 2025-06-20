@@ -9,12 +9,12 @@ using System.Security.Claims;
 using System.Text;
 
 
-//Para Adcionar no program.cs, a explicação e o código de Import:
-// Register our TokenService dependency
+//Para Adicionar no program.cs, a explicação e o código de Import:
+// Registrando nossa TokenService dependency
 //builder.Services.AddScoped<TokenService, TokenService>();
 public class TokenService
 {
-    // Specify how long until the token expires set up for 30 minutes
+    // Specifica quanto tempo o token será válido, nesse caso 30 minutos
     private const int ExpirationMinutes = 30;
     private readonly ILogger<TokenService> _logger;
 
