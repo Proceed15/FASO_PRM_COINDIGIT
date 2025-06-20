@@ -21,8 +21,8 @@
     "tailwind-merge": "^3.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/node": "20.19.1",
+    "@types/react": "18.3.23",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "eslint": "^8",
