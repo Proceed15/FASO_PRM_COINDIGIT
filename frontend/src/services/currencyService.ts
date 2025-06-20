@@ -59,6 +59,15 @@ const currencyService = {
       headers: { Authorization: `Bearer ${token}` },
     });
   },
+
+   async getHistory(id: string) {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${BASE_URL}/${id}/history`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  },
+
 };
 
 export default currencyService;

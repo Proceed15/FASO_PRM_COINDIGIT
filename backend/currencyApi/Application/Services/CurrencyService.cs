@@ -42,6 +42,20 @@ namespace CurrencyAPI.Application.Services
         {
             await _repository.UpdateAsync(currency);
         }
+        
+        /*public async Task UpdateAsync(Currency currency)
+        {
+            var existing = await _repository.GetByIdAsync(currency.Id);
+            if (existing == null)
+                throw new Exception("Moeda não encontrada.");
+
+            existing.Symbol = currency.Symbol;
+            existing.Name = currency.Name;
+            existing.Backing = currency.Backing;
+            existing.Reverse = currency.Reverse;
+
+            await _repository.UpdateAsync(existing);
+        }*/
 
         public async Task DeleteAsync(Guid id)
         {

@@ -80,8 +80,22 @@ export default function CreateCurrencyPage() {
           {error && <p className="text-red-500">{error}</p>}
 
           <div className="flex justify-end space-x-2 pt-2">
-            <Button onClick={() => router.push("/currencies")} type="button">Cancelar</Button>
-            <Button type="submit">Cadastrar</Button>
+            <Button
+              variant="outline"
+              className=" bg-purple-700 border-white-400 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform font-semibold rounded px-4 py-2"
+              onClick={() => router.push("/currencies")}
+              type="button"
+            >
+              Cancelar
+            </Button>
+
+            <Button
+              className="border border-white-400 ml-4 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform font-semibold rounded px-4 py-2"
+              type="submit"
+            >
+              Cadastrar
+            </Button>
+
           </div>
         </form>
       </div>

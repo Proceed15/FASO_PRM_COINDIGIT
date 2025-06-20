@@ -66,11 +66,18 @@ export default function CurrencyViewPage({ params }: CurrencyViewProps) {
         </div>
         <div className="flex justify-end space-x-2 pt-2">
           <Button
-             className="mr-2 border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
-            onClick={() => router.push(`/currencies/${currency.id}/edit`)}>Editar</Button>
+            className="p-3 border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
+            onClick={() => router.push(`/currencies/${currency.id}/edit`)}>Editar
+          </Button>
           <Button
-            className="ml-4 border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
-            onClick={() => router.push("/currencies")}>Voltar</Button>
+            className="p-3 border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
+            onClick={() => router.push(`/currencies/${currency.id}/history`)}>
+            Ver Histórico
+          </Button>
+          <Button
+            className="p-3 border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
+            onClick={() => router.push("/currencies")}>Voltar
+          </Button>
         </div>
       </div>
     </div>

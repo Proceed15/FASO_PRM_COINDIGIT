@@ -36,12 +36,18 @@ export default function CurrencyEditPage({ params }: CurrencyEditProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await currencyService.update(params.id, formData);
+      await currencyService.update(params.id, {
+        ...formData,
+        id: params.id
+        //histories: []
+      });
       router.push("/currencies");
     } catch (error: any) {
+      console.error("Erro ao atualizar moeda:", error);
       setError(`Erro ao atualizar moeda. ${error?.message || "Erro desconhecido"}`);
     }
   };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
