@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using CurrencyAPI.Application.Interfaces;
 using CurrencyAPI.API.DTOs;
 using CurrencyAPI.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using CurrencyAPI.Infrastructure.Data;
 
 namespace CurrencyAPI.API.Controllers
 {
@@ -71,6 +73,9 @@ namespace CurrencyAPI.API.Controllers
         {
             var existing = await _service.GetByIdAsync(id);
             if (existing == null) return NotFound();
+
+            var context = HttpContext.RequestServices.GetRequiredService<AppDbContext>();
+            context.Entry(existing).State = EntityState.Detached;
 
             var updated = new Currency(dto.Symbol, dto.Name, dto.Backing, dto.Reverse);
             typeof(Currency).GetProperty("Id")?.SetValue(updated, id);
