@@ -5,9 +5,14 @@ Iniciando o git flow:
 <p>
   git flow init
 </p>
+</p>
+Reiniciando o git flow (para alterar as branchs padrão):
+<p>
+  git flow init --force
+</p>
 Iniciando a Feature:
 <p>
-  git flow feature start "<NomeFeature>"
+  git flow feature start "<NomeFeature>" é
 </p>
 Add com Commit na Feature:
 <p>

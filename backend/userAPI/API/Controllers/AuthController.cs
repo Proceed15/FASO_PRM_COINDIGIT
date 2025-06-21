@@ -51,9 +51,13 @@ public class AuthController : ControllerBase
         var key = Encoding.ASCII.GetBytes(jwtKey);
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Email),
-            new Claim(ClaimTypes.Name, user.Name),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.UniqueName, user.Name),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(ClaimTypes.Role, "Administrator")
+            //new Claim(ClaimTypes.NameIdentifier, user.Email),
+            //new Claim(ClaimTypes.Name, user.Name),
+            //new Claim(ClaimTypes.Role, "Administrator")
         };
 
         var tokenDescriptor = new SecurityTokenDescriptor

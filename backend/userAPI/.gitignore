@@ -1,6 +1,8 @@
+#Backend .gitignore file for User API
 Debug/
 bin/
 obj/
+net9.0/
 obj/Debug/
 node_modules/
 obj/Debug/net9.0/

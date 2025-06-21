@@ -10,5 +10,11 @@ Projeto de uma Plataforma para Atividades Financeiras Digitais, A CoinDigit é u
 CoinDigit @2025
 
 Programação Multiplaforma Fatec Sorocaba
+Professor André
 
-Link de um Repositório de Caracteres: https://jandreh.com/caracteres-especiais/
+Link de um Repositório de Caracteres Especiais: https://jandreh.com/caracteres-especiais/
+
+
+
+
+
