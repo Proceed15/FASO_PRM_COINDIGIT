@@ -1,4 +1,4 @@
-// TABELA -> 
+/*/ TABELA -> 
 "use client";
 
 import { useEffect, useState } from "react";
@@ -35,7 +35,7 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
     const limitedHistory = [...history]
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 10);
-
+/*
     return (
         //min-h-[600px]
         <div className="min-h-[950px] bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
@@ -93,8 +93,8 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
         </div>
     );
 }
+*/
 
-/*
 // TENTATIVA DE GRÁFICO
 "use client";
 
@@ -190,4 +190,4 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
             </main>
         </div>
     );
-}*/
+}
