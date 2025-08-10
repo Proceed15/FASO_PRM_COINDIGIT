@@ -22,7 +22,7 @@ Add com Commit na Feature:
   git add .
 </p>
 <p>
-  git commit -m "Alteração da Feature" - "NomeAutor"
+  git commit -m "feat: titulo" -m "descrição mais detalhada" -m "Nome"
 </p>
 Completando a Feature:
 <p>
