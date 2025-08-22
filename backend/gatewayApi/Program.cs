@@ -19,7 +19,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
  
-app.Useocelot().Wait();
+app.UseOcelot().Wait();
 
 app.Run();
 

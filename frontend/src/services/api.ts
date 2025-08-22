@@ -1,4 +1,7 @@
 const BASE_URL = 'http://localhost:5120/api';
+//http://localhost:5284
+//http://localhost:5284/currency
+//http://localhost:5284/user
 // Rezerve the first 2 segments for the API
 //                 placeholder="Confirmação de Senha"
 //                 value={user.password}
