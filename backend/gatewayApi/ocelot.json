@@ -26,7 +26,7 @@
         "DownstreamScheme": "http",
         "DownstreamHostandPorts": [{
             "Host": "localhost",
-            "Port": 5120
+            "Port": 5220
         }],
         "upstreamPathTemplate": "/wallet",
         "upstreamHttpMethod": [ "GET", "POST"]
