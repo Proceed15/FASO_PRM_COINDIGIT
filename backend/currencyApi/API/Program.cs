@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Currency API V1");
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Currency API V1.15");
         options.RoutePrefix = string.Empty;
     });
 }
