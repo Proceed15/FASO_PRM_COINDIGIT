@@ -1,33 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { Button } from "../../components/ui/button";
 
 interface DeleteUserDialogProps {
   userId: string;
   userName: string;
-  onDelete: (id: string) => void;
-  className: string;
+  onDelete: (id: string) => void | Promise<void>;
+  className?: string; 
+  icon?: ReactNode;   
 }
 
-export function DeleteUserDialog({ userId, userName, onDelete, className }: DeleteUserDialogProps) {
+export function DeleteUserDialog({
+  userId,
+  userName,
+  onDelete,
+  className,
+  icon,
+}: DeleteUserDialogProps) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button variant="outline" className={className} onClick={() => setOpen(true)}>Excluir</Button>
+      <Button
+        variant="outline"
+        className={className || ""}
+        onClick={() => setOpen(true)}
+      >
+         {icon}
+      </Button>
 
       {open && (
         <div className="fixed inset-0 bg-black/50 z-40 flex items-center justify-center">
           <div className="bg-white p-6 rounded-xl shadow-xl space-y-4 max-w-sm w-full z-50">
             <h2 className="text-black font-bold">Confirmar Exclusão</h2>
-            <p className="text-black">Tem certeza que deseja excluir <strong>{userName}</strong>?</p>
+            <p className="text-black">
+              Tem certeza que deseja excluir <strong>{userName}</strong>?
+            </p>
             <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
-              <Button variant="danger" onClick={() => {
-                onDelete(userId);
-                setOpen(false);
-              }}>
+              <Button variant="outline" onClick={() => setOpen(false)}>
+                Cancelar
+              </Button>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  onDelete(userId);
+                  setOpen(false);
+                }}
+              >
                 Confirmar
               </Button>
             </div>

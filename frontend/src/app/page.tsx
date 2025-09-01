@@ -87,10 +87,10 @@ export default function Home() {
             <img
               src="/images/Logo_CoinDigit.png"
               alt="Logo CoinDigit"
-              className="w-32 h-32 md:w-48 md:h-48"
+              className="w-48 h-48 md:w-48 md:h-48"
             />
             <div className="max-w-[300px] md:max-w-[400px]">
-              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight break-words">
+              <h1 className="text-5xl md:text-6xl font-extrabold leading-tight break-words">
                 COINDIGIT
               </h1>
               <p className="text-lg md:text-2xl text-gray-200 font-medium mt-2">
