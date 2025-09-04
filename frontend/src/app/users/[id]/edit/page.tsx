@@ -88,7 +88,7 @@ export default function UserEditPage({ params }: UserEditPageProps) {
                 phone: formData.phone || "",
                 address: formData.address || "",
                 password: formData.password && formData.password.trim() !== "" ? formData.password : "",
-                photo: user.photo || "",
+                photo: formData.photo || user.photo || "",
             };
             // Call API to update user
             await userService.update(user.id!, updatedUser);
@@ -121,7 +121,7 @@ export default function UserEditPage({ params }: UserEditPageProps) {
         return (
             <>
                 <Header pageName="Usuários" />
-                <div className="p-6 max-w-4xl mx-auto">Carregando usuário...</div>
+                <div className="p-6 max-w-4xl mx-auto text-white">Carregando usuário...</div>
             </>
         );
     }
@@ -153,68 +153,133 @@ export default function UserEditPage({ params }: UserEditPageProps) {
     return (
         <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e]">
             <Header pageName="Usuários" />
-            <div className="space-y-6 max-w-4xl mx-auto pt-[70px] pb-[75px] ">
-                <h1 className="text-2xl font-bold text-white">Editar Usuário</h1>
+            <div className="max-w-4xl mx-auto pt-[70px] pb-[75px] px-6">
+                <form onSubmit={handleSubmit} className="space-y-6 bg-[#1e1e3f] border border-purple-300 rounded-lg shadow-lg p-6">
+                    {/* Foto + nome no topo */}
+                    <div className="flex flex-col items-center mb-8">
+                        <img
+                            src={formData.photo || "/images/default-avatar.png"}
+                            alt={formData.name}
+                            className="w-28 h-28 rounded-full border-2 border-purple-400 object-cover shadow-md mb-4"
+                        />
+                        <h1 className="text-3xl font-bold text-white">{formData.name || "Usuário"}</h1>
+                    </div>
+                    <h2 className="text-white text-xl font-semibold mb-4">Editar Usuário</h2>
 
-                <form onSubmit={handleSubmit} className="space-y-4 bg-[#1e1e3f] border border-purple-200 rounded-lg shadow-sm p-6">
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Nome"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.name}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.email}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="phone"
-                        placeholder="Telefone"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.phone}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="address"
-                        placeholder="Endereço"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.address}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="photo"
-                        placeholder="Foto (URL)"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.photo}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Senha"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.password}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirmar Senha"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                    />
+                    {/* Nome */}
+                    <div>
+                        <label className="block text-purple-300 font-semibold mb-1" htmlFor="name">
+                            Nome
+                        </label>
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 rounded border border-purple-500 bg-transparent text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                            placeholder="Nome"
+                        />
+                    </div>
 
-                    <div className="flex justify-between items-center pt-4">
+                    {/* Email */}
+                    <div>
+                        <label className="block text-purple-300 font-semibold mb-1" htmlFor="email">
+                            Email
+                        </label>
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 rounded border border-purple-500 bg-transparent text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                            placeholder="Email"
+                        />
+                    </div>
+
+                    {/* Telefone */}
+                    <div>
+                        <label className="block text-purple-300 font-semibold mb-1" htmlFor="phone">
+                            Telefone
+                        </label>
+                        <input
+                            id="phone"
+                            type="text"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 rounded border border-purple-500 bg-transparent text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                            placeholder="Telefone"
+                        />
+                    </div>
+
+                    {/* Endereço */}
+                    <div>
+                        <label className="block text-purple-300 font-semibold mb-1" htmlFor="address">
+                            Endereço
+                        </label>
+                        <input
+                            id="address"
+                            type="text"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 rounded border border-purple-500 bg-transparent text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                            placeholder="Endereço"
+                        />
+                    </div>
+
+                    {/* Foto */}
+                    <div>
+                        <label className="block text-purple-300 font-semibold mb-1" htmlFor="photo">
+                            Foto (URL)
+                        </label>
+                        <input
+                            id="photo"
+                            type="text"
+                            name="photo"
+                            value={formData.photo}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 rounded border border-purple-500 bg-transparent text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                            placeholder="Foto (URL)"
+                        />
+                    </div>
+
+                    {/* Senha */}
+                    <div>
+                        <label className="block text-purple-300 font-semibold mb-1" htmlFor="password">
+                            Senha
+                        </label>
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 rounded border border-purple-500 bg-transparent text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                            placeholder="Senha"
+                        />
+                    </div>
+
+                    {/* Confirmar Senha */}
+                    <div>
+                        <label className="block text-purple-300 font-semibold mb-1" htmlFor="confirmPassword">
+                            Confirmar Senha
+                        </label>
+                        <input
+                            id="confirmPassword"
+                            type="password"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 rounded border border-purple-500 bg-transparent text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                            placeholder="Confirmar Senha"
+                        />
+                    </div>
+
+                    {/* Botões */}
+                    <div className="flex justify-between items-center pt-6">
                         <Button
                             type="button"
                             className="border border-red-300 bg-red-600 hover:bg-red-700 text-white hover:opacity-90 active:scale-95 transition font-semibold rounded px-4 py-2"
@@ -222,7 +287,8 @@ export default function UserEditPage({ params }: UserEditPageProps) {
                         >
                             Deletar
                         </Button>
-                        <div className="flex space-x-2">
+
+                        <div className="flex space-x-3">
                             <Button
                                 type="button"
                                 className="border border-purple-200 bg-transparent text-white hover:bg-purple-800 hover:opacity-90 active:scale-95 transition font-semibold rounded px-4 py-2"

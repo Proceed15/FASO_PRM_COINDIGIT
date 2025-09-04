@@ -9,6 +9,7 @@ import { DeleteCurrencyDialog } from "@/components/dialogs/DeleteCurrencyDialog"
 import { Eye, Pencil, Trash2, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Clock } from "lucide-react";
 
 export default function CurrencyListPage() {
+  
   const router = useRouter();
 
   const [currencies, setCurrencies] = useState<Currency[]>([]);

@@ -38,9 +38,12 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
   const handleLogin = () => router.push("/login");
   const handleRegister = () => router.push("/register");
 
-  // Função para verificar item ativo
   const isActive = (path: string) =>
     pathname === path ? "bg-blue-600 text-white" : "hover:bg-blue-600";
+
+//load
+const [isUserLoaded, setIsUserLoaded] = useState(false);
+
 
   return (
     <>
@@ -69,7 +72,7 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
         )}
 
         {/* DIREITA - ENTRAR/CADASTRE-SE */}
-        
+
         <div className="col-start-3 flex items-center justify-end gap-3">
           {!user?.id ? (
             <>
@@ -106,8 +109,8 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
           {/* TOPO DO MENU */}
           <div className="flex items-center justify-between px-4 py-4 border-b border-white/20">
             <span className="mb-2 mt-2 font-bold text-lg flex items-center gap-2">
-               <Menu size={28} /> 
-               <ChevronDown size={20} />
+              <Menu size={28} />
+              <ChevronDown size={20} />
             </span>
             <button
               onClick={() => setMenuOpen(false)}
@@ -142,8 +145,18 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
                 </button>
               );
             })}
+            {/* BEM-VINDO USUÁRIO */}
+            <a href="/" className="inline-block">
+              <div className="mx-2 mt-2 flex items-center gap-2 px-3 py-2 rounded-md text-white transition-all justify-center px-4 text-center hover:bg-gradient-to-r hover:from-[#283976] hover:to-[#265dbf]">
+                <p className="text-lg font-medium text-white">
+                  Bem-vindo
+                  {user?.name && (
+                    <span className="text-[#fffcb7] font-semibold">, {user.name}!</span>
+                  )}
+                </p>
+              </div>
+            </a>
           </nav>
-
 
           {/* BOTÃO SAIR */}
           <div className="absolute bottom-4 left-0 w-full px-4">
