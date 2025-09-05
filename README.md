@@ -1,7 +1,7 @@
-# FASO_PRM_COINDIGIT
+# FASO PRM COINDIGIT
 <<<<<< develop ver 1
 =
-Projeto de uma Plataforma para Atividades Financeiras Digitais, A CoinDigit é uma Plataforma para Operações Financeiras Digitais Desenvolvida para ser útil em Multiplas Plataformas de Atuação!
+É Projeto de uma Plataforma para Atividades Financeiras Digitais, A CoinDigit é uma Plataforma para Operações Financeiras Digitais Desenvolvida para ser útil em Multiplas Plataformas de Atuação!
 >>>>>>
 <<<<<< main ver 3
 =
