@@ -16,10 +16,15 @@ cd Frontend
 npm install
 npm run dev
 # Backend
-cd Backend
+cd backend
+Criar Nova API:
+dotnet new --list
+dotnet new -webapi NomeDaSuaAPI
+
 Currency:
 dotnet restore
 dotnet run
+
 UserApi:
 dotnet restore
 dotnet run
