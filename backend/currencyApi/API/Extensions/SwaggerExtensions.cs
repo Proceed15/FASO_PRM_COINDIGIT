@@ -16,8 +16,8 @@ namespace CurrencyAPI.API.Extensions
                     Description = "API para gerenciamento de moedas",
                     Contact = new OpenApiContact
                     {
-                        Name = "Andre Souza",
-                        Email = "andre.souza99@fatec.sp.gov.br"
+                        Name = "JRLSF",
+                        Email = "JRLSF@fatec.sp.gov.br"
                     }
                 });
 

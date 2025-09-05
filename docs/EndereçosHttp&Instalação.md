@@ -7,10 +7,6 @@ Currency
 http://localhost:5002
 User
 http://localhost:5120
-Gateway
-http://localhost:5284
-http://localhost:5284/currency
-http://localhost:5284/user
 
 # Instalação:
 cd FASO_PRM_COINDIGIT

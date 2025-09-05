@@ -4,5 +4,11 @@
     "next": "^15.3.4",
     "react-icons": "^5.5.0",
     "recharts": "^2.15.3"
+  },
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   }
 }
