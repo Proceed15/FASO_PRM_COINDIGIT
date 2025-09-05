@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 
 interface DeleteCurrencyDialogProps {
@@ -8,6 +8,7 @@ interface DeleteCurrencyDialogProps {
   currencyName: string;
   onDelete: (id: string) => void;
   className?: string;
+  icon?: ReactNode;  // ícone opcional para o botão
 }
 
 export function DeleteCurrencyDialog({
@@ -15,6 +16,7 @@ export function DeleteCurrencyDialog({
   currencyName,
   onDelete,
   className = "",
+  icon,
 }: DeleteCurrencyDialogProps) {
   const [open, setOpen] = useState(false);
 
@@ -25,7 +27,7 @@ export function DeleteCurrencyDialog({
         className={className}
         onClick={() => setOpen(true)}
       >
-        Excluir
+        {icon ?? "Excluir"}
       </Button>
 
       {open && (
