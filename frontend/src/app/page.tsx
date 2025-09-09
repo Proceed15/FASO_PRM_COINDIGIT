@@ -30,7 +30,7 @@ export default function Home() {
     { id: "p3", texto: "3. O que significa 'lastro' de uma moeda?" },
     { id: "p4", texto: "4. É seguro investir em criptomoedas?" },
   ];
-  
+
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
     if (section) {
@@ -65,13 +65,12 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-[#0a1647] text-white min-h-screen">
+    <div className="bg-[#0a1647] text-white min-h-screen items-center">
       <Header pageName="Início" />
 
       {/* PARTE DE CIMA */}
       <section
-        className="flex flex-col items-center justify-between 
-       px-6 md:px-16 py-20 min-h-[95vh] relative"
+        className="flex flex-col items-center justify-between px-6 md:px-16 py-20 min-h-[95vh] relative"
         style={{
           backgroundImage: "url('/images/BACKGROUND-LOSANGOS.png')",
           backgroundSize: "cover",
@@ -95,14 +94,9 @@ export default function Home() {
             animation: flush 15s linear infinite;
           }
         `}</style>
-
-        <div className="bg-gradient-to-r from-[#265dbf]/30 via-white/20 to-[#265dbf]/30 
-        flex flex-col items-center justify-between 
-        px-6 md:px-16 py-20 min-h-[95vh] absolute top-0 left-0 w-full h-full z-10 animate-flush">
-        </div>
-
-        <div className="w-full justify-center relative z-10 flex flex-col xl:flex-row items-center justify-between gap-12">
-          <div className="w-full justify-center flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+        <div className="bg-gradient-to-r from-[#265dbf]/30 via-white/20 to-[#265dbf]/30 flex flex-col items-center justify-center px-6 md:px-16 py-20 min-h-[95vh] absolute top-0 left-0 w-full h-full z-10 animate-flush"></div>
+        <div className="mt-[45px] w-full justify-between relative z-10 flex flex-col xl:flex-row items-center gap-12">
+          <div className="w-[1000px] justify-center flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
             <img
               src="/images/Logo_CoinDigit.png"
               alt="Logo CoinDigit"
@@ -123,10 +117,7 @@ export default function Home() {
               <button
                 key={q.id}
                 onClick={() => scrollToSection(q.id)}
-                className="mt-[15px] bg-[#0e1a52] rounded-lg px-6 py-5 
-                 shadow-md border border-white 
-                 hover:bg-[#162a6b] transition-all duration-300 
-                 text-lg md:text-xl text-left font-medium"
+                className="mt-[15px] bg-[#0e1a52] rounded-lg px-6 py-5 shadow-md border border-white hover:bg-[#162a6b] transition-all duration-300 text-lg md:text-xl text-left font-medium"
               >
                 {q.texto}
               </button>
