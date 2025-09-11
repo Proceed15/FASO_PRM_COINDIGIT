@@ -39,35 +39,37 @@ export default function UserViewPage({ params }: Props) {
   if (!user) return <div className="text-white">Usuário não encontrado</div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e]">
+    <div className="min-h-screen bg-[#283976]">
       <Header pageName="Usuários" userName={user.name} userId={user.id} />
       <div className="p-6 flex justify-center items-center min-h-screen">
-        <div className="w-full max-w-4xl bg-[#1e1e3f] border border-purple-300 rounded-lg p-6 shadow-lg space-y-6 text-white">
-          <div className="flex justify-center">
+        <div className="mb-[120px] w-full max-w-4xl bg-[#171e33] border border-transparent rounded-lg p-6 shadow-lg space-y-6 text-white">
+          <div className="h-[150px] flex items-center justify-center">
             <img
-              src={user.photo || "/images/default-avatar.png"}
+              src={user.photo || "https://t3.ftcdn.net/jpg/05/87/76/66/360_F_587766653_PkBNyGx7mQh9l1XXPtCAq1lBgOsLl6xH.jpg"}
               alt={user.name}
-              className="mt-5 w-28 h-28 rounded-full border-2 border-purple-400 object-cover shadow-md"
+              className="w-28 h-28 rounded-full border-2 object-cover shadow-md"
             />
           </div>
-          <p><span className="ml-5 font-semibold text-purple-300">Nome:</span> {user.name}</p>
-          <p><span className="ml-5 font-semibold text-purple-300">Email:</span> {user.email}</p>
-          <p><span className="ml-5 font-semibold text-purple-300">Telefone:</span> {user.phone}</p>
-          <p><span className="ml-5 font-semibold text-purple-300">Endereço:</span> {user.address}</p>
+          <p><span className="ml-5 font-semibold text-[#78ffef]">Nome:</span> {user.name}</p>
+          <p><span className="ml-5 font-semibold text-[#78ffef]">Email:</span> {user.email}</p>
+          <p><span className="ml-5 font-semibold text-[#78ffef]">Telefone:</span> {user.phone}</p>
+          <p><span className="ml-5 font-semibold text-[#78ffef]">Endereço:</span> {user.address}</p>
 
           <div className="flex justify-end pt-4">
             <Button
-              className="mx-2 w-[100px] bg-purple-700 hover:bg-purple-600"
-              onClick={() => router.push(`/users/${userId}/edit`)}
-            >
-              Editar
-            </Button>
-            <Button
-              className="mx-2 w-[100px] bg-blue-700 hover:bg-blue-600"
+              className="mx-2 w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
               onClick={() => router.push("/users")}
             >
               Voltar
             </Button>
+
+            <Button
+              className="mx-2 w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+              onClick={() => router.push(`/users/${userId}/edit`)}
+            >
+              Editar
+            </Button>
+
           </div>
         </div>
       </div>

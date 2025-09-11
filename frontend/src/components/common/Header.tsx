@@ -51,12 +51,12 @@ const [isUserLoaded, setIsUserLoaded] = useState(false);
       <header className="z-20 grid grid-cols-3 items-center px-6 py-4 bg-[#030930] text-white border-b border-white/20">
 
         {/* ESQUERDA - Logo */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           <a href="/" className="inline-block">
             <img
               src="/images/Logo_CoinDigit.png"
               alt="ICON"
-              className="w-15 h-10 cursor-pointer rounded-full hover:scale-105 active:scale-100 transition-transform duration-150"
+              className="w-[60px] h-[40px] object-contain cursor-pointer hover:scale-105 active:scale-100 transition-transform duration-150"
             />
           </a>
           <span className="ml-2 text-2xl font-semibold">{siteName}</span>

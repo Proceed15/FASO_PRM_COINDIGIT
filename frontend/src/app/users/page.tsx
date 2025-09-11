@@ -104,11 +104,11 @@ export default function UserListPage() {
     <div className="min-h-screen items-center justify-start bg-[#283976] text-white">
       <Header pageName="Lista de Usuários" />
       {error && <div className="text-red-500 my-4">{error}</div>}
-      <div className="flex flex-col items-center justify-start">
+      <div className="mt-[20px] flex flex-col items-center justify-start">
         <div className="mb-[40px] mt-[40px] w-full max-w-6xl px-4">
 
           {/* PESQUISA + ADD */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-left mb-6 w-full">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-left mb-[20px] w-full">
             <input
               type="text"
               value={searchQuery}
@@ -117,7 +117,7 @@ export default function UserListPage() {
               className="bg-[#11172b] border border-[#00d9ff] text-white rounded-lg px-3 py-2 w-full sm:max-w-md outline-none"
             />
             <Button
-              className="bg-[#3fadc0] hover:bg-cyan-600 text-white font-semibold rounded px-4 py-2"
+              className="bg-[#3fadc0] hover:bg-cyan-600 text-white font-semibold rounded px-4 py-2 active:scale-95 transition-transform duration-150"
               onClick={() => router.push("/register")}
             >
               Adicionar Usuário
@@ -129,41 +129,17 @@ export default function UserListPage() {
             <table className="min-w-[600px] w-full text-white bg-[#171e33]">
               <thead className="bg-[#11172b] text-[#3fadc0]">
                 <tr>
-                  <th
-                    onClick={() => handleSort("name")}
-                    className="text-left px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none"
-                  >
-                    <div className="flex items-center gap-1">
-                      Nome
-                      {renderSortIcon("name")}
-                    </div>
+                  <th onClick={() => handleSort("name")} className="text-left px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
+                    <div className="flex items-center gap-1">Nome {renderSortIcon("name")}</div>
                   </th>
-                  <th
-                    onClick={() => handleSort("email")}
-                    className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none"
-                  >
-                    <div className="flex justify-end items-center gap-1">
-                      Email
-                      {renderSortIcon("email")}
-                    </div>
+                  <th onClick={() => handleSort("email")} className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
+                    <div className="flex justify-end items-center gap-1">Email {renderSortIcon("email")}</div>
                   </th>
-                  <th
-                    onClick={() => handleSort("phone")}
-                    className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none"
-                  >
-                    <div className="flex justify-end items-center gap-1">
-                      Telefone
-                      {renderSortIcon("phone")}
-                    </div>
+                  <th onClick={() => handleSort("phone")} className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
+                    <div className="flex justify-end items-center gap-1">Telefone {renderSortIcon("phone")}</div>
                   </th>
-                  <th
-                    onClick={() => handleSort("address")}
-                    className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none"
-                  >
-                    <div className="flex justify-end items-center gap-1">
-                      Endereço
-                      {renderSortIcon("address")}
-                    </div>
+                  <th onClick={() => handleSort("address")} className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
+                    <div className="flex justify-end items-center gap-1">Endereço {renderSortIcon("address")}</div>
                   </th>
                   <th className="text-center px-4 py-3 border-[#00d9ff]">Ações</th>
                 </tr>
@@ -177,16 +153,10 @@ export default function UserListPage() {
                     <td className="text-right px-4 py-2 border-t border-r border-[#00d9ff]">{user.address}</td>
                     <td className="text-center px-4 py-2 border-t border-[#00d9ff]">
                       <div className="flex items-center justify-center gap-2 sm:gap-3">
-                        <button
-                          className="p-2"
-                          onClick={() => router.push(`/users/${user.id}/view`)}
-                        >
+                        <button className="p-2" onClick={() => router.push(`/users/${user.id}/view`)}>
                           <Eye size={22} className="text-cyan-400 hover:text-cyan-200" />
                         </button>
-                        <button
-                          className="p-2"
-                          onClick={() => router.push(`/users/${user.id}/edit`)}
-                        >
+                        <button className="p-2" onClick={() => router.push(`/users/${user.id}/edit`)}>
                           <Pencil size={20} className="text-yellow-400 hover:text-yellow-200" />
                         </button>
                         <DeleteUserDialog
@@ -204,34 +174,25 @@ export default function UserListPage() {
             </table>
           </div>
 
-          {/* < > */}
+          {/* Paginação */}
           <div className="mt-[20px] mb-[20px] flex flex-wrap justify-end items-center gap-2">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-2 sm:px-3 py-1 rounded hover:text-cyan-600 disabled:opacity-40 text-sm sm:text-base flex items-center justify-center"
-            >
+            <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}
+              className="px-2 sm:px-3 py-1 rounded hover:text-cyan-600 disabled:opacity-40 text-sm sm:text-base flex items-center justify-center">
               <ChevronLeft size={18} />
             </button>
 
             {[...Array(totalPages)].map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentPage(i + 1)}
+              <button key={i} onClick={() => setCurrentPage(i + 1)}
                 className={`px-2 sm:px-3 py-1 rounded text-sm sm:text-base ${currentPage === i + 1
                   ? "bg-[#3fadc0] text-white"
-                  : "hover:bg-cyan-600"
-                  }`}
-              >
+                  : "hover:bg-cyan-600"}`}>
                 {i + 1}
               </button>
             ))}
 
-            <button
-              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="px-2 sm:px-3 py-1 rounded hover:text-cyan-600 disabled:opacity-40 text-sm sm:text-base flex items-center justify-center"
-            >
+              className="px-2 sm:px-3 py-1 rounded hover:text-cyan-600 disabled:opacity-40 text-sm sm:text-base flex items-center justify-center">
               <ChevronRight size={18} />
             </button>
           </div>
