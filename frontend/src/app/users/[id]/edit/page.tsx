@@ -95,7 +95,6 @@ export default function UserEditPage({ params }: UserEditPageProps) {
 
             await userService.update(user.id!, updatedUser);
 
-            // Atualiza contexto se o usuário editado for o logado
             if (loggedInUser && loggedInUser.id === user.id) {
                 setUser(updatedUser);
             }
@@ -106,28 +105,6 @@ export default function UserEditPage({ params }: UserEditPageProps) {
         }
     };
 
-    const handleDelete = async () => {
-        setError("");
-        if (!user) {
-            setError("Usuário não carregado");
-            return;
-        }
-        try {
-            await userService.delete(user.id!);
-
-            // Se o usuário deletado for o logado, desloga e vai para login
-            if (loggedInUser && loggedInUser.id === user.id) {
-                localStorage.removeItem("token");
-                localStorage.removeItem("user");
-                setUser(null);
-                router.push("/login");
-            } else {
-                router.push("/users");
-            }
-        } catch (error) {
-            setError(`Erro ao deletar usuário: ${error}`);
-        }
-    };
 
     if (loading) {
         return (
@@ -204,24 +181,23 @@ export default function UserEditPage({ params }: UserEditPageProps) {
                             </div>
                         );
                     })}
-
-                    {/* Botões */}
-                    <div className="flex justify-between items-center pt-6">
+                    <div className="flex justify-end items-center mt-[25px]">
+                        {/* 
                         <DeleteUserDialog
-                            userId={String(user.id)}
-                            userName={user.name}
-                            onDelete={handleDelete}
-                            icon={
-                                <Button
-                                    type="button"
-                                    className="bg-red-600 hover:bg-red-700 text-white hover:opacity-90 active:scale-95 transition-transform duration-150"
-                                >
-                                    Deletar
-                                </Button>
-                            }
-                        />
-
-                        <div className="flex space-x-3">
+                                userId={String(user.id)}
+                                userName={user.name}
+                                onDelete={handleDelete}
+                                icon={
+                                    <Button
+                                        type="button"
+                                        className="bg-red-600 hover:bg-red-700 text-white hover:opacity-90 active:scale-95 transition-transform duration-150"
+                                    >
+                                        Deletar
+                                    </Button>
+                                }
+                            />
+                            */}
+                        <div className="flex space-x-3 mr-1 mt-[10px] mb-[10px]">
                             <Button
                                 type="button"
                                 className="mx-2 w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
@@ -239,6 +215,6 @@ export default function UserEditPage({ params }: UserEditPageProps) {
                     </div>
                 </form>
             </div>
-        </div>
+        </div >
     );
-}
+} 

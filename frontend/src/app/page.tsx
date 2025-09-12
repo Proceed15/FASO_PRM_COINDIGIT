@@ -95,7 +95,7 @@ export default function Home() {
           }
         `}</style>
         <div className="bg-gradient-to-r from-[#265dbf]/30 via-white/20 to-[#265dbf]/30 flex flex-col items-center justify-center px-6 md:px-16 py-20 min-h-[95vh] absolute top-0 left-0 w-full h-full z-10 animate-flush"></div>
-        <div className="mt-[45px] w-full justify-between relative z-10 flex flex-col xl:flex-row items-center gap-12">
+        <div className="mt-[15px] w-full justify-between relative z-10 flex flex-col xl:flex-row items-center gap-12">
           <div className="w-[1000px] justify-center flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
             <img
               src="/images/Logo_CoinDigit.png"
