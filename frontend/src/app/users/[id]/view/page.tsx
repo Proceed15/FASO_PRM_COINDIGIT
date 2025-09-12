@@ -38,17 +38,17 @@ export default function UserViewPage({ params }: Props) {
     fetchUser();
   }, [userId]);
 
-  const handleDelete = async () => {
+  const handleDelete = async (id: string) => {
     if (!user) return;
 
-    await userService.delete(user.id);
+    await userService.delete(parseInt(id));
 
-    if (loggedInUser?.id === user.id) {
-      // Se deletou o usuário logado, faz logout na teoria
+    if (String(loggedInUser?.id) === id) {
+      // SE USER LOGADO = TRUE | DESLOGA E VOLTA PRA TELA INICIAL
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       setLoggedInUser(null);
-      router.push("/login");
+      router.push("/");
     } else {
       router.push("/users");
     }
@@ -65,10 +65,7 @@ export default function UserViewPage({ params }: Props) {
         <div className="mb-[100px] w-full max-w-4xl bg-[#171e33] border border-transparent rounded-lg p-6 shadow-lg space-y-6 text-white">
           <div className="h-[150px] flex items-center justify-center">
             <img
-              src={
-                user.photo ||
-                "https://t3.ftcdn.net/jpg/05/87/76/66/360_F_587766653_PkBNyGx7mQh9l1XXPtCAq1lBgOsLl6xH.jpg"
-              }
+              src={user.photo || "/images/default-avatar.png"}
               alt={user.name}
               className="w-28 h-28 rounded-full border-2 object-cover shadow-md"
             />
@@ -100,22 +97,19 @@ export default function UserViewPage({ params }: Props) {
                 </Button>
               }
             />
-            {/* Botões */}
-            <div className="flex space-x-4">
-              <Button
-                className="w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
-                onClick={() => router.push("/users")}
-              >
-                Voltar
-              </Button>
+            <Button
+              className="mr-[16px] w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+              onClick={() => router.push("/users")}
+            >
+              Voltar
+            </Button>
 
-              <Button
-                className="w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
-                onClick={() => router.push(`/users/${userId}/edit`)}
-              >
-                Editar
-              </Button>
-            </div>
+            <Button
+              className="w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+              onClick={() => router.push(`/users/${userId}/edit`)}
+            >
+              Editar
+            </Button>
           </div>
         </div>
       </div>

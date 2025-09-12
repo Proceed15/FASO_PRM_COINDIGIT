@@ -7,8 +7,11 @@ import { Button } from "../../components/ui/button";
 import { DeleteUserDialog } from "../../components/dialogs/DeleteUserDialog";
 import { useEffect, useState } from "react";
 import { Eye, Pencil, Trash2, ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from "lucide-react";
+import { useContext } from "react";
+import { UserContext } from "@/contexts/UserContext";
 
 export default function UserListPage() {
+  const { user: loggedInUser, setUser: setLoggedInUser } = useContext(UserContext);
   const router = useRouter();
 
   const [users, setUsers] = useState<User[]>([]);
@@ -32,11 +35,19 @@ export default function UserListPage() {
     fetchUsers();
   }, []);
 
+  //SE USER LOGADO FOR DELETADO ELE DESLOGA E VAI PRA TELA INCIAL
   const handleDelete = async (id: string) => {
     setError("");
     try {
       await userService.delete(Number(id));
       setUsers((prev) => prev.filter((user) => user.id !== Number(id)));
+
+      if (String(loggedInUser?.id) === id) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setLoggedInUser(null);
+        router.push("/");
+      }
     } catch (error) {
       setError(`Erro ao deletar usuário: ${error}`);
     }
