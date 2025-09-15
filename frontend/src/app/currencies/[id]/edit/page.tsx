@@ -50,32 +50,31 @@ export default function CurrencyEditPage({ params }: CurrencyEditProps) {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
+    <div className="min-h-screen bg-[#283976] text-white">
       <Header pageName="Editar Moeda" />
 
-      <div className="space-y-6 max-w-4xl mx-auto pt-[70px] pb-[75px]">
-        <h1 className="text-2xl font-bold text-white">Editar</h1>
+      <div className="space-y-6 max-w-4xl mx-auto mt-[100px] mb-[75px]">
         <form
           onSubmit={handleSubmit}
-          className="bg-[#1e1e3f] border border-purple-200 rounded-lg shadow-sm p-6 space-y-4"
+          className="bg-[#171e33] rounded-lg shadow-sm p-6 space-y-4"
         >
           <input
             name="symbol"
-            className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white"
+            className="w-full bg-transparent border border-[#fffcb7] rounded px-4 py-2 text-white"
             value={formData.symbol}
             onChange={handleChange}
             placeholder="Símbolo"
           />
           <input
             name="name"
-            className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white"
+            className="w-full bg-transparent border border-[#fffcb7] rounded px-4 py-2 text-white"
             value={formData.name}
             onChange={handleChange}
             placeholder="Nome"
           />
           <input
             name="backing"
-            className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white"
+            className="w-full bg-transparent border border-[#fffcb7] rounded px-4 py-2 text-white"
             value={formData.backing}
             onChange={handleChange}
             placeholder="Lastro"
@@ -93,12 +92,12 @@ export default function CurrencyEditPage({ params }: CurrencyEditProps) {
 
           {error && <p className="text-red-500">{error}</p>}
 
-          <div className="flex justify-end space-x-2 pt-2">
+          <div className="flex justify-end space-x-3 pt-2 mr-[10px] ">
             <Button
-              className="mr-2 border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
+              className="w-[100px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
               onClick={() => router.push("/currencies")} type="button">Cancelar</Button>
             <Button
-              className="ml-4 border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
+              className="w-[100px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
               type="submit">Atualizar</Button>
           </div>
         </form>

@@ -92,7 +92,7 @@ export default function CurrencyListPage() {
   const renderSortIcon = (column: keyof Currency) => {
     if (sortColumn !== column) {
       return (
-        <span className="text-[#3fadc0] opacity-50">
+        <span className="text-[#fffcb7] opacity-50">
           <ChevronUp size={14} className="-mb-1" />
           <ChevronDown size={14} className="-mt-1" />
         </span>
@@ -111,7 +111,7 @@ export default function CurrencyListPage() {
       <Header pageName="Lista de Moedas" />
       {error && <div className="text-red-500 my-4">{error}</div>}
       <div className="flex flex-col items-center justify-start">
-        <div className="mb-[40px] mt-[40px] w-full max-w-6xl px-4">
+        <div className="mb-[40px] mt-[45px] w-full max-w-6xl px-4">
 
           {/* PESQUISA + ADD */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-left mb-6 w-full">
@@ -120,10 +120,10 @@ export default function CurrencyListPage() {
               value={searchQuery}
               onChange={handleSearch}
               placeholder="Buscar moeda..."
-              className="bg-[#11172b] border border-[#00d9ff] text-white rounded-lg px-3 py-2 w-full sm:max-w-md outline-none"
+              className="bg-[#11172b] border border-[#fffcb7] text-white rounded-lg px-3 py-2 w-full sm:max-w-md outline-none"
             />
             <Button
-              className="bg-[#3fadc0] hover:bg-cyan-600 text-white font-semibold rounded px-4 py-2"
+              className="bg-yellow-500 hover:bg-[#c8a823] text-white font-semibold rounded px-4 py-2 active:scale-95 transition-transform duration-150"
               onClick={() => router.push("/currencies/create")}
             >
               Nova Moeda
@@ -131,29 +131,29 @@ export default function CurrencyListPage() {
           </div>
 
           {/* TABELA */}
-          <div className="border-2 border-[#00d9ff] rounded-lg overflow-x-auto">
+          <div className="border-2 border-[#fffcb7] rounded-lg overflow-x-auto">
             <table className="min-w-[600px] w-full text-white bg-[#171e33]">
-              <thead className="bg-[#11172b] text-[#3fadc0]">
+              <thead className="bg-[#11172b] text-[#fffcb7]">
                 <tr>
-                  <th onClick={() => handleSort("symbol")} className="text-left px-4 py-3 border-r border-[#00d9ff] cursor-pointer">
-                    <div className="flex items-center gap-1">
+                  <th onClick={() => handleSort("symbol")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
+                    <div className="flex items-center gap-1 ">
                       Símbolo
                       {renderSortIcon("symbol")}
                     </div>
                   </th>
-                  <th onClick={() => handleSort("name")} className="text-left px-4 py-3 border-r border-[#00d9ff] cursor-pointer">
+                  <th onClick={() => handleSort("name")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
                     <div className="flex items-center gap-1">
                       Nome
                       {renderSortIcon("name")}
                     </div>
                   </th>
-                  <th onClick={() => handleSort("backing")} className="text-left px-4 py-3 border-r border-[#00d9ff] cursor-pointer">
+                  <th onClick={() => handleSort("backing")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
                     <div className="flex items-center gap-1">
                       Lastro
                       {renderSortIcon("backing")}
                     </div>
                   </th>
-                  <th onClick={() => handleSort("reverse")} className="text-left px-4 py-3 border-r border-[#00d9ff] cursor-pointer">
+                  <th onClick={() => handleSort("reverse")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
                     <div className="flex items-center gap-1">
                       Reverso
                       {renderSortIcon("reverse")}
@@ -165,13 +165,13 @@ export default function CurrencyListPage() {
               <tbody>
                 {paginatedCurrencies.map((currency) => (
                   <tr key={currency.id} className="hover:bg-[#11172b] transition">
-                    <td className="px-4 py-2 border-t border-r border-[#00d9ff]">{currency.symbol}</td>
-                    <td className="px-4 py-2 border-t border-r border-[#00d9ff]">{currency.name}</td>
-                    <td className="px-4 py-2 border-t border-r border-[#00d9ff]">{currency.backing}</td>
-                    <td className="px-4 py-2 border-t border-r border-[#00d9ff]">
+                    <td className="px-4 py-2 border-t border-r border-[#fffcb7]">{currency.symbol}</td>
+                    <td className="px-4 py-2 border-t border-r border-[#fffcb7]">{currency.name}</td>
+                    <td className="px-4 py-2 border-t border-r border-[#fffcb7]">{currency.backing}</td>
+                    <td className="px-4 py-2 border-t border-r border-[#fffcb7]">
                       {currency.reverse ? "Sim" : "Não"}
                     </td>
-                    <td className="text-center px-4 py-2 border-t border-[#00d9ff]">
+                    <td className="text-center px-4 py-2 border-t border-[#fffcb7]">
                       <div className="flex items-center justify-center gap-2 sm:gap-3">
                         <button
                           className="p-2"
@@ -216,7 +216,7 @@ export default function CurrencyListPage() {
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-2 sm:px-3 py-1 rounded hover:text-cyan-600 disabled:opacity-40 text-sm sm:text-base flex items-center justify-center"
+              className="px-2 sm:px-3 py-1 rounded hover:text-yellow-500 disabled:opacity-40 text-sm sm:text-base flex items-center justify-center"
             >
               <ChevronLeft size={18} />
             </button>
@@ -225,7 +225,7 @@ export default function CurrencyListPage() {
               <button
                 key={i}
                 onClick={() => setCurrentPage(i + 1)}
-                className={`px-2 sm:px-3 py-1 rounded text-sm sm:text-base ${currentPage === i + 1 ? "bg-[#3fadc0] text-white" : "hover:bg-cyan-600"
+                className={`px-2 sm:px-3 py-1 rounded text-sm sm:text-base ${currentPage === i + 1 ? "bg-[#c8a823] text-white" : "hover:bg-yellow-500"
                   }`}
               >
                 {i + 1}
@@ -235,7 +235,7 @@ export default function CurrencyListPage() {
             <button
               onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="px-2 sm:px-3 py-1 rounded hover:text-cyan-600 disabled:opacity-40 text-sm sm:text-base flex items-center justify-center"
+              className="px-2 sm:px-3 py-1 rounded hover:text-yellow-500 disabled:opacity-40 text-sm sm:text-base flex items-center justify-center"
             >
               <ChevronRight size={18} />
             </button>

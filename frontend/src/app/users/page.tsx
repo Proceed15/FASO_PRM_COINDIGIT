@@ -116,7 +116,7 @@ export default function UserListPage() {
       <Header pageName="Lista de Usuários" />
       {error && <div className="text-red-500 my-4">{error}</div>}
       <div className="mt-[20px] flex flex-col items-center justify-start">
-        <div className="mb-[40px] mt-[40px] w-full max-w-6xl px-4">
+        <div className="mb-[35px] mt-[35px] w-full max-w-6xl px-4">
 
           {/* PESQUISA + ADD */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-left mb-[20px] w-full">
