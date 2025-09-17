@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import currencyService from "@/services/currencyService";
 import Header from "@/components/common/Header";
@@ -22,12 +22,11 @@ interface History {
 }
 
 interface PageProps {
-    params: {
+    params: Promise<{
         id: string;
-    };
+    }>;
 }
 
-// Gera todos os meses do ano especificado no formato "YYYY-MM"
 function getAllMonthsOfYear(year: number): string[] {
     const months = [];
     for (let month = 0; month < 12; month++) {
@@ -37,12 +36,11 @@ function getAllMonthsOfYear(year: number): string[] {
     return months;
 }
 
-// Agrupa histórico por mês, filtrando preços inválidos (null, undefined, 0)
 function groupHistoryByMonth(history: History[]) {
-    const grouped: Record<string, History[]> = {};
+    const grouped: Record<string, number[]> = {};
 
     history.forEach((item) => {
-        if (item.price == null || item.price === 0) return; // filtra preços inválidos
+        if (item.price == null || item.price === 0) return;
 
         const date = new Date(item.date);
         const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
@@ -50,25 +48,22 @@ function groupHistoryByMonth(history: History[]) {
         if (!grouped[yearMonth]) {
             grouped[yearMonth] = [];
         }
-        grouped[yearMonth].push(item);
+        grouped[yearMonth].push(item.price);
     });
 
-    const monthlyData = Object.entries(grouped).map(([month, items]) => {
-        // Ordena do mais recente para o mais antigo para pegar preço de fechamento válido
-        items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const monthlyData = Object.entries(grouped).map(([month, prices]) => {
+        const maxPrice = Math.max(...prices);
         return {
             month,
-            price: items[0].price,
+            price: maxPrice,
         };
     });
 
-    // Ordena cronologicamente
     monthlyData.sort((a, b) => new Date(a.month + "-01").getTime() - new Date(b.month + "-01").getTime());
 
     return monthlyData;
 }
 
-// Formata números grandes para K, M, B
 function formatLargeNumber(value: number) {
     if (value >= 1_000_000_000) return (value / 1_000_000_000).toFixed(1) + "B";
     if (value >= 1_000_000) return (value / 1_000_000).toFixed(1) + "M";
@@ -78,27 +73,34 @@ function formatLargeNumber(value: number) {
 
 export default function CurrencyHistoryPage({ params }: PageProps) {
     const router = useRouter();
+    const unwrappedParams = use(params);
+    const id = unwrappedParams.id;
+
     const [history, setHistory] = useState<History[]>([]);
     const [error, setError] = useState("");
 
     useEffect(() => {
         currencyService
-            .getHistory(params.id)
-            .then(setHistory)
+            .getHistory(id)
+            .then(data => {
+                console.log("Dados recebidos do serviço:", data);
+                setHistory(data);
+            })
             .catch(() => setError("Erro ao carregar histórico."));
-    }, [params.id]);
+    }, [id]);
 
     const groupedData = groupHistoryByMonth(history);
-    const months2025 = getAllMonthsOfYear(2025);
+    console.log("Dados agrupados por mês:", groupedData);
 
-    // Mapa para acesso rápido dos preços por mês
+    const months2025 = getAllMonthsOfYear(2025);
     const dataMap = new Map(groupedData.map(item => [item.month, item.price]));
 
-    // Monta dados para o gráfico com todos os meses de 2025, preenchendo com 0 se não tiver dado
     const chartData = months2025.map(month => ({
         date: month,
         price: dataMap.get(month) ?? 0,
     }));
+
+    console.log("Dados para o gráfico:", chartData);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white font-sans">
@@ -118,20 +120,20 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
                             <XAxis
                                 dataKey="date"
                                 tick={{ fill: "#fff", fontSize: 12 }}
-                                interval={0} // mostra todos os meses
+                                interval={0}
                                 tickFormatter={(str) => {
                                     const [year, month] = str.split("-");
                                     const date = new Date(Number(year), Number(month) - 1);
                                     return date.toLocaleString("pt-BR", { month: "short" });
                                 }}
-                                height={60} // para não cortar o texto
+                                height={60}
                             />
                             <YAxis
                                 tick={{ fill: "#fff", fontSize: 12 }}
                                 domain={['auto', 'auto']}
                                 allowDecimals={true}
                                 tickFormatter={formatLargeNumber}
-                                width={80} // espaço maior para ticks grandes
+                                width={80}
                             />
                             <Tooltip
                                 contentStyle={{ backgroundColor: "#1e1e3f", border: "1px solid #8884d8" }}
@@ -150,7 +152,7 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
                                 stroke="#8884d8"
                                 strokeWidth={2}
                                 dot={false}
-                                connectNulls={true} // conecta pontos ignorando nulls (não teremos nulls)
+                                connectNulls={true}
                             />
                         </LineChart>
                     </ResponsiveContainer>
@@ -158,7 +160,7 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
 
                 <div className="flex justify-end pt-4">
                     <button
-                        onClick={() => router.push(`/currencies/${params.id}/view`)}
+                        onClick={() => router.push(`/currencies/${id}/view`)}
                         className="bg-purple-700 text-white px-6 py-2 rounded-lg hover:bg-purple-800 transition text-base font-medium"
                     >
                         Voltar
