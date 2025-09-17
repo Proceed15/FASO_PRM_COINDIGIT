@@ -8,10 +8,13 @@ import { Button } from "@/components/ui/button";
 import { DeleteCurrencyDialog } from "@/components/dialogs/DeleteCurrencyDialog";
 import { Eye, Pencil, Trash2, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Clock } from "lucide-react";
 import { CurrencyIconTable } from "@/components/common/CurrencyIcon";
+import LoadingScreen, { TableLoadingSkeleton } from "@/components/common/LoadingScreen";
+import { useApiLoading } from "@/hooks/useLoading";
 
 export default function CurrencyListPage() {
   
   const router = useRouter();
+  const { loading, withLoading } = useApiLoading();
 
   const [currencies, setCurrencies] = useState<Currency[]>([]);
   const [error, setError] = useState<string>("");
@@ -24,15 +27,18 @@ export default function CurrencyListPage() {
 
   useEffect(() => {
     async function fetchCurrencies() {
-      try {
-        const data = await currencyService.getAll();
-        setCurrencies(data);
-      } catch (e: any) {
-        setError(`Erro ao carregar moedas: ${e.message}`);
-      }
+      await withLoading('fetch', async () => {
+        try {
+          const data = await currencyService.getAll();
+          setCurrencies(data);
+          setError("");
+        } catch (e: any) {
+          setError(`Erro ao carregar moedas: ${e.message}`);
+        }
+      });
     }
     fetchCurrencies();
-  }, []);
+  }, [withLoading]);
 
   const handleDelete = async (id: string) => {
     setError("");
@@ -133,85 +139,99 @@ export default function CurrencyListPage() {
 
           {/* TABELA */}
           <div className="border-2 border-[#fffcb7] rounded-lg overflow-x-auto">
-            <table className="min-w-[600px] w-full text-white bg-[#171e33]">
-              <thead className="bg-[#11172b] text-[#fffcb7]">
-                <tr>
-                  <th onClick={() => handleSort("symbol")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
-                    <div className="flex items-center gap-1 ">
-                      Símbolo
-                      {renderSortIcon("symbol")}
-                    </div>
-                  </th>
-                  <th onClick={() => handleSort("name")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
-                    <div className="flex items-center gap-1">
-                      Nome
-                      {renderSortIcon("name")}
-                    </div>
-                  </th>
-                  <th onClick={() => handleSort("backing")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
-                    <div className="flex items-center gap-1">
-                      Lastro
-                      {renderSortIcon("backing")}
-                    </div>
-                  </th>
-                  <th onClick={() => handleSort("reverse")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
-                    <div className="flex items-center gap-1">
-                      Reverso
-                      {renderSortIcon("reverse")}
-                    </div>
-                  </th>
-                  <th className="text-center px-4 py-3 border-[#00d9ff]">Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedCurrencies.map((currency) => (
-                  <tr key={currency.id} className="hover:bg-[#11172b] transition">
-                    <td className="px-4 py-2 border-t border-r border-[#fffcb7]">
-                      <CurrencyIconTable symbol={currency.symbol} />
-                    </td>
-                    <td className="px-4 py-2 border-t border-r border-[#fffcb7]">{currency.name}</td>
-                    <td className="px-4 py-2 border-t border-r border-[#fffcb7]">{currency.backing}</td>
-                    <td className="px-4 py-2 border-t border-r border-[#fffcb7]">
-                      {currency.reverse ? "Sim" : "Não"}
-                    </td>
-                    <td className="text-center px-4 py-2 border-t border-[#fffcb7]">
-                      <div className="flex items-center justify-center gap-2 sm:gap-3">
-                        <button
-                          className="p-2"
-                          onClick={() => router.push(`/currencies/${currency.id}/history`)}
-                          title="Ver histórico"
-                        >
-                          <Clock size={20} className="text-green-400 hover:text-green-200" />
-                        </button>
-                        <button
-                          className="p-2"
-                          onClick={() => router.push(`/currencies/${currency.id}/view`)}
-                          title="Visualizar moeda"
-                        >
-                          <Eye size={22} className="text-cyan-400 hover:text-cyan-200" />
-                        </button>
-
-                        <button
-                          className="p-2"
-                          onClick={() => router.push(`/currencies/${currency.id}/edit`)}
-                          title="Editar moeda"
-                        >
-                          <Pencil size={20} className="text-yellow-400 hover:text-yellow-200" />
-                        </button>
-
-                        <DeleteCurrencyDialog
-                          currencyId={currency.id!}
-                          currencyName={currency.name}
-                          onDelete={handleDelete}
-                          icon={<Trash2 size={20} className="text-red-500 hover:text-red-300" />}
-                          className="p-2"
-                        />
+            {loading.fetch ? (
+              <div className="bg-[#171e33] p-4">
+                <TableLoadingSkeleton rows={pageSize} />
+              </div>
+            ) : (
+              <table className="min-w-[600px] w-full text-white bg-[#171e33]">
+                <thead className="bg-[#11172b] text-[#fffcb7]">
+                  <tr>
+                    <th onClick={() => handleSort("symbol")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
+                      <div className="flex items-center gap-1 ">
+                        Símbolo
+                        {renderSortIcon("symbol")}
                       </div>
-                    </td>
+                    </th>
+                    <th onClick={() => handleSort("name")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
+                      <div className="flex items-center gap-1">
+                        Nome
+                        {renderSortIcon("name")}
+                      </div>
+                    </th>
+                    <th onClick={() => handleSort("backing")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
+                      <div className="flex items-center gap-1">
+                        Lastro
+                        {renderSortIcon("backing")}
+                      </div>
+                    </th>
+                    <th onClick={() => handleSort("reverse")} className="text-left px-4 py-3 border-r border-[#fffcb7] cursor-pointer">
+                      <div className="flex items-center gap-1">
+                        Reverso
+                        {renderSortIcon("reverse")}
+                      </div>
+                    </th>
+                    <th className="text-center px-4 py-3 border-[#00d9ff]">Ações</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {paginatedCurrencies.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="text-center py-8 text-gray-400">
+                        {searchQuery ? "Nenhuma moeda encontrada" : "Nenhuma moeda cadastrada"}
+                      </td>
+                    </tr>
+                  ) : (
+                    paginatedCurrencies.map((currency) => (
+                      <tr key={currency.id} className="hover:bg-[#11172b] transition">
+                        <td className="px-4 py-2 border-t border-r border-[#fffcb7]">
+                          <CurrencyIconTable symbol={currency.symbol} />
+                        </td>
+                        <td className="px-4 py-2 border-t border-r border-[#fffcb7]">{currency.name}</td>
+                        <td className="px-4 py-2 border-t border-r border-[#fffcb7]">{currency.backing}</td>
+                        <td className="px-4 py-2 border-t border-r border-[#fffcb7]">
+                          {currency.reverse ? "Sim" : "Não"}
+                        </td>
+                        <td className="text-center px-4 py-2 border-t border-[#fffcb7]">
+                          <div className="flex items-center justify-center gap-2 sm:gap-3">
+                            <button
+                              className="p-2"
+                              onClick={() => router.push(`/currencies/${currency.id}/history`)}
+                              title="Ver histórico"
+                            >
+                              <Clock size={20} className="text-green-400 hover:text-green-200" />
+                            </button>
+                            <button
+                              className="p-2"
+                              onClick={() => router.push(`/currencies/${currency.id}/view`)}
+                              title="Visualizar moeda"
+                            >
+                              <Eye size={22} className="text-cyan-400 hover:text-cyan-200" />
+                            </button>
+
+                            <button
+                              className="p-2"
+                              onClick={() => router.push(`/currencies/${currency.id}/edit`)}
+                              title="Editar moeda"
+                            >
+                              <Pencil size={20} className="text-yellow-400 hover:text-yellow-200" />
+                            </button>
+
+                            <DeleteCurrencyDialog
+                              currencyId={currency.id!}
+                              currencyName={currency.name}
+                              onDelete={handleDelete}
+                              icon={<Trash2 size={20} className="text-red-500 hover:text-red-300" />}
+                              className="p-2"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            )}
           </div>
 
           {/* PAGINAÇÃO */}

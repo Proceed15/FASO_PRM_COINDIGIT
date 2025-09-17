@@ -6,24 +6,25 @@ import LoadingScreen from "../components/common/LoadingScreen";
 import { UserContext } from "../contexts/UserContext";
 
 export default function Home() {
-  {/*
-    const { isLoading } = useContext(UserContext);
-    const [showContent, setShowContent] = useState(false);
+  const { isLoading, isInitialized } = useContext(UserContext);
+  const [showContent, setShowContent] = useState(false);
 
-    // LOAD
-    useEffect(() => {
-      if (!isLoading) {
-        const timeout = setTimeout(() => setShowContent(true), 300);
-        return () => clearTimeout(timeout);
-      } else {
-        setShowContent(false);
-      }
-    }, [isLoading]);
+  // LOAD 
+  useEffect(() => {
+    if (isInitialized && !isLoading) {
+      const timeout = setTimeout(() => setShowContent(true), 200);
+      return () => clearTimeout(timeout);
+    } else {
+      setShowContent(false);
+    }
+  }, [isLoading, isInitialized]);
 
-    if (isLoading || !showContent) return <LoadingScreen />;
-  */}
+  // LOADING...
+  if (!isInitialized || isLoading || !showContent) {
+    return <LoadingScreen message="Inicializando CoinDigit..." />;
+  }
 
-  //pag
+//PAGINA
   const perguntas = [
     { id: "p1", texto: "1. O que é uma criptomoeda?" },
     { id: "p2", texto: "2. O que é cotação reversa?" },

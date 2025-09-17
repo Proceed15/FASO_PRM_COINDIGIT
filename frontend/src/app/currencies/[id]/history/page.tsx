@@ -4,6 +4,8 @@ import React, { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import currencyService from "@/services/currencyService";
 import Header from "@/components/common/Header";
+import LoadingScreen, { ChartLoadingSkeleton } from "@/components/common/LoadingScreen";
+import { useApiLoading } from "@/hooks/useLoading";
 import {
     LineChart,
     Line,
@@ -75,19 +77,24 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
     const router = useRouter();
     const unwrappedParams = use(params);
     const id = unwrappedParams.id;
+    const { loading, withLoading } = useApiLoading();
 
     const [history, setHistory] = useState<History[]>([]);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        currencyService
-            .getHistory(id)
-            .then(data => {
+        withLoading('fetch', async () => {
+            try {
+                const data = await currencyService.getHistory(id);
                 console.log("Dados recebidos do serviço:", data);
                 setHistory(data);
-            })
-            .catch(() => setError("Erro ao carregar histórico."));
-    }, [id]);
+                setError("");
+            } catch (err) {
+                console.error("Erro ao carregar histórico:", err);
+                setError("Erro ao carregar histórico.");
+            }
+        });
+    }, [id, withLoading]);
 
     const groupedData = groupHistoryByMonth(history);
     console.log("Dados agrupados por mês:", groupedData);
@@ -111,23 +118,30 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
 
                 {error && <p className="text-red-500">{error}</p>}
 
-                {chartData.length === 0 ? (
-                    <p className="text-gray-300">Nenhum dado de histórico encontrado.</p>
+                {loading.fetch ? (
+                    <ChartLoadingSkeleton />
+                ) : chartData.length === 0 ? (
+                    <div className="text-center py-12">
+                        <p className="text-gray-300 text-lg">Nenhum dado de histórico encontrado.</p>
+                        <p className="text-gray-400 text-sm mt-2">Tente novamente mais tarde ou verifique se há dados disponíveis para esta moeda.</p>
+                    </div>
                 ) : (
                     <ResponsiveContainer width="100%" height={400}>
                         <LineChart data={chartData} margin={{ top: 20, right: 40, bottom: 20, left: 0 }}>
                             <CartesianGrid stroke="#8884d8" strokeDasharray="3 3" />
+                            {/* @ts-ignore */}
                             <XAxis
                                 dataKey="date"
                                 tick={{ fill: "#fff", fontSize: 12 }}
                                 interval={0}
-                                tickFormatter={(str) => {
+                                tickFormatter={(str: string) => {
                                     const [year, month] = str.split("-");
                                     const date = new Date(Number(year), Number(month) - 1);
                                     return date.toLocaleString("pt-BR", { month: "short" });
                                 }}
                                 height={60}
                             />
+                            {/* @ts-ignore */}
                             <YAxis
                                 tick={{ fill: "#fff", fontSize: 12 }}
                                 domain={['auto', 'auto']}
@@ -135,17 +149,19 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
                                 tickFormatter={formatLargeNumber}
                                 width={80}
                             />
+                            {/* @ts-ignore */}
                             <Tooltip
                                 contentStyle={{ backgroundColor: "#1e1e3f", border: "1px solid #8884d8" }}
                                 labelStyle={{ color: "#fff" }}
                                 itemStyle={{ color: "#fff" }}
                                 formatter={(value: number) => value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                                labelFormatter={(label) => {
+                                labelFormatter={(label: string) => {
                                     const [year, month] = label.split("-");
                                     const date = new Date(Number(year), Number(month) - 1);
                                     return date.toLocaleString("pt-BR", { month: "long", year: "numeric" });
                                 }}
                             />
+                            {/* @ts-ignore */}
                             <Line
                                 type="monotone"
                                 dataKey="price"
@@ -162,6 +178,7 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
                     <button
                         onClick={() => router.push(`/currencies/${id}/view`)}
                         className="bg-purple-700 text-white px-6 py-2 rounded-lg hover:bg-purple-800 transition text-base font-medium"
+                        disabled={loading.fetch}
                     >
                         Voltar
                     </button>
