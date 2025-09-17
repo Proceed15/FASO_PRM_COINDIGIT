@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import currencyService, { Currency } from "@/services/currencyService";
 import Header from "@/components/common/Header";
 import { Button } from "@/components/ui/button";
+import { CurrencyIconDetail } from "@/components/common/CurrencyIcon";
 
 interface CurrencyViewProps {
   params: {
@@ -48,7 +49,9 @@ export default function CurrencyViewPage({ params }: CurrencyViewProps) {
         <div className="mb-3 bg-[#171e33] rounded-lg shadow-sm p-6 space-y-4">
           <div>
             <p className="text-sm text-[#fffcb7]">Símbolo</p>
-            <p className="text-lg font-medium text-white">{currency.symbol}</p>
+            <div className="flex items-center mt-2">
+              <CurrencyIconDetail symbol={currency.symbol} />
+            </div>
           </div>
           <div>
             <p className="text-sm text-[#fffcb7]">Nome</p>

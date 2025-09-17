@@ -7,6 +7,7 @@ import Header from "@/components/common/Header";
 import { Button } from "@/components/ui/button";
 import { DeleteCurrencyDialog } from "@/components/dialogs/DeleteCurrencyDialog";
 import { Eye, Pencil, Trash2, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Clock } from "lucide-react";
+import { CurrencyIconTable } from "@/components/common/CurrencyIcon";
 
 export default function CurrencyListPage() {
   
@@ -165,7 +166,9 @@ export default function CurrencyListPage() {
               <tbody>
                 {paginatedCurrencies.map((currency) => (
                   <tr key={currency.id} className="hover:bg-[#11172b] transition">
-                    <td className="px-4 py-2 border-t border-r border-[#fffcb7]">{currency.symbol}</td>
+                    <td className="px-4 py-2 border-t border-r border-[#fffcb7]">
+                      <CurrencyIconTable symbol={currency.symbol} />
+                    </td>
                     <td className="px-4 py-2 border-t border-r border-[#fffcb7]">{currency.name}</td>
                     <td className="px-4 py-2 border-t border-r border-[#fffcb7]">{currency.backing}</td>
                     <td className="px-4 py-2 border-t border-r border-[#fffcb7]">

@@ -3,3 +3,5 @@ npm install recharts
 npm install lucide-react
 
 npm install date-fns //pra datas ajuda
+
+npm install cryptocurrency-icons//icones moedas biblioteca
