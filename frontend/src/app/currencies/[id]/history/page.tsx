@@ -209,7 +209,6 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
           </ResponsiveContainer>
         )}
 
-        {/* Botão Voltar responsivo */}
         <div className="w-full flex justify-end md:justify-end mt-6">
           <button
             onClick={() => router.push(`/currencies/${id}/view`)}
