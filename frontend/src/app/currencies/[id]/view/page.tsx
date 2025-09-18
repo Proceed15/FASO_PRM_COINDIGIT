@@ -19,7 +19,8 @@ export default function CurrencyViewPage({ params }: CurrencyViewProps) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    currencyService.getById(params.id)
+    currencyService
+      .getById(params.id)
       .then(setCurrency)
       .catch(() => setError("Moeda não encontrada."));
   }, [params.id]);
@@ -27,7 +28,7 @@ export default function CurrencyViewPage({ params }: CurrencyViewProps) {
   if (error) {
     return (
       <div className="pt-[100px] p-6 text-red-500">
-        <Header pageName="Detalhes da Moeda" />
+        <Header pageName="Editar Moeda" />
         {error}
       </div>
     );
@@ -36,7 +37,7 @@ export default function CurrencyViewPage({ params }: CurrencyViewProps) {
   if (!currency) {
     return (
       <div className="pt-[100px] p-6 text-white">
-        <Header pageName="Detalhes da Moeda" />
+        <Header pageName="Editar Moeda" />
         Carregando...
       </div>
     );
@@ -44,42 +45,53 @@ export default function CurrencyViewPage({ params }: CurrencyViewProps) {
 
   return (
     <div className="min-h-screen bg-[#283976]">
-      <Header pageName="Detalhes da Moeda" />
-      <div className="space-y-6 max-w-4xl mx-auto mt-[100px] mb-[75px]">
-        <div className="mb-3 bg-[#171e33] rounded-lg shadow-sm p-6 space-y-4">
-          <div>
-            <p className="text-sm text-[#fffcb7]">Símbolo</p>
-            <div className="flex items-center mt-2">
-              <CurrencyIconDetail symbol={currency.symbol} />
+      <Header pageName="Dados da Moeda" />
+      <div className="flex justify-center items-center mt-[60px]">
+        <div className="bg-[#171e33] rounded-lg shadow-md p-10 w-[1000px] text-center">
+          {/* Ícone e símbolo */}
+          <div className="flex flex-col items-center space-y-2 mb-6">
+            <CurrencyIconDetail symbol={currency.symbol} className="w-16 h-16" />
+          </div>
+
+          {/* Informações */}
+          <div className="space-y-4 text-left text-white">
+            <div>
+              <p className="text-sm text-[#fffcb7]">Nome</p>
+              <p className="text-base font-medium">{currency.name}</p>
+            </div>
+            <div>
+              <p className="text-sm text-[#fffcb7]">Lastro</p>
+              <p className="text-base font-medium">{currency.backing}</p>
+            </div>
+            <div>
+              <p className="text-sm text-[#fffcb7]">Reverse</p>
+              <p className="text-base font-medium">
+                {currency.reverse ? "Sim" : "Não"}
+              </p>
             </div>
           </div>
-          <div>
-            <p className="text-sm text-[#fffcb7]">Nome</p>
-            <p className="text-lg font-medium text-white">{currency.name}</p>
+
+          {/* Botões */}
+          <div className="flex justify-end space-x-3 mt-10">
+            <Button
+              className="w-[100px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+              onClick={() => router.push("/currencies")}
+            >
+              Voltar
+            </Button>
+            <Button
+              className="w-[110px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+              onClick={() => router.push(`/currencies/${currency.id}/history`)}
+            >
+              Histórico
+            </Button>
+            <Button
+              className="w-[100px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+              onClick={() => router.push(`/currencies/${currency.id}/edit`)}
+            >
+              Editar
+            </Button>
           </div>
-          <div>
-            <p className="text-sm text-[#fffcb7]">Lastro</p>
-            <p className="text-lg font-medium text-white">{currency.backing}</p>
-          </div>
-          <div>
-            <p className="text-sm text-[#fffcb7]">Reverse</p>
-            <p className="text-lg font-medium text-white">{currency.reverse ? "Sim" : "Não"}</p>
-          </div>
-        </div>
-        <div className="flex justify-end space-x-3 pt-2 mr-[15px]">
-          <Button
-            className="w-[100px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
-            onClick={() => router.push(`/currencies/${currency.id}/edit`)}>Editar
-          </Button>
-          <Button
-            className="w-[110px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
-            onClick={() => router.push(`/currencies/${currency.id}/history`)}>
-            Histórico
-          </Button>
-          <Button
-            className="w-[100px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
-            onClick={() => router.push("/currencies")}>Voltar
-          </Button>
         </div>
       </div>
     </div>
