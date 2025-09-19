@@ -49,3 +49,5 @@ Completando a Feature:
 <p>
   6 Para Nomes de features colocar se é uma alteração de Frontend ou Backend, não alterem a pasta docs quando possível
 </p>
+
+
