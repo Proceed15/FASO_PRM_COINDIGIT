@@ -32,36 +32,36 @@ export default function CreateCurrencyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e] text-white">
+    <div className="min-h-screen bg-[#283976] text-white">
       <Header pageName="Nova Moeda" />
-      <div className="pt-[75px] p-6 space-y-6 max-w-4xl mx-auto">
+      <div className="p-6 space-y-6 max-w-4xl mx-auto">
         <form
           onSubmit={handleSubmit}
-          className="bg-[#1e1e3f] border border-purple-200 rounded-lg shadow-sm p-6 space-y-4"
+          className="mt-[20px] mb-[20px] bg-[#171e33] border border-purple-200 rounded-lg shadow-sm p-6 space-y-4"
         >
           <div>
-            <label className="text-sm text-purple-200">Símbolo</label>
+            <label className="text-sm text-[#fffcb7]">Símbolo</label>
             <input
               name="symbol"
-              className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white mt-1"
+              className="w-full bg-transparent border border-[#fffcb7] rounded px-4 py-2 text-white mt-1"
               value={formData.symbol}
               onChange={handleChange}
             />
           </div>
           <div>
-            <label className="text-sm text-purple-200">Nome</label>
+            <label className="text-sm text-[#fffcb7]">Nome</label>
             <input
               name="name"
-              className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white mt-1"
+              className="w-full bg-transparent border border-[#fffcb7] rounded px-4 py-2 text-white mt-1"
               value={formData.name}
               onChange={handleChange}
             />
           </div>
           <div>
-            <label className="text-sm text-purple-200">Lastro</label>
+            <label className="text-sm text-[#fffcb7]">Lastro</label>
             <input
               name="backing"
-              className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white mt-1"
+              className="w-full bg-transparent border border-[#fffcb7] rounded px-4 py-2 text-white mt-1"
               value={formData.backing}
               onChange={handleChange}
             />
@@ -72,17 +72,17 @@ export default function CreateCurrencyPage() {
               name="reverse"
               checked={formData.reverse}
               onChange={handleChange}
-              className="h-4 w-4"
+              className="h-4 w-4 accent-[#fffcb7]"
             />
-            <label className="text-sm text-purple-200">Inverter Cotação (Reverse)</label>
+            <label className="text-sm text-[#fffcb7]">Inverter Cotação (Reverse)</label>
           </div>
 
           {error && <p className="text-red-500">{error}</p>}
 
-          <div className="flex justify-end space-x-2 pt-2">
+          <div className="mr-[10px] mb-[10px] flex justify-end space-x-4 mt-8">
             <Button
               variant="outline"
-              className=" bg-purple-700 border-white-400 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform font-semibold rounded px-4 py-2"
+              className="text-white w-[100px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
               onClick={() => router.push("/currencies")}
               type="button"
             >
@@ -90,7 +90,7 @@ export default function CreateCurrencyPage() {
             </Button>
 
             <Button
-              className="border border-white-400 ml-4 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform font-semibold rounded px-4 py-2"
+              className="w-[100px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
               type="submit"
             >
               Cadastrar

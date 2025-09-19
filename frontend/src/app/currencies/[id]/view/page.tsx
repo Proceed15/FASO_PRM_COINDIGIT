@@ -46,8 +46,8 @@ export default function CurrencyViewPage({ params }: CurrencyViewProps) {
   return (
     <div className="min-h-screen bg-[#283976]">
       <Header pageName="Dados da Moeda" />
-      <div className="flex justify-center items-center mt-[60px]">
-        <div className="bg-[#171e33] rounded-lg shadow-md p-10 w-[1000px] text-center">
+      <div className="flex justify-center items-center">
+        <div className="mt-[60px] mb-[60px] bg-[#171e33] rounded-lg shadow-md p-10 w-[1000px] text-center">
           {/* Ícone e símbolo */}
           <div className="flex flex-col items-center space-y-2 mb-6">
             <CurrencyIconDetail symbol={currency.symbol} className="w-16 h-16" />

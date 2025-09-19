@@ -56,11 +56,10 @@ export default function CurrencyEditPage({ params }: CurrencyEditProps) {
   return (
     <div className="min-h-screen bg-[#283976] text-white">
       <Header pageName="Editar Moeda" />
-
-      <div className="flex justify-center items-center mt-[60px]">
+      <div className="flex justify-center items-center">
         <form
           onSubmit={handleSubmit}
-          className="bg-[#171e33] rounded-lg shadow-md p-10 w-[1000px] text-center space-y-6"
+          className="mt-[60px] mb-[60px] bg-[#171e33] rounded-lg shadow-md p-10 w-[1000px] text-center space-y-6"
         >
           {/* Ícone e símbolo */}
           <div className="flex flex-col items-center space-y-2">
@@ -108,9 +107,9 @@ export default function CurrencyEditPage({ params }: CurrencyEditProps) {
                 name="reverse"
                 checked={formData.reverse}
                 onChange={handleChange}
-                className="h-4 w-4 accent-[#fffcb7]" // cor do check também amarela
+                className="h-4 w-4 accent-[#fffcb7]"
               />
-              <label className="text-sm text-purple-200">Reverse</label>
+              <label className="text-sm text-[#fffcb7]">Reverse</label>
             </div>
           </div>
 
