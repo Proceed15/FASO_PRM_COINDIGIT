@@ -15,9 +15,21 @@ public class UserController : ControllerBase
     [HttpPost]
     public IActionResult RegisterUser(UserDTO userDto)
     {
-        var result = _userService.RegisterUser(userDto);
-        return Ok(result);
+        try
+        {
+            var result = _userService.RegisterUser(userDto);
+            return Ok(result);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { error = "Erro interno do servidor." });
+        }
     }
+
 
     [HttpGet]
     public IActionResult getAllUsers()

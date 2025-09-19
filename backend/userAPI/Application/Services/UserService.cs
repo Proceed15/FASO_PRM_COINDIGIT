@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
@@ -13,11 +14,32 @@ public class UserService : IUserService
 
     public UserDTO RegisterUser(UserDTO userDto)
     {
+        // Validation for required fields
+        if (string.IsNullOrWhiteSpace(userDto.Name))
+        {
+            throw new ArgumentException("O nome é obrigatório.");
+        }
+        if (string.IsNullOrWhiteSpace(userDto.Email))
+        {
+            throw new ArgumentException("O email é obrigatório.");
+        }
+        if (string.IsNullOrWhiteSpace(userDto.Password))
+        {
+            throw new ArgumentException("A senha é obrigatória.");
+        }
+
+        // Check if email already exists
+        var existingUser = _userRepository.GetByEmail(userDto.Email);
+        if (existingUser != null)
+        {
+            throw new ArgumentException("Este email já está cadastrado.");
+        }
+
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
 
-        var user = new User 
-        { 
-            Name = userDto.Name, 
+        var user = new User
+        {
+            Name = userDto.Name,
             Email = userDto.Email,
             Phone = userDto.Phone,
             Address = userDto.Address,
@@ -41,10 +63,10 @@ public class UserService : IUserService
     public UserDTO? GetUserDetails(int id)
     {
         var user = _userRepository.GetById(id);
-        return user != null ? new UserDTO 
-        { 
+        return user != null ? new UserDTO
+        {
             Id = user.Id,
-            Name = user.Name, 
+            Name = user.Name,
             Email = user.Email,
             Phone = user.Phone,
             Address = user.Address,
@@ -66,23 +88,6 @@ public class UserService : IUserService
             Photo = User.Photo
         }).ToList();
     }
-
-    /*
-    public UserDTO? GetUserByEmail(string email)
-    {
-        var user = _userRepository.GetByEmail(email);
-        return user != null ? new UserDTO
-        {
-            Id = user.Id,
-            Name = user.Name,
-            Email = user.Email,
-            Phone = user.Phone,
-            Address = user.Address,
-            Password = user.Password,
-            Photo = user.Photo
-        } : null;
-    }
-    */
 
     public UserDTO? UpdateUser(int id, UserDTO userDto)
     {
@@ -114,12 +119,7 @@ public class UserService : IUserService
             Photo = user.Photo
         };
     }
-    /*
-    public async Task EditUserAsync( User user)
-    {
-        await _userRepository.EditUserAsync(user);
-    }
-    */
+
     public bool DeleteUser(int id)
     {
         var user = _userRepository.GetById(id);
@@ -127,12 +127,14 @@ public class UserService : IUserService
         _userRepository.Delete(id);
         return true;
     }
-    
+
     public UserDTO? ValidateUser(string email, string password)
     {
         var user = _userRepository.GetByEmail(email);
         if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
-        {return null;}
+        {
+            return null;
+        }
 
         return new UserDTO
         {
@@ -144,5 +146,4 @@ public class UserService : IUserService
             Photo = user.Photo
         };
     }
-    
 }
