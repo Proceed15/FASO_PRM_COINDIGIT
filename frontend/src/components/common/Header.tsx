@@ -1,4 +1,6 @@
+// components/common/Header.tsx
 "use client";
+
 import { useState, useContext } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
@@ -9,7 +11,9 @@ import {
   Coins,
   Users,
   User,
-  ChevronDown
+  ChevronDown,
+  LogIn,
+  UserPlus,
 } from "lucide-react";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -19,7 +23,7 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, isLoading } = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const goToProfile = () => {
@@ -32,7 +36,8 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
-    router.push("/");
+    setMenuOpen(false); // <- fecha o menu lateral
+    router.push("/");   // <- vai para tela inicial
   };
 
   const handleLogin = () => router.push("/login");
@@ -41,15 +46,12 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
   const isActive = (path: string) =>
     pathname === path ? "bg-blue-600 text-white" : "hover:bg-blue-600";
 
-//load
-const [isUserLoaded, setIsUserLoaded] = useState(false);
-
+  // ⚠️ Aguarda carregar o usuário antes de renderizar o header
+  if (isLoading) return null;
 
   return (
     <>
-      {/* HEADER */}
       <header className="z-20 grid grid-cols-3 items-center px-6 py-4 bg-[#030930] text-white border-b border-white/20">
-
         {/* ESQUERDA - Logo */}
         <div className="flex items-center">
           <a href="/" className="inline-block">
@@ -71,22 +73,23 @@ const [isUserLoaded, setIsUserLoaded] = useState(false);
           </div>
         )}
 
-        {/* DIREITA - ENTRAR/CADASTRE-SE */}
-
+        {/* DIREITA - ENTRAR / SAIR */}
         <div className="col-start-3 flex items-center justify-end gap-3">
           {!user?.id ? (
             <>
               <button
                 onClick={handleLogin}
-                className="px-4 py-1 rounded-md border border-white hover:bg-white hover:text-[#0c113f] transition-all"
+                className="active:scale-95 transition-transform duration-150 flex items-center gap-2 px-4 py-1 rounded-md border border-white hover:bg-white hover:text-[#0c113f] transition-all"
               >
                 Entrar
+                <LogIn size={18} />
               </button>
               <button
                 onClick={handleRegister}
-                className="px-4 py-1 border border-transparent rounded-md bg-blue-600 hover:bg-blue-500 transition-all"
+                className="active:scale-95 transition-transform duration-150 flex items-center gap-2 px-4 py-1 border border-white rounded-md bg-blue-600 hover:bg-blue-500 transition-all"
               >
                 Cadastre-se
+                <UserPlus size={18} />
               </button>
             </>
           ) : (
@@ -145,27 +148,24 @@ const [isUserLoaded, setIsUserLoaded] = useState(false);
                 </button>
               );
             })}
-            {/* BEM-VINDO USUÁRIO */}
-            <a href="/" className="inline-block">
-              <div className="mx-2 mt-2 flex items-center gap-2 px-3 py-2 rounded-md text-white transition-all justify-center px-4 text-center hover:bg-gradient-to-r hover:from-[#283976] hover:to-[#265dbf]">
-                <p className="text-lg font-medium text-white">
-                  Bem-vindo
-                  {user?.name && (
-                    <span className="text-[#fffcb7] font-semibold">, {user.name}!</span>
-                  )}
-                </p>
-              </div>
-            </a>
+            <div className="mx-2 mt-2 flex items-center gap-2 px-3 py-2 rounded-md text-white justify-center hover:bg-gradient-to-r hover:from-[#283976] hover:to-[#265dbf]">
+              <p className="text-lg font-medium">
+                Bem-vindo
+                {user?.name && (
+                  <span className="text-[#fffcb7] font-semibold">, {user.name}!</span>
+                )}
+              </p>
+            </div>
           </nav>
 
           {/* BOTÃO SAIR */}
           <div className="absolute bottom-4 left-0 w-full px-4">
             <button
               onClick={handleLogout}
-              className="mb-3 ml-3 flex items-center gap-2 text-white-400 hover:text-red-500 transition-colors"
+              className="mb-3 ml-3 flex items-center gap-2 text-white hover:text-red-500 transition-colors"
             >
               <LogOut size={25} />
-
+              <span>Sair</span>
             </button>
           </div>
         </div>

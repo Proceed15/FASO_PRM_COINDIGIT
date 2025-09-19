@@ -197,7 +197,14 @@ export default function UserEditPage({ params }: UserEditPageProps) {
                                 }
                             />
                             */}
-                        <div className="flex space-x-3 mr-1 mt-[10px] mb-[10px]">
+                        <div className="w-full flex justify-end space-x-3 mr-1 mt-[10px] mb-[10px]">
+                             <Button
+                                type="button"
+                                className="w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+                                onClick={() => router.push(`/users/${user.id}/view`)}
+                            >
+                                Voltar
+                            </Button>
                             <Button
                                 type="button"
                                 className="mx-2 w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"

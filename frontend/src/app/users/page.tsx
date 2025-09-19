@@ -7,9 +7,15 @@ import { Button } from "../../components/ui/button";
 import { DeleteUserDialog } from "../../components/dialogs/DeleteUserDialog";
 import { useEffect, useState } from "react";
 import { Eye, Pencil, Trash2, ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from "lucide-react";
+import { useContext } from "react";
+import { UserContext } from "@/contexts/UserContext";
+import LoadingScreen, { TableLoadingSkeleton } from "@/components/common/LoadingScreen";
+import { useApiLoading } from "@/hooks/useLoading";
 
 export default function UserListPage() {
+  const { user: loggedInUser, setUser: setLoggedInUser } = useContext(UserContext);
   const router = useRouter();
+  const { loading, withLoading } = useApiLoading();
 
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string>("");
@@ -22,21 +28,32 @@ export default function UserListPage() {
 
   useEffect(() => {
     async function fetchUsers() {
-      try {
-        const data = await userService.getAll();
-        setUsers(data);
-      } catch (error) {
-        setError(`Erro ao buscar usuários ${error}`);
-      }
+      await withLoading('fetch', async () => {
+        try {
+          const data = await userService.getAll();
+          setUsers(data);
+          setError("");
+        } catch (error) {
+          setError(`Erro ao buscar usuários ${error}`);
+        }
+      });
     }
     fetchUsers();
-  }, []);
+  }, [withLoading]);
 
+  //SE USER LOGADO FOR DELETADO ELE DESLOGA E VAI PRA TELA INCIAL
   const handleDelete = async (id: string) => {
     setError("");
     try {
       await userService.delete(Number(id));
       setUsers((prev) => prev.filter((user) => user.id !== Number(id)));
+
+      if (String(loggedInUser?.id) === id) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setLoggedInUser(null);
+        router.push("/");
+      }
     } catch (error) {
       setError(`Erro ao deletar usuário: ${error}`);
     }
@@ -105,7 +122,7 @@ export default function UserListPage() {
       <Header pageName="Lista de Usuários" />
       {error && <div className="text-red-500 my-4">{error}</div>}
       <div className="mt-[20px] flex flex-col items-center justify-start">
-        <div className="mb-[40px] mt-[40px] w-full max-w-6xl px-4">
+        <div className="mb-[35px] mt-[35px] w-full max-w-6xl px-4">
 
           {/* PESQUISA + ADD */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-left mb-[20px] w-full">
@@ -126,52 +143,66 @@ export default function UserListPage() {
 
           {/* TABELA */}
           <div className="border-2 border-[#00d9ff] rounded-lg overflow-x-auto">
-            <table className="min-w-[600px] w-full text-white bg-[#171e33]">
-              <thead className="bg-[#11172b] text-[#3fadc0]">
-                <tr>
-                  <th onClick={() => handleSort("name")} className="text-left px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
-                    <div className="flex items-center gap-1">Nome {renderSortIcon("name")}</div>
-                  </th>
-                  <th onClick={() => handleSort("email")} className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
-                    <div className="flex justify-end items-center gap-1">Email {renderSortIcon("email")}</div>
-                  </th>
-                  <th onClick={() => handleSort("phone")} className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
-                    <div className="flex justify-end items-center gap-1">Telefone {renderSortIcon("phone")}</div>
-                  </th>
-                  <th onClick={() => handleSort("address")} className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
-                    <div className="flex justify-end items-center gap-1">Endereço {renderSortIcon("address")}</div>
-                  </th>
-                  <th className="text-center px-4 py-3 border-[#00d9ff]">Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-[#11172b] transition">
-                    <td className="px-4 py-2 border-t border-r border-[#00d9ff]">{user.name}</td>
-                    <td className="text-right px-4 py-2 border-t border-r border-[#00d9ff]">{user.email}</td>
-                    <td className="text-right px-4 py-2 border-t border-r border-[#00d9ff]">{user.phone}</td>
-                    <td className="text-right px-4 py-2 border-t border-r border-[#00d9ff]">{user.address}</td>
-                    <td className="text-center px-4 py-2 border-t border-[#00d9ff]">
-                      <div className="flex items-center justify-center gap-2 sm:gap-3">
-                        <button className="p-2" onClick={() => router.push(`/users/${user.id}/view`)}>
-                          <Eye size={22} className="text-cyan-400 hover:text-cyan-200" />
-                        </button>
-                        <button className="p-2" onClick={() => router.push(`/users/${user.id}/edit`)}>
-                          <Pencil size={20} className="text-yellow-400 hover:text-yellow-200" />
-                        </button>
-                        <DeleteUserDialog
-                          userId={String(user.id)}
-                          userName={user.name}
-                          onDelete={handleDelete}
-                          icon={<Trash2 size={20} className="text-red-500 hover:text-red-300" />}
-                          className="p-2"
-                        />
-                      </div>
-                    </td>
+            {loading.fetch ? (
+              <div className="bg-[#171e33] p-4">
+                <TableLoadingSkeleton rows={pageSize} />
+              </div>
+            ) : (
+              <table className="min-w-[600px] w-full text-white bg-[#171e33]">
+                <thead className="bg-[#11172b] text-[#3fadc0]">
+                  <tr>
+                    <th onClick={() => handleSort("name")} className="text-left px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
+                      <div className="flex items-center gap-1">Nome {renderSortIcon("name")}</div>
+                    </th>
+                    <th onClick={() => handleSort("email")} className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
+                      <div className="flex justify-end items-center gap-1">Email {renderSortIcon("email")}</div>
+                    </th>
+                    <th onClick={() => handleSort("phone")} className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
+                      <div className="flex justify-end items-center gap-1">Telefone {renderSortIcon("phone")}</div>
+                    </th>
+                    <th onClick={() => handleSort("address")} className="text-right px-4 py-3 border-r border-[#00d9ff] cursor-pointer select-none">
+                      <div className="flex justify-end items-center gap-1">Endereço {renderSortIcon("address")}</div>
+                    </th>
+                    <th className="text-center px-4 py-3 border-[#00d9ff]">Ações</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {paginatedUsers.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="text-center py-8 text-gray-400">
+                        {searchQuery ? "Nenhum usuário encontrado" : "Nenhum usuário cadastrado"}
+                      </td>
+                    </tr>
+                  ) : (
+                    paginatedUsers.map((user) => (
+                      <tr key={user.id} className="hover:bg-[#11172b] transition">
+                        <td className="px-4 py-2 border-t border-r border-[#00d9ff]">{user.name}</td>
+                        <td className="text-right px-4 py-2 border-t border-r border-[#00d9ff]">{user.email}</td>
+                        <td className="text-right px-4 py-2 border-t border-r border-[#00d9ff]">{user.phone}</td>
+                        <td className="text-right px-4 py-2 border-t border-r border-[#00d9ff]">{user.address}</td>
+                        <td className="text-center px-4 py-2 border-t border-[#00d9ff]">
+                          <div className="flex items-center justify-center gap-2 sm:gap-3">
+                            <button className="p-2" onClick={() => router.push(`/users/${user.id}/view`)}>
+                              <Eye size={22} className="text-cyan-400 hover:text-cyan-200" />
+                            </button>
+                            <button className="p-2" onClick={() => router.push(`/users/${user.id}/edit`)}>
+                              <Pencil size={20} className="text-yellow-400 hover:text-yellow-200" />
+                            </button>
+                            <DeleteUserDialog
+                              userId={String(user.id)}
+                              userName={user.name}
+                              onDelete={handleDelete}
+                              icon={<Trash2 size={20} className="text-red-500 hover:text-red-300" />}
+                              className="p-2"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            )}
           </div>
 
           {/* Paginação */}
