@@ -12,37 +12,23 @@ import * as Recharts from "recharts";
 
 
 export default function DashboardPage() {
-  // Estado para o valor do conversor (mantido como placeholder)
+
   const [amount, setAmount] = useState(200);
-
-  // Hook para navegação
   const router = useRouter();
-
-  // Contexto do usuário para obter dados do usuário logado
   const { user } = useContext(UserContext);
-
-  // Estado para armazenar as moedas carregadas
   const [currencies, setCurrencies] = useState<Currency[]>([]);
-
-  // Estado para controlar o loading das moedas
   const [loadingCurrencies, setLoadingCurrencies] = useState(true);
-
-  // Estado para dados do gráfico de preços
   const [chartData, setChartData] = useState<{ name: string; price: number }[]>([]);
-
-  // Estado para loading do gráfico
   const [loadingChart, setLoadingChart] = useState(true);
 
-  // Efeito para carregar as moedas ao montar o componente
   useEffect(() => {
     const fetchCurrencies = async () => {
       try {
-        // Busca todas as moedas via currencyService
         const data = await currencyService.getAll();
         setCurrencies(data);
       } catch (error) {
         console.error('Erro ao carregar moedas:', error);
-        // Em caso de erro, deixa a lista vazia
+        // CATCH
         setCurrencies([]);
       } finally {
         setLoadingCurrencies(false);
@@ -52,28 +38,25 @@ export default function DashboardPage() {
     fetchCurrencies();
   }, []);
 
-  // Efeito para carregar dados do gráfico após carregar moedas
   useEffect(() => {
     if (currencies.length > 0) {
       const fetchChartData = async () => {
         try {
-          // Busca histórico para todas as moedas
           const histories = await Promise.all(
             currencies.map(c => currencyService.getHistory(c.id!))
           );
-          // Cria dados com preço mais recente
           const dataWithPrices = histories.map((history, index) => {
             const latestPrice = history.length > 0 ? history[history.length - 1].price : 0;
             return {
               name: currencies[index].symbol,
               price: latestPrice
             };
-          }).filter(item => item.price > 0); // Filtra apenas moedas com preço
+          }).filter(item => item.price > 0);
 
-          // Ordena por preço decrescente
+          // DECRESCENTE
           dataWithPrices.sort((a, b) => b.price - a.price);
 
-          // Pega as top 6 moedas mais caras
+          // 6 + CARAS
           const top6Expensive = dataWithPrices.slice(0, 6);
 
           setChartData(top6Expensive);
@@ -95,12 +78,12 @@ export default function DashboardPage() {
       <Header pageName="DASHBOARD" />
 
       {/* CONTEÚDO CENTRALIZADO */}
-      <div className="flex-1 flex items-center justify-center px-4 py-6">
+      <div className="my-[30px] flex-1 flex items-center justify-center px-4 py-6">
         <div className="mt-4 md:mt-0 w-full max-w-6xl space-y-10">
           {/* SECTION 1 - BOTÕES + GRÁFICO */}
           <div className="flex flex-col md:flex-row gap-8 items-stretch">
             {/* BOTÕES AMARELOS - Navegação para páginas de moedas */}
-            <div className="flex flex-col gap-4 w-full md:w-[220px]">
+            <div className="items-center justify-center flex flex-col gap-4 w-full md:w-[220px]">
               <Button
                 onClick={() => router.push('/currencies')} // Redireciona para listagem de moedas
                 className="bg-[#FFD23F] text-black font-bold py-6 rounded-xl hover:bg-yellow-500 flex items-center justify-center gap-2 w-full"
