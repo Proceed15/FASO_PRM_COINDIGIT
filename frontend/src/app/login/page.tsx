@@ -85,7 +85,7 @@ export default function LoginPage() {
                 type="text"
                 name="email"
                 placeholder="E-mail"
-                className="w-full px-4 py-2 bg-[#0c0c1a] border border-[#2c2c3f] rounded text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+                className="w-full px-4 py-2 bg-[#0c0c1a] border border-[#2c2c3f] rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                 value={formData.email}
                 onChange={handleChange}
               />
@@ -97,7 +97,7 @@ export default function LoginPage() {
                 type="password"
                 name="password"
                 placeholder="Senha"
-                className="mb-4 w-full px-4 py-2 bg-[#0c0c1a] border border-[#2c2c3f] rounded text-sm focus:outline-none focus:ring-2 focus:ring-purple-600"
+                className="mb-4 w-full px-4 py-2 bg-[#0c0c1a] border border-[#2c2c3f] rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
                 value={formData.password}
                 onChange={handleChange}
               />

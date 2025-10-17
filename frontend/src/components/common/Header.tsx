@@ -46,12 +46,12 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
   const isActive = (path: string) =>
     pathname === path ? "bg-blue-600 text-white" : "hover:bg-blue-600";
 
-  // ⚠️ Aguarda carregar o usuário antes de renderizar o header
+  // Aguarda carregar o usuário antes de renderizar o header
   if (isLoading) return null;
 
   return (
     <>
-      <header className="z-20 grid grid-cols-3 items-center px-6 py-4 bg-[#030930] text-white border-b border-white/20">
+      <header className="z-20 grid md:grid-cols-3 grid-cols-[1fr_1fr_0.4fr] items-center px-6 py-4 bg-[#030930] text-white border-b border-white/20">
         {/* ESQUERDA - Logo */}
         <div className="flex items-center">
           <a href="/" className="inline-block">
@@ -61,32 +61,32 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
               className="w-[60px] h-[40px] object-contain cursor-pointer hover:scale-105 active:scale-100 transition-transform duration-150"
             />
           </a>
-          <span className="ml-2 text-2xl font-semibold">{siteName}</span>
+          <span className="text-[20px] md:text-2xl font-semibold">{siteName}</span>
         </div>
 
         {/* CENTRO - Page Name */}
         {user?.id && (
-          <div className="text-center">
-            <span className="text-white font-bold text-lg md:text-2xl truncate">
+          <div className="text-center justify-center">
+            <span className="text-white text-[15px] justify-bottom items-bottom text-lg md:text-2xl md:text-white truncate ">
               {pageName}
             </span>
           </div>
         )}
 
-        {/* DIREITA - ENTRAR / SAIR */}
+        {/* DIREITA - ENTRAR / CADASTRAR */}
         <div className="col-start-3 flex items-center justify-end gap-3">
           {!user?.id ? (
             <>
               <button
                 onClick={handleLogin}
-                className="active:scale-95 transition-transform duration-150 flex items-center gap-2 px-4 py-1 rounded-md border border-white hover:bg-white hover:text-[#0c113f] transition-all"
+                className="active:scale-95 transition-transform duration-150 flex items-center justify-center gap-2 px-4 py-1 rounded-md border border-white hover:bg-white hover:text-[#0c113f] transition-all"
               >
                 Entrar
                 <LogIn size={18} />
               </button>
               <button
                 onClick={handleRegister}
-                className="active:scale-95 transition-transform duration-150 flex items-center gap-2 px-4 py-1 border border-white rounded-md bg-blue-600 hover:bg-blue-500 transition-all"
+                className="min-w-[155px] active:scale-95 transition-transform duration-150 flex items-center justify-center gap-2 px-4 py-1 border border-white rounded-md bg-blue-600 hover:bg-blue-500 transition-all"
               >
                 Cadastre-se
                 <UserPlus size={18} />
@@ -139,7 +139,7 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
                   className={`mx-2 mt-2 flex items-center gap-2 px-3 py-2 rounded-md text-white transition-all
             ${active
                       ? "bg-gradient-to-r from-[#283976] to-[#265dbf]"
-                      : "hover:bg-gradient-to-r hover:from-[#283976] hover:to-[#265dbf]"
+                      : "hover:bg-gradient-to-r hover:from-[#283976] hover:to-[#265dbf] hover:active:scale-95 transition-transform duration-150 rounded-lg"
                     }
             `}
                 >

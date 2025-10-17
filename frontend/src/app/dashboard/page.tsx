@@ -181,7 +181,7 @@ export default function DashboardPage() {
             </Button>
 
             <Button
-              onClick={() => router.push("/users/create")}
+              onClick={() => router.push("/register")}
               className="bg-[#0D1437] hover:bg-[#1a1f4a] py-6 rounded-xl flex items-center justify-center gap-2 w-full transition duration-200 active:scale-95"
             >
               <Plus className="w-5 h-5" />
@@ -192,7 +192,7 @@ export default function DashboardPage() {
               <p>
                 BEM VINDO AO <span className="font-bold">COINDIGIT!</span> <br />
                 <span className="text-[#3DDC97] font-bold">
-                  {user?.name || "Usuário"}
+                  {user?.name || "USUÁRIO"}
                 </span>
               </p>
             </div>
