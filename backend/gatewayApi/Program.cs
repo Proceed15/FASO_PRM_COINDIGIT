@@ -1,30 +1,3 @@
-using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-//builder.Services.AddEndpointsApiExplorer();
-builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-builder.Services.AddOcelot();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
-app.UseHttpsRedirection();
- 
-app.UseOcelot().Wait();
-
-app.Run();
-
-/*
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -35,10 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://localhost:5000");
 
-// Configurações do Ocelot
+// garantir que ocelot.json seja carregado antes de AddOcelot
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 
-// Adiciona autenticação com JWT
+// autenticação JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer("Bearer", options =>
     {
@@ -49,22 +22,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]!)
+                Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"] ?? "sua-chave-jwt-aqui")
             )
         };
     });
 
-builder.Services.AddOcelot();
+// autorização (necessário quando usar AuthenticationOptions no ocelot.json)
+builder.Services.AddAuthorization();
+
+// registra ocelot com a configuração carregada
+builder.Services.AddOcelot(builder.Configuration);
 
 var app = builder.Build();
 
-// Middleware de autenticação/ autorização ANTES do Ocelot
 app.UseAuthentication();
 app.UseAuthorization();
 
+// inicializa o Ocelot
 await app.UseOcelot();
 
 app.Run();
-
-*/
-
