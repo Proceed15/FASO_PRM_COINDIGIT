@@ -6,6 +6,7 @@ import { Button } from "../../../../components/ui/button";
 import Header from "../../../../components/common/Header";
 import userService, { User } from "../../../../services/userService";
 import { UserContext } from "../../../../contexts/UserContext";
+import { DeleteUserDialog } from "../../../../components/dialogs/DeleteUserDialog";
 
 interface UserEditPageProps {
     params: {
@@ -16,9 +17,9 @@ interface UserEditPageProps {
 export default function UserEditPage({ params }: UserEditPageProps) {
     const router = useRouter();
     const userId = params.id;
-    const { user: loggedInUser } = useContext(UserContext);
+    const { user: loggedInUser, setUser } = useContext(UserContext);
 
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUserData] = useState<User | null>(null);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -38,7 +39,7 @@ export default function UserEditPage({ params }: UserEditPageProps) {
             try {
                 const data = await userService.getById(parseInt(userId));
                 if (data) {
-                    setUser(data);
+                    setUserData(data);
                     setFormData({
                         name: data.name,
                         email: data.email,
@@ -49,12 +50,10 @@ export default function UserEditPage({ params }: UserEditPageProps) {
                         confirmPassword: "",
                     });
                 } else {
-                    setUser(null);
                     setError("Usuário não encontrado");
                 }
             } catch (error) {
                 setError(`Erro ao buscar usuário: ${error}`);
-                setUser(null);
             } finally {
                 setLoading(false);
             }
@@ -87,41 +86,31 @@ export default function UserEditPage({ params }: UserEditPageProps) {
                 email: formData.email || "",
                 phone: formData.phone || "",
                 address: formData.address || "",
-                password: formData.password && formData.password.trim() !== "" ? formData.password : "",
-                photo: user.photo || "",
+                password:
+                    formData.password && formData.password.trim() !== ""
+                        ? formData.password
+                        : "",
+                photo: formData.photo || user.photo || "",
             };
-            // Call API to update user
+
             await userService.update(user.id!, updatedUser);
-            if (loggedInUser && loggedInUser.id) {
-                router.push(`/users/${loggedInUser.id}/view`);
-            } else {
-                router.push(`/users/${userId}/view`);
+
+            if (loggedInUser && loggedInUser.id === user.id) {
+                setUser(updatedUser);
             }
+
+            router.push(`/users/${user.id}/view`);
         } catch (error: any) {
-            console.error("Erro ao atualizar usuário:", error);
             setError(`Erro ao atualizar usuário: ${error.message || error}`);
         }
     };
 
-    const handleDelete = async () => {
-        setError("");
-        if (!user) {
-            setError("Usuário não carregado");
-            return;
-        }
-        try {
-            await userService.delete(user.id!);
-            router.push("/users");
-        } catch (error) {
-            setError(`Erro ao deletar usuário: ${error}`);
-        }
-    };
 
     if (loading) {
         return (
             <>
                 <Header pageName="Usuários" />
-                <div className="p-6 max-w-4xl mx-auto">Carregando usuário...</div>
+                <div className="p-6 max-w-4xl mx-auto text-white">Carregando usuário...</div>
             </>
         );
     }
@@ -151,95 +140,88 @@ export default function UserEditPage({ params }: UserEditPageProps) {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e]">
+        <div className="min-h-screen bg-[#283976]">
             <Header pageName="Usuários" />
-            <div className="space-y-6 max-w-4xl mx-auto pt-[70px] pb-[75px] ">
-                <h1 className="text-2xl font-bold text-white">Editar Usuário</h1>
+            <div className="max-w-4xl mx-auto pt-[70px] pb-[75px] px-6">
+                <form onSubmit={handleSubmit} className="space-y-6 bg-[#171e33] rounded-lg shadow-lg p-6">
+                    {/* Foto + nome no topo */}
+                    <div className="h-[200px] flex flex-col items-center justify-center">
+                        <img
+                            src={formData.photo || "/images/default-avatar.png"}
+                            alt={formData.name}
+                            className="w-28 h-28 rounded-full border-2 object-cover shadow-md mb-4"
+                        />
+                        <h1 className="text-3xl font-bold text-white">{formData.name || "Usuário"}</h1>
+                    </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4 bg-[#1e1e3f] border border-purple-200 rounded-lg shadow-sm p-6">
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Nome"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.name}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.email}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="phone"
-                        placeholder="Telefone"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.phone}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="address"
-                        placeholder="Endereço"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.address}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="photo"
-                        placeholder="Foto (URL)"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.photo}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Senha"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.password}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirmar Senha"
-                        className="w-full bg-transparent border border-purple-300 rounded px-4 py-2 text-white placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                    />
-
-                    <div className="flex justify-between items-center pt-4">
-                        <Button
-                            type="button"
-                            className="border border-red-300 bg-red-600 hover:bg-red-700 text-white hover:opacity-90 active:scale-95 transition font-semibold rounded px-4 py-2"
-                            onClick={handleDelete}
-                        >
-                            Deletar
-                        </Button>
-                        <div className="flex space-x-2">
+                    {/* Campos de input */}
+                    {["name", "email", "phone", "address", "photo", "password", "confirmPassword"].map((field) => {
+                        const label = field === "name" ? "Nome" :
+                            field === "email" ? "Email" :
+                                field === "phone" ? "Telefone" :
+                                    field === "address" ? "Endereço" :
+                                        field === "photo" ? "Foto (URL)" :
+                                            field === "password" ? "Senha" :
+                                                "Confirmar Senha";
+                        const type = field.includes("password") ? "password" : "text";
+                        return (
+                            <div key={field}>
+                                <label className="block text-[#78ffef] font-semibold mb-1" htmlFor={field}>
+                                    {label}
+                                </label>
+                                <input
+                                    id={field}
+                                    name={field}
+                                    type={type}
+                                    value={(formData as any)[field]}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-2 rounded border border-[#00d9ff] bg-transparent text-white placeholder-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                                    placeholder={label}
+                                />
+                            </div>
+                        );
+                    })}
+                    <div className="flex justify-end items-center mt-[25px]">
+                        {/* 
+                        <DeleteUserDialog
+                                userId={String(user.id)}
+                                userName={user.name}
+                                onDelete={handleDelete}
+                                icon={
+                                    <Button
+                                        type="button"
+                                        className="bg-red-600 hover:bg-red-700 text-white hover:opacity-90 active:scale-95 transition-transform duration-150"
+                                    >
+                                        Deletar
+                                    </Button>
+                                }
+                            />
+                            */}
+                        <div className="w-full flex justify-end space-x-3 mr-1 mt-[10px] mb-[10px]">
+                             <Button
+                                type="button"
+                                className="w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+                                onClick={() => router.push(`/users/${user.id}/view`)}
+                            >
+                                Voltar
+                            </Button>
                             <Button
                                 type="button"
-                                className="border border-purple-200 bg-transparent text-white hover:bg-purple-800 hover:opacity-90 active:scale-95 transition font-semibold rounded px-4 py-2"
+                                className="mx-2 w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
                                 onClick={() => router.push(`/users`)}
                             >
                                 Cancelar
                             </Button>
                             <Button
                                 type="submit"
-                                className="border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition font-semibold rounded px-4 py-2"
+                                className="mx-2 w-[100px] bg-[#265dbf] hover:bg-blue-800 active:scale-95 transition-transform duration-150"
                             >
-                                Salvar & Atualizar
+                                Salvar
                             </Button>
                         </div>
                     </div>
                 </form>
             </div>
-        </div>
+        </div >
     );
-}
+} 

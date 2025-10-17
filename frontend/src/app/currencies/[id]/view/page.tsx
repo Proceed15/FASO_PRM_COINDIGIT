@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import currencyService, { Currency } from "@/services/currencyService";
 import Header from "@/components/common/Header";
 import { Button } from "@/components/ui/button";
+import { CurrencyIconDetail } from "@/components/common/CurrencyIcon";
 
 interface CurrencyViewProps {
   params: {
@@ -18,7 +19,8 @@ export default function CurrencyViewPage({ params }: CurrencyViewProps) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    currencyService.getById(params.id)
+    currencyService
+      .getById(params.id)
       .then(setCurrency)
       .catch(() => setError("Moeda não encontrada."));
   }, [params.id]);
@@ -26,7 +28,7 @@ export default function CurrencyViewPage({ params }: CurrencyViewProps) {
   if (error) {
     return (
       <div className="pt-[100px] p-6 text-red-500">
-        <Header pageName="Detalhes da Moeda" />
+        <Header pageName="Editar Moeda" />
         {error}
       </div>
     );
@@ -35,49 +37,61 @@ export default function CurrencyViewPage({ params }: CurrencyViewProps) {
   if (!currency) {
     return (
       <div className="pt-[100px] p-6 text-white">
-        <Header pageName="Detalhes da Moeda" />
+        <Header pageName="Editar Moeda" />
         Carregando...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0c0f3a] to-[#2a184e]">
-      <Header pageName="Detalhes da Moeda" />
-      <div className="space-y-6 max-w-4xl mx-auto pt-[70px] pb-[75px]">
-        <h1 className="text-2xl font-bold text-white">Vizualizar</h1>
-        <div className="mb-3 bg-[#1e1e3f] border border-purple-200 rounded-lg shadow-sm p-6 space-y-4">
-          <div>
-            <p className="text-sm text-purple-200">Símbolo</p>
-            <p className="text-lg font-medium text-white">{currency.symbol}</p>
+    <div className="min-h-screen bg-[#283976]">
+      <Header pageName="Dados da Moeda" />
+      <div className="flex justify-center items-center">
+        <div className="mt-[60px] mb-[60px] bg-[#171e33] rounded-lg shadow-md p-10 w-[1000px] text-center">
+          {/* Ícone e símbolo */}
+          <div className="flex flex-col items-center space-y-2 mb-6">
+            <CurrencyIconDetail symbol={currency.symbol} className="w-16 h-16" />
           </div>
-          <div>
-            <p className="text-sm text-purple-200">Nome</p>
-            <p className="text-lg font-medium text-white">{currency.name}</p>
+
+          {/* Informações */}
+          <div className="space-y-4 text-left text-white">
+            <div>
+              <p className="text-sm text-[#fffcb7]">Nome</p>
+              <p className="text-base font-medium">{currency.name}</p>
+            </div>
+            <div>
+              <p className="text-sm text-[#fffcb7]">Lastro</p>
+              <p className="text-base font-medium">{currency.backing}</p>
+            </div>
+            <div>
+              <p className="text-sm text-[#fffcb7]">Reverse</p>
+              <p className="text-base font-medium">
+                {currency.reverse ? "Sim" : "Não"}
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm text-purple-200">Lastro</p>
-            <p className="text-lg font-medium text-white">{currency.backing}</p>
+
+          {/* Botões */}
+          <div className="flex justify-end space-x-3 mt-10">
+            <Button
+              className="w-[100px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+              onClick={() => router.push("/currencies")}
+            >
+              Voltar
+            </Button>
+            <Button
+              className="w-[110px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+              onClick={() => router.push(`/currencies/${currency.id}/history`)}
+            >
+              Histórico
+            </Button>
+            <Button
+              className="w-[100px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150"
+              onClick={() => router.push(`/currencies/${currency.id}/edit`)}
+            >
+              Editar
+            </Button>
           </div>
-          <div>
-            <p className="text-sm text-purple-200">Reverse</p>
-            <p className="text-lg font-medium text-white">{currency.reverse ? "Sim" : "Não"}</p>
-          </div>
-        </div>
-        <div className="flex justify-end space-x-2 pt-2">
-          <Button
-            className="p-3 border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
-            onClick={() => router.push(`/currencies/${currency.id}/edit`)}>Editar
-          </Button>
-          <Button
-            className="p-3 border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
-            onClick={() => router.push(`/currencies/${currency.id}/history`)}>
-            Ver Histórico
-          </Button>
-          <Button
-            className="p-3 border border-purple-200 bg-purple-700 text-white hover:bg-[#52008b] hover:opacity-90 active:scale-95 transition transform text-white font-semibold rounded px-4 py-2"
-            onClick={() => router.push("/currencies")}>Voltar
-          </Button>
         </div>
       </div>
     </div>

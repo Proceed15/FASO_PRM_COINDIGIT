@@ -2,16 +2,28 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { UserProvider } from '@/contexts/UserContext'
-// Idioma: pt-br
+
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'Coin Digital',
-  description: 'by AMS-ADS 5 JRLSF FESR ADPM ISAA LGRF',
+export const metadata = {//ICONE DA PÁGINA
+  title: "CoinDigit",
+  description: "Invista no seu Futuro!",
   icons: {
-    icon: '/favicon.ico', // Isso é o que adiciona o ícone na aba
+    icon: [
+      {
+        url: "/favicon.png",
+        type: "image/png",
+        sizes: "32x32",
+      },
+      {
+        url: "/favicon.ico",
+        type: "image/x-icon",
+        sizes: "16x16",
+      },
+    ],
   },
-}
+};
+
 
 export default function RootLayout({
   children,
