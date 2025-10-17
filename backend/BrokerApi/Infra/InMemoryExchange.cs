@@ -1,5 +1,8 @@
 using System.Collections.Concurrent;
 using Core;
+using Core.IExchange;
+using Core.IMessage;
+using Core.IQueue;
 
 namespace BrokerApi.API.Infra
 {

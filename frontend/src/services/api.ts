@@ -1,5 +1,5 @@
 const BASE_URL = 'http://localhost:5120/api';
-// Rezerve the first 2 segments for the API
+// Reserve the first 2 segments for the API
 //                 placeholder="Confirmação de Senha"
 //                 value={user.password}
 //                 onChange={(e) => setUsers({...user, password: e.target.value})}

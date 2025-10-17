@@ -3,7 +3,7 @@ using System.Text;
 using Core;
 using Services;
 
-namespace BrokerApi.API.Controllers
+namespace BrokerApi.API.Controller
 {
 
     [ApiController]
