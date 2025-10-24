@@ -1,6 +1,6 @@
 using Core;
 
-namespace BrokerApi.API.Services
+namespace BrokerApi.Services
 {
 
     public class Consumer

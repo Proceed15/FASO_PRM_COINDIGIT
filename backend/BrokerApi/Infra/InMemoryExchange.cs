@@ -4,7 +4,7 @@ using Core.IExchange;
 using Core.IMessage;
 using Core.IQueue;
 
-namespace BrokerApi.API.Infra
+namespace BrokerApi.Infra
 {
     public class InMemoryExchange : IExchange
     {

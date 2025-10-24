@@ -1,4 +1,4 @@
-namespace BrokerApi.API.Core
+namespace BrokerApi.Core
 {
     public enum ExchangeType
     {

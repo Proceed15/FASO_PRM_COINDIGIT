@@ -1,4 +1,4 @@
-namespace BrokerApi.API.Core
+namespace BrokerApi.Core
 {
     public class Message : IMessage
     {

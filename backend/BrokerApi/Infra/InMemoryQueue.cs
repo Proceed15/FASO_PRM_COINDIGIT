@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using Core;
 
-namespace BrokerApi.API.Infra
+namespace BrokerApi.Infra
 {
 
     public class InMemoryQueue : IQueue
