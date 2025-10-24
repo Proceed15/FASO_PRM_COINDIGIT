@@ -1,8 +1,5 @@
 using System.Collections.Concurrent;
-using Core;
-using Core.IExchange;
-using Core.IMessage;
-using Core.IQueue;
+using BrokerApi.Core;
 
 namespace BrokerApi.Infra
 {
@@ -32,6 +29,9 @@ namespace BrokerApi.Infra
 
         public async Task RouteAsync(IMessage message)
         {
+            //trata o RoutingKey com ?? sting.Empty para evitar null references
+            var key = message.RoutingKey ?? string.Empty;
+
             if (Type == ExchangeType.Fanout)
             {
                 foreach (var kv in _bindings)
@@ -46,7 +46,7 @@ namespace BrokerApi.Infra
 
             if (Type == ExchangeType.Direct)
             {
-                if (_bindings.TryGetValue(message.RoutingKey, out var bag))
+                if (_bindings.TryGetValue(key, out var bag))
                 {
                     foreach (var q in bag)
                     {
@@ -58,7 +58,7 @@ namespace BrokerApi.Infra
 
             if (Type == ExchangeType.Topic)
             {
-                if (_bindings.TryGetValue(message.RoutingKey, out var bag2))
+                if (_bindings.TryGetValue(key, out var bag2))
                 {
                     foreach (var q in bag2)
                     {
