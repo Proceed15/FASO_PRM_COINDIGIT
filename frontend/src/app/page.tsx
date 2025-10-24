@@ -8,7 +8,7 @@ import { UserContext } from "../contexts/UserContext";
 export default function Home() {
   const { isLoading, isInitialized } = useContext(UserContext);
   const [showContent, setShowContent] = useState(false);
-
+   // Seções
   // LOAD 
   useEffect(() => {
     if (isInitialized && !isLoading) {

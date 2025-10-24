@@ -1,6 +1,6 @@
 # mobile
 
-A new Flutter project.
+The New Flutter Project Monday One!
 
 ## Getting Started
 
