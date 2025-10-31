@@ -2,7 +2,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+//Tabela Compras Vendas, Registro por Cliente, Ligação Wallet com a Lista de transações própria de muitos para muitos indo para a CurrencyAPI, retorna as moedas que foram transferidas por um Usuário Vinculado a Wallet pela UserApi
+//User Api 1 para Muitos Wallet
+//Currency Api Muitos para Muitos Wallet, lista de Transações 
 builder.Services.AddOpenApi();
+builder.WebHost.UseUrls("http://localhost:5004");
 
 var app = builder.Build();
 
@@ -14,7 +18,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+/*var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
@@ -31,11 +35,11 @@ app.MapGet("/weatherforecast", () =>
         .ToArray();
     return forecast;
 })
-.WithName("GetWeatherForecast");
+.WithName("GetWeatherForecast");*/
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+/*record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+}*/
