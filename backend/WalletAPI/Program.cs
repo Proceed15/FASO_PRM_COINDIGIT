@@ -3,7 +3,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
+//Tabela Compras Vendas, Registro por Cliente, Ligação Wallet com a Lista de transações própria de muitos para muitos indo para a CurrencyAPI, retorna as moedas que foram transferidas por um Usuário Vinculado a Wallet pela UserApi
+//User Api 1 para Muitos Wallet
+//Currency Api Muitos para Muitos Wallet, lista de Transações 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
