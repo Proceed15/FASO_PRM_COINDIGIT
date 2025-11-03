@@ -4,7 +4,7 @@ namespace BrokerApi.Core
     {
         string Name { get; }
         Task EnqueueAsync(IMessage message);
-        Task<Message?> DequeueAsync(CancellationToken ct);
+        Task<IMessage?> DequeueAsync(CancellationToken ct);
         int Count { get; }
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
-using Core;
-using Infra;
+using BrokerApi.Core;
+using BrokerApi.Infra;
 
 namespace BrokerApi.Services
 {

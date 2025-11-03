@@ -8,7 +8,7 @@ namespace BrokerApi.Infra
         public string Name { get; }
         public ExchangeType Type { get; }
 
-        private readonly ConcurrentDictionary<string, List<IQueue>> _bindings = new();
+        private readonly ConcurrentDictionary<string, ConcurrentBag<IQueue>> _bindings = new();
 
         public InMemoryExchange(string name, ExchangeType type)
         {
@@ -44,7 +44,7 @@ namespace BrokerApi.Infra
                 }
             }
 
-            if (Type == ExchangeType.Direct)
+            if (Type == ExchangeType.Direct || Type == ExchangeType.Topic)
             {
                 if (_bindings.TryGetValue(key, out var bag))
                 {
@@ -54,18 +54,6 @@ namespace BrokerApi.Infra
                     }
                     return;
                 }
-            }
-
-            if (Type == ExchangeType.Topic)
-            {
-                if (_bindings.TryGetValue(key, out var bag2))
-                {
-                    foreach (var q in bag2)
-                    {
-                        await q.EnqueueAsync(message);
-                    }
-                }
-                return;
             }
         }
     }
