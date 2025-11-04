@@ -38,6 +38,7 @@ mobile/
  ├── test/
  ├── pubspec.yaml
  └── README.md
+ 
 4. Estrutura do Projeto
 Principais pastas e arquivos:
 lib/ Onde fica o código-fonte principal em Dart. O arquivo inicial é main.dart.
