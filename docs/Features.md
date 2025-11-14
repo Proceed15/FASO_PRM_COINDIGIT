@@ -41,7 +41,7 @@ Completando a Feature:
   3 São Comandos sequencias, executar na ordem de aparição exceto pelas opções do git add (escolher uma)
 </p>
 <p>
-  4 Considere que por enquanto temos que executar git flow init todas as vezes no raiz do projeto
+  4 Considere que por enquanto temos que executar git flow init todas as vezes no raiz do projetogit add
 </p>
 <p>
   5 Por precaução rodar git pull antes de fazer o commit

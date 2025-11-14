@@ -5,7 +5,7 @@ using CurrencyAPI.Infrastructure.Services;
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
-builder.WebHost.UseUrls("http://localhost:5002");
+builder.WebHost.UseUrls("http://localhost:5294");
 
 // Service Configuration
 builder.Services.AddJwtAuthentication(configuration);

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using JwtRoleAuthentication.Services;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -64,5 +65,37 @@ public class UserController : ControllerBase
     {
         var updatedUser = _userService.UpdateUser(id, userDto);
         return updatedUser != null ? Ok(updatedUser) : NotFound();
+    }
+
+    [HttpPost("login")]
+    public IActionResult Login(LoginDTO loginDto)
+    {
+        try
+        {
+            var user = _userService.ValidateUser(loginDto.Email, loginDto.Password);
+            if (user == null)
+            {
+                return Unauthorized(new { error = "Credenciais inválidas." });
+            }
+
+            // Gerar token JWT
+            var tokenService = new TokenService(null); // Logger pode ser passado se necessário
+            var token = tokenService.CreateToken(new User
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                Phone = user.Phone,
+                Address = user.Address,
+                Password = "", // Não incluir senha no token
+                Photo = user.Photo
+            });
+
+            return Ok(new { token, user });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { error = "Erro interno do servidor." });
+        }
     }
 }
