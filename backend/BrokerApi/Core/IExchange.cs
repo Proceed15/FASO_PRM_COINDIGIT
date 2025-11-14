@@ -1,4 +1,4 @@
-namespace BrokerApi.API.Core
+namespace BrokerApi.Core
 {
     public interface IExchange
     {
@@ -7,6 +7,6 @@ namespace BrokerApi.API.Core
 
         void BindQueue(string routingKey, IQueue queue);
         void UnbindQueue(string routingKey, IQueue queue);
-        Task PublishAsync(Message message);
+        Task RouteAsync(IMessage message);
     }
 }

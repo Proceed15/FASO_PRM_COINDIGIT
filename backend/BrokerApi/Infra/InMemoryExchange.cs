@@ -1,17 +1,14 @@
 using System.Collections.Concurrent;
-using Core;
-using Core.IExchange;
-using Core.IMessage;
-using Core.IQueue;
+using BrokerApi.Core;
 
-namespace BrokerApi.API.Infra
+namespace BrokerApi.Infra
 {
     public class InMemoryExchange : IExchange
     {
         public string Name { get; }
         public ExchangeType Type { get; }
 
-        private readonly ConcurrentDictionary<string, List<IQueue>> _bindings = new();
+        private readonly ConcurrentDictionary<string, ConcurrentBag<IQueue>> _bindings = new();
 
         public InMemoryExchange(string name, ExchangeType type)
         {
@@ -32,6 +29,9 @@ namespace BrokerApi.API.Infra
 
         public async Task RouteAsync(IMessage message)
         {
+            //trata o RoutingKey com ?? sting.Empty para evitar null references
+            var key = message.RoutingKey ?? string.Empty;
+
             if (Type == ExchangeType.Fanout)
             {
                 foreach (var kv in _bindings)
@@ -44,9 +44,9 @@ namespace BrokerApi.API.Infra
                 }
             }
 
-            if (Type == ExchangeType.Direct)
+            if (Type == ExchangeType.Direct || Type == ExchangeType.Topic)
             {
-                if (_bindings.TryGetValue(message.RoutingKey, out var bag))
+                if (_bindings.TryGetValue(key, out var bag))
                 {
                     foreach (var q in bag)
                     {
@@ -54,18 +54,6 @@ namespace BrokerApi.API.Infra
                     }
                     return;
                 }
-            }
-
-            if (Type == ExchangeType.Topic)
-            {
-                if (_bindings.TryGetValue(message.RoutingKey, out var bag2))
-                {
-                    foreach (var q in bag2)
-                    {
-                        await q.EnqueueAsync(message);
-                    }
-                }
-                return;
             }
         }
     }
