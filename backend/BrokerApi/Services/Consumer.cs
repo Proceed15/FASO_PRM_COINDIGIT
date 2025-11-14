@@ -7,7 +7,7 @@ namespace BrokerApi.Services
     {
         private readonly IBroker _broker;
         private readonly IQueue _queue;
-        private readonly Func<IMessage, Task<bool>> _processor; // returns true if ack, false if nack
+        private readonly Func<IMessage, Task<bool>> _processor;
         private readonly int _maxRetries;
 
         public Consumer(IBroker broker, string queueName, Func<IMessage, Task<bool>> processor, int maxRetries = 3)
@@ -38,7 +38,6 @@ namespace BrokerApi.Services
                         }
                         else
                         {
-                            // re-enqueue with backoff (simple)
                             await Task.Delay(500);
                             await _queue.EnqueueAsync(msg);
                             Console.WriteLine($"Requeued message {msg.Id}, deliveryCount={msg.DeliveryCount}");
@@ -46,13 +45,11 @@ namespace BrokerApi.Services
                     }
                     else
                     {
-                        // ack - nothing to do in our in-memory model
                         Console.WriteLine($"Processed and acked {msg.Id}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    // treat as nack
                     msg.DeliveryCount++;
                     Console.WriteLine($"Processor threw: {ex.Message}. deliveryCount={msg.DeliveryCount}");
                     if (msg.DeliveryCount > _maxRetries)
