@@ -27,8 +27,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         return;
       }
 
-      // O backend embute o user dentro do token ou retorna user no login?
-      // Aqui estamos considerando que o front salva o usuário em cache.
+//dd
       final cached = prefs.getString("user");
       if (cached != null) {
         user = User.fromJson(jsonDecode(cached));

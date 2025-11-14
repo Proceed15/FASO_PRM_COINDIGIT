@@ -10,9 +10,7 @@ class ChatbotService {
     ),
   );
 
-  // ===========================================================
   // ENVIAR MENSAGEM PARA O CHATBOT
-  // ===========================================================
   static Future<String> sendMessage(String message) async {
     final payload = {"message": message};
 

@@ -32,7 +32,7 @@ class _UserCreatePageState extends State<UserCreatePage> {
         role: role,
       );
 
-      // CORREÇÃO: usar register() (como no backend original)
+      //red register
       await UserService.register(user);
 
       if (!mounted) return;
@@ -73,9 +73,9 @@ class _UserCreatePageState extends State<UserCreatePage> {
             ),
             const SizedBox(height: 20),
 
-            // campo de role (dropdown)
+            //dropdown
             DropdownButtonFormField<String>(
-              value: role,
+              initialValue: role,
               items: const [
                 DropdownMenuItem(value: "User", child: Text("User")),
                 DropdownMenuItem(value: "Admin", child: Text("Admin")),

@@ -100,7 +100,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
             ),
           ),
 
-          // Área de envio
+          //Envio
           Container(
             color: const Color(0xFF0c0c1a),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),

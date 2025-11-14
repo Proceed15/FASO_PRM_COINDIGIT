@@ -6,9 +6,7 @@ import '../core/constants.dart';
 class CurrencyService {
   static final ApiClient _api = ApiClient(baseUrl: API_BASE);
 
-  // ===========================================================
-  // LISTAR TODAS AS MOEDAS
-  // ===========================================================
+  // LIST MOEDAS
   static Future<List<Currency>> getAll() async {
     final endpoints = [
       "/api/Currency",
@@ -34,9 +32,7 @@ class CurrencyService {
     throw Exception("Falha ao carregar moedas.");
   }
 
-  // ===========================================================
-  // BUSCAR 1 MOEDA POR ID
-  // ===========================================================
+  // BUSCAR POR ID
   static Future<Currency> getById(String id) async {
     final endpoints = [
       "/api/Currency/$id",
@@ -60,9 +56,7 @@ class CurrencyService {
     throw Exception("Moeda não encontrada.");
   }
 
-  // ===========================================================
   // CRIAR MOEDA
-  // ===========================================================
   static Future<Currency> create(Currency currency) async {
     final endpoints = [
       "/api/Currency",
@@ -84,9 +78,7 @@ class CurrencyService {
     throw Exception("Falha ao criar moeda.");
   }
 
-  // ===========================================================
   // ATUALIZAR MOEDA
-  // ===========================================================
   static Future<Currency> update(String id, Currency currency) async {
     final endpoints = [
       "/api/Currency/$id",
@@ -108,9 +100,7 @@ class CurrencyService {
     throw Exception("Falha ao atualizar moeda.");
   }
 
-  // ===========================================================
   // DELETAR MOEDA
-  // ===========================================================
   static Future<void> delete(String id) async {
     final endpoints = [
       "/api/Currency/$id",
@@ -129,9 +119,7 @@ class CurrencyService {
     throw Exception("Falha ao excluir moeda.");
   }
 
-  // ===========================================================
-  // HISTÓRICO DE PREÇOS
-  // ===========================================================
+  // HISTÓRICO
   static Future<List<CurrencyHistoryItem>> getHistory(String currencyId) async {
     final endpoints = [
       "/api/Currency/$currencyId/history",
@@ -153,8 +141,7 @@ class CurrencyService {
         }
       } catch (_) {}
     }
-
-    // se nenhuma rota funcionar, retornar lista vazia
+    //retornar lista vazia
     return [];
   }
 }

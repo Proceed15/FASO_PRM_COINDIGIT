@@ -4,7 +4,7 @@ class Currency {
   String name;
   String backing;
   bool reverse;
-  double? price; // usado no dashboard e histórico
+  double? price;
 
   Currency({
     this.id,
@@ -38,10 +38,8 @@ class Currency {
       };
 }
 
-// ---------------------------
-// MODELO DO HISTÓRICO DE PREÇOS
-// ---------------------------
 
+//HISTÓRICO
 class CurrencyHistoryItem {
   String id;
   String currencyId;

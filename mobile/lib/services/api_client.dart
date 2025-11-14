@@ -17,7 +17,7 @@ class ApiClient {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          // injeta o token automaticamente
+          //token
           final prefs = await SharedPreferences.getInstance();
           final token = prefs.getString("token");
 
@@ -34,7 +34,7 @@ class ApiClient {
     );
   }
 
-  // Métodos HTTP
+  //HTTP
   Future<Response> get(String path,
           {Map<String, dynamic>? queryParameters}) =>
       dio.get(path, queryParameters: queryParameters);
