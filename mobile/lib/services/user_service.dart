@@ -1,130 +1,88 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/user.dart';
-import 'api_client.dart';
-import '../core/constants.dart';
 
 class UserService {
-  static final ApiClient _api = ApiClient(baseUrl: API_BASE);
+  static final Dio _dio = Dio(BaseOptions(
+    baseUrl: "http://localhost:5120", //api
+    headers: {"Content-Type": "application/json"},
+  ));
 
-  // LOGIN
-  static Future<String> login(String email, String password) async {
-    final payload = {
-      "email": email,
-      "password": password,
-    };
-
-    try {//BASE NO SWAGGER
-      final dio = Dio();
-      final resp = await dio.post("$API_BASE/api/auth/login", data: payload);
-
-      if (resp.statusCode != null && resp.statusCode! < 400) {
-        final data = resp.data;
-        String token;
-
-        if (data is Map && (data['token'] != null || data['Token'] != null)) {
-          token = data['token'] ?? data['Token'];
-        } else if (data is String) {
-          token = data;
-        } else {
-          token = jsonEncode(data);
-        }
-
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString("token", token);
-
-        return token;
-      }
-    } catch (e) {
-      throw Exception("Erro ao fazer login: $e");
-    }
-
-    throw Exception("Falha ao realizar login.");
-  }
-
-  // LOGOUT
-  static Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove("token");
-    await prefs.remove("user");
-  }
-
-  // REGISTRO
-  static Future<User> register(User user) async {
+  //LOGIN
+  static Future<String?> login(String email, String password) async {
     try {
-      final r = await _api.post("/api/User", user.toJson());
+      final response = await _dio.post("/auth/login", data: {
+        "email": email,
+        "password": password,
+      });
 
-      if (r.statusCode != null && r.statusCode! < 400) {
-        return User.fromJson(r.data as Map<String, dynamic>);
-      }
+      return response.data["token"];
     } catch (e) {
-      throw Exception("Erro ao registrar usuário: $e");
+      print("Erro login: $e");
+      return null;
     }
-
-    throw Exception("Falha ao registrar usuário.");
   }
 
-  // LISTAR TODOS
+  //CADASTRAR USUÁRIO
+  static Future<bool> register(User user) async {
+    try {
+      final response = await _dio.post(
+        "/User",
+        data: user.toJson(),
+      );
+
+      return response.statusCode == 200 || response.statusCode == 201;
+    } catch (e) {
+      print("Erro register: $e");
+      return false;
+    }
+  }
+
+  //LISTAR TODOS
   static Future<List<User>> getAll() async {
     try {
-      final r = await _api.get("/api/User");
+      final response = await _dio.get("/User");
 
-      if (r.statusCode != null && r.statusCode! < 400 && r.data is List) {
-        return (r.data as List)
-            .map((e) => User.fromJson(e as Map<String, dynamic>))
-            .toList();
-      }
+      final List data = response.data;
+      return data.map((json) => User.fromJson(json)).toList();
     } catch (e) {
-      throw Exception("Erro ao carregar usuários: $e");
+      print("Erro getAll: $e");
+      return [];
     }
-
-    throw Exception("Falha ao carregar usuários.");
   }
 
-  // BUSCAR POR ID
-  static Future<User> getById(String id) async {
+  //BUSCAR POR ID
+  static Future<User?> getById(String id) async {
     try {
-      final r = await _api.get("/api/User/$id");
-
-      if (r.statusCode != null &&
-          r.statusCode! < 400 &&
-          r.data is Map<String, dynamic>) {
-        return User.fromJson(r.data as Map<String, dynamic>);
-      }
+      final response = await _dio.get("/User/$id");
+      return User.fromJson(response.data);
     } catch (e) {
-      throw Exception("Erro ao buscar usuário: $e");
+      print("Erro getById: $e");
+      return null;
     }
-
-    throw Exception("Usuário não encontrado.");
   }
 
-  // ATUALIZAR
-  static Future<User> update(String id, User user) async {
+  //ATUALIZAR
+  static Future<bool> update(User user) async {
     try {
-      final r = await _api.put("/api/User/$id", user.toJson());
-
-      if (r.statusCode != null && r.statusCode! < 400) {
-        return User.fromJson(r.data as Map<String, dynamic>);
-      }
+      final response = await _dio.put(
+        "/User/${user.id}",
+        data: user.toJson(),
+      );
+      return response.statusCode == 200;
     } catch (e) {
-      throw Exception("Erro ao atualizar usuário: $e");
+      print("Erro update: $e");
+      return false;
     }
-
-    throw Exception("Falha ao atualizar usuário.");
   }
 
-  // DELETAR
-  static Future<void> delete(String id) async {
+  //DELETAR
+  static Future<bool> delete(String id) async {
     try {
-      final r = await _api.delete("/api/User/$id");
-
-      if (r.statusCode != null && r.statusCode! < 400) return;
+      final response = await _dio.delete("/User/$id");
+      return response.statusCode == 200;
     } catch (e) {
-      throw Exception("Erro ao excluir usuário: $e");
+      print("Erro delete: $e");
+      return false;
     }
-
-    throw Exception("Falha ao excluir usuário.");
   }
 }

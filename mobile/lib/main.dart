@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'routes.dart';
 import 'core/theme.dart';
+import 'routes.dart';
 
 void main() {
   runApp(const CoinDigitApp());

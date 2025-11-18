@@ -1,3 +1,5 @@
+/*
+
 import 'package:dio/dio.dart';
 import '../core/constants.dart';
 
@@ -38,4 +40,4 @@ class ChatbotService {
 
     throw Exception("Erro ao comunicar com o Chatbot.");
   }
-}
+}*/

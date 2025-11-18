@@ -3,8 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 final appTheme = ThemeData(
   brightness: Brightness.dark,
+  scaffoldBackgroundColor: const Color(0xFF101320),
 
-  scaffoldBackgroundColor: const Color(0xFF283976),
+  colorScheme: const ColorScheme.dark(
+    primary: Color(0xFF265DBF),
+    secondary: Color(0xFF265DBF),
+    surface: Color(0xFF0c0c1a),
+    background: Color(0xFF101320),
+  ),
 
   primaryColor: const Color(0xFF265DBF),
 
@@ -18,14 +24,7 @@ final appTheme = ThemeData(
     filled: true,
     fillColor: const Color(0xFF0c0c1a),
     labelStyle: const TextStyle(color: Colors.white70),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: Colors.white24),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: Colors.white24),
-    ),
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
       borderSide: const BorderSide(color: Colors.blueAccent),
@@ -37,10 +36,7 @@ final appTheme = ThemeData(
       backgroundColor: const Color(0xFF265DBF),
       foregroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(vertical: 14),
-      textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     ),
   ),
 );

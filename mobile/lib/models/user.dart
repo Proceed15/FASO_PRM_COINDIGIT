@@ -5,8 +5,8 @@ class User {
   String? phone;
   String? address;
   String? photo;
-  String? password; 
-  String role;
+  String? password;
+  String? role;
 
   User({
     this.id,
@@ -16,7 +16,7 @@ class User {
     this.address,
     this.photo,
     this.password,
-    this.role = "User",
+    this.role,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -26,24 +26,19 @@ class User {
         phone: json['phone'] ?? json['Phone'],
         address: json['address'] ?? json['Address'],
         photo: json['photo'] ?? json['Photo'],
-        role: json['role'] ?? json['Role'] ?? "User",
+        role: json['role'] ?? json['Role'],
       );
 
-  Map<String, dynamic> toJson() => {
-        if (id != null) 'id': id,
-        'name': name,
-        'email': email,
-        if (phone != null) 'phone': phone,
-        if (address != null) 'address': address,
-        if (photo != null) 'photo': photo,
-        if (password != null) 'password': password,
-        'role': role,
-      };
-
-  static User empty() => User(
-        id: null,
-        name: "",
-        email: "",
-        role: "User",
-      );
+  Map<String, dynamic> toJson() {
+    final m = <String, dynamic>{};
+    if (id != null) m['id'] = id;
+    m['name'] = name;
+    m['email'] = email;
+    if (phone != null) m['phone'] = phone;
+    if (address != null) m['address'] = address;
+    if (photo != null) m['photo'] = photo;
+    if (password != null) m['password'] = password;
+    if (role != null) m['role'] = role;
+    return m;
+  }
 }
