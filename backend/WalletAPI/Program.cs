@@ -1,43 +1,33 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using RabbitMQ.Client;
+using System.Text;
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-//Tabela Compras Vendas, Registro por Cliente, Ligação Wallet com a Lista de transações própria de muitos para muitos indo para a CurrencyAPI, retorna as moedas que foram transferidas por um Usuário Vinculado a Wallet pela UserApi
-//User Api 1 para Muitos Wallet
-//Currency Api Muitos para Muitos Wallet, lista de Transações 
+// Configuração do RabbitMQ
+builder.Services.AddSingleton<IConnectionFactory>(sp => new ConnectionFactory
+{
+    HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost",
+    UserName = "admin",
+    Password = "admin"
+});
+
+builder.Services.AddSingleton<RabbitMQ.Client.IConnection>(sp => sp.GetRequiredService<IConnectionFactory>().CreateConnection());
+builder.Services.AddSingleton<WalletMessagePublisher>();
+builder.Services.AddHostedService<WalletMessageConsumer>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+app.MapGet("/", () => Results.Json(new { message = "Hello from WalletAPI" }));
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
+app.MapPost("/publish", async (WalletMessagePublisher publisher) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-//weatherforecast
-app.MapGet("/", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    var msg = new { Id = Guid.NewGuid(), Value = Random.Shared.Next(1, 1000), Date = DateTime.UtcNow };
+    await publisher.PublishAsync("wallet.queue", msg);
+    return Results.Json(new { status = "Message published", msg });
+});
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
