@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using JwtRoleAuthentication.Services;
-
+using Microsoft.AspNetCore.Authorization;
 [ApiController]
 [Route("api/[controller]")]
 
@@ -31,14 +30,14 @@ public class UserController : ControllerBase
         }
     }
 
-
+    [Authorize]
     [HttpGet]
     public IActionResult getAllUsers()
     {
         var users = _userService.GetAllUsers();
         return Ok(users);
     }
-
+    [Authorize]
     [HttpGet("{id}")]
     public IActionResult GetUserDetails(int id)
     {
@@ -52,14 +51,14 @@ public class UserController : ControllerBase
     //     var user = _userService.GetUserByEmail(email);
     //     return user != null ? Ok(user) : NotFound();
     // }
-
+    [Authorize]
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(int id)
     {
         var result = _userService.DeleteUser(id);
         return result ? NoContent() : NotFound();
     }
-
+    [Authorize]
     [HttpPut("{id}")]
     public IActionResult UpdateUser(int id, UserDTO userDto)
     {
