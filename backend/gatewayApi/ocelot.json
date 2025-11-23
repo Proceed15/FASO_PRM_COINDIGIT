@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "Routes": [
         {
             "DownstreamPathTemplate": "/api/Currency",
@@ -102,3 +103,89 @@
         "BaseUrl": "http://localhost:5000"
     }
 }
+=======
+    "Routes":
+    [
+        {
+        "DownstreamPathTemplate": "/api/Currency",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [{
+            "Host": "localhost",
+            "Port": 5294
+        }],
+        "UpstreamPathTemplate": "/currency",
+        "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE"]
+        },
+        {
+        "DownstreamPathTemplate": "/api/Currency/{id}/history",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [{
+            "Host": "localhost",
+            "Port": 5294
+        }],
+        "UpstreamPathTemplate": "/currency/{id}/history",
+        "UpstreamHttpMethod": [ "GET"]
+        },
+        {
+        "DownstreamPathTemplate": "/api/Currency/convert",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [{
+            "Host": "localhost",
+            "Port": 5294
+        }],
+        "UpstreamPathTemplate": "/currency/convert",
+        "UpstreamHttpMethod": [ "GET"]
+        },
+        {
+        "DownstreamPathTemplate": "/api/Currency/summary",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [{
+            "Host": "localhost",
+            "Port": 5294
+        }],
+        "UpstreamPathTemplate": "/currency/summary",
+        "UpstreamHttpMethod": [ "GET"]
+        },
+        {
+        "DownstreamPathTemplate": "/api/Currency/{id}/chart",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [{
+            "Host": "localhost",
+            "Port": 5294
+        }],
+        "UpstreamPathTemplate": "/currency/{id}/chart",
+        "UpstreamHttpMethod": [ "GET"]
+        },
+        {
+        "DownstreamPathTemplate": "/api/User",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [{
+            "Host": "localhost",
+            "Port": 5120
+        }],
+        "UpstreamPathTemplate": "/user",
+        "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE"]
+        },
+        {
+        "DownstreamPathTemplate": "/api/User/login",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [{
+            "Host": "localhost",
+            "Port": 5120
+        }],
+        "UpstreamPathTemplate": "/user/login",
+        "UpstreamHttpMethod": [ "POST"]
+        },
+        {
+        "DownstreamPathTemplate": "/api/wallet",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [{
+            "Host": "localhost",
+            "Port": 5124
+        }],
+        "UpstreamPathTemplate": "/wallet",
+        "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE"]
+        }
+    ]
+}
+>>>>>>> feature/ConsertoGetwayApi
