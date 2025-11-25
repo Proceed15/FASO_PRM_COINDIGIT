@@ -17,18 +17,43 @@ class _RegisterPageState extends State<RegisterPage> {
   String? error;
 
   Future<void> register() async {
-    setState(() { loading = true; error = null; });
-
-    try {
-      final user = User(name: nameCtrl.text.trim(), email: emailCtrl.text.trim(), password: passCtrl.text.trim());
-      await UserService.register(user);
-      if (!mounted) return;
-      Navigator.pushReplacementNamed(context, "/login");
-    } catch (e) {
-      setState(() => error = "Erro ao criar conta.");
+    if (nameCtrl.text.trim().isEmpty ||
+        emailCtrl.text.trim().isEmpty ||
+        passCtrl.text.trim().isEmpty) {
+      setState(() {
+        error = "Por favor, preencha todos os campos.";
+      });
+      return;
     }
 
-    setState(() { loading = false; });
+    setState(() {
+      loading = true;
+      error = null;
+    });
+
+    try {
+      final user = User(
+        name: nameCtrl.text.trim(),
+        email: emailCtrl.text.trim(),
+        password: passCtrl.text.trim(),
+        phone: "", //MANDA VAZIO
+        address: "",
+        photo: "",
+      );
+      final ok = await UserService.register(user);
+      if (ok) {
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, "/login");
+      } else {
+        setState(() => error = "Erro ao criar conta. Verifique seus dados.");
+      }
+    } catch (e) {
+      setState(() => error = "Erro ao criar conta: \$e");
+    }
+
+    setState(() {
+      loading = false;
+    });
   }
 
   @override

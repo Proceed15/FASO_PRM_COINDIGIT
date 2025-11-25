@@ -1,35 +1,53 @@
 import 'package:dio/dio.dart';
 import '../models/user.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class UserService {
-  static final Dio _dio = Dio(BaseOptions(
-    baseUrl: "http://localhost:5120", //api
-    headers: {"Content-Type": "application/json"},
-  ));
+  static final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: "http://localhost:5120",
+      headers: {"Content-Type": "application/json"},
+    ),
+  );
 
-  //LOGIN
-  static Future<String?> login(String email, String password) async {
+  // LOGIN
+  // Guarda o usuário logado
+  static User? loggedUser;
+
+  static Future<bool> login(String email, String password) async {
     try {
-      final response = await _dio.post("/auth/login", data: {
-        "email": email,
-        "password": password,
-      });
+      final response = await _dio.post(
+        "/api/auth/login",
+        data: {"email": email, "password": password},
+      );
 
-      return response.data["token"];
+      final token = response.data["token"];
+
+      if (token == null) return false;
+
+      // Decodifica o token jwt
+      Map<String, dynamic> decoded = JwtDecoder.decode(token);
+
+      // Preenche o usuário logado usando os dados do token
+      loggedUser = User(
+        id: decoded["sub"]?.toString(),
+        name: decoded["unique_name"] ?? "",
+        email: decoded["email"] ?? "",
+        role: decoded["role"] ?? "",
+      );
+
+      return true;
     } catch (e) {
       print("Erro login: $e");
-      return null;
+      return false;
     }
   }
 
-  //CADASTRAR USUÁRIO
+  // CADASTRAR
+
   static Future<bool> register(User user) async {
     try {
-      final response = await _dio.post(
-        "/User",
-        data: user.toJson(),
-      );
-
+      final response = await _dio.post("/api/User", data: user.toJson());
       return response.statusCode == 200 || response.statusCode == 201;
     } catch (e) {
       print("Erro register: $e");
@@ -37,10 +55,11 @@ class UserService {
     }
   }
 
-  //LISTAR TODOS
+  // LISTAR
+
   static Future<List<User>> getAll() async {
     try {
-      final response = await _dio.get("/User");
+      final response = await _dio.get("/api/User");
 
       final List data = response.data;
       return data.map((json) => User.fromJson(json)).toList();
@@ -50,10 +69,11 @@ class UserService {
     }
   }
 
-  //BUSCAR POR ID
+  // GET BY ID
+
   static Future<User?> getById(String id) async {
     try {
-      final response = await _dio.get("/User/$id");
+      final response = await _dio.get("/api/User/$id");
       return User.fromJson(response.data);
     } catch (e) {
       print("Erro getById: $e");
@@ -61,13 +81,11 @@ class UserService {
     }
   }
 
-  //ATUALIZAR
+  // UPDATE
+
   static Future<bool> update(User user) async {
     try {
-      final response = await _dio.put(
-        "/User/${user.id}",
-        data: user.toJson(),
-      );
+      final response = await _dio.put("/api/User/${user.id}", data: user.toJson());
       return response.statusCode == 200;
     } catch (e) {
       print("Erro update: $e");
@@ -75,10 +93,11 @@ class UserService {
     }
   }
 
-  //DELETAR
+  // DELETE
+
   static Future<bool> delete(String id) async {
     try {
-      final response = await _dio.delete("/User/$id");
+      final response = await _dio.delete("/api/User/$id");
       return response.statusCode == 200;
     } catch (e) {
       print("Erro delete: $e");
