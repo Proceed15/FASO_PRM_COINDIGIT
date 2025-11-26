@@ -1,0 +1,50 @@
+Terminal (venv):
+
+python run.py
+Traceback (most recent call last):
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\run.py", line 2, in <module>
+    from controllers.analysis_controller import bp_analysis
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\controllers\analysis_controller.py", line 2, in <module>
+    from services.nlp_services import analyze_text
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\services\nlp_services.py", line 1, in <module>
+    from core.models import nlp, sentiment_pipeline, tfidf_vectorizer
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\core\models.py", line 3, in <module>
+    from transformers import pipeline
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\venv\Lib\site-packages\transformers\__init__.py", line 27, in <module>
+    from . import dependency_versions_check
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\venv\Lib\site-packages\transformers\dependency_versions_check.py", line 16, in <module>
+    from .utils.versions import require_version, require_version_core
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\venv\Lib\site-packages\transformers\utils\__init__.py", line 24, in <module>
+    from .args_doc import (
+    ...<9 lines>...
+    )
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\venv\Lib\site-packages\transformers\utils\args_doc.py", line 30, in <module>
+    from .generic import ModelOutput
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\venv\Lib\site-packages\transformers\utils\generic.py", line 480, in <module>
+    import torch.utils._pytree as _torch_pytree
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\venv\Lib\site-packages\torch\utils\__init__.py", line 8, in <module>
+    from torch.utils import (
+    ...<5 lines>...
+    )
+  File "C:\Users\0031432412016\Desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\venv\Lib\site-packages\torch\utils\backcompat\__init__.py", line 2, in <module>
+    from torch._C import _set_backcompat_broadcast_warn
+ModuleNotFoundError: No module named 'torch._C'
+
+Log de Erros do CMD:
+python run.py 
+Traceback (most recent call last):
+  File "C:\Users\0031432412016\desktop\FASO_PRM_COINDIGIT\backend\ChatBotAPI\npl_chatbot\run.py", line 1, in <module>
+    from flask import Flask, render_template
+ModuleNotFoundError: No module named 'flask'
+
+Venv de Novo:
+pip install -r requirements.txt
+Collecting en_core_web_sm@ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl#sha256=1932429db727d4bff3deed6b34cfc05df17794f4a52eeb26cf8928f7c1a0fb85 (from -r requirements.txt (line 12))
+  Downloading https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl (12.8 MB)
+     ---------------------------------------- 0.0/12.8 MB ? eta -:--:--ERROR: Could not install packages due to an OSError: [Errno 28] No space left on device
+
+     -- ------------------------------------- 0.8/12.8 MB 10.7 MB/s eta 0:00:02
+
+[notice] A new release of pip is available: 25.0.1 -> 25.3
+[notice] To update, run: python.exe -m pip install --upgrade pip
+
