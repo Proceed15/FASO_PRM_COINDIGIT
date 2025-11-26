@@ -5,7 +5,7 @@ class CurrencyService {
   static final ApiClient _api = ApiClient();
 
   static Future<List<Currency>> getAll() async {
-    final r = await _api.get("/Currency");
+    final r = await _api.get("/currency");
     if (r.statusCode != null && r.statusCode! < 400 && r.data is List) {
       return (r.data as List).map((e) => Currency.fromJson(e as Map<String, dynamic>)).toList();
     }
@@ -13,7 +13,7 @@ class CurrencyService {
   }
 
   static Future<Currency> getById(String id) async {
-    final r = await _api.get("/Currency/$id");
+    final r = await _api.get("/currency/$id");
     if (r.statusCode != null && r.statusCode! < 400) {
       return Currency.fromJson(r.data as Map<String, dynamic>);
     }
@@ -21,7 +21,7 @@ class CurrencyService {
   }
 
   static Future<List<CurrencyHistoryItem>> getHistory(String id) async {
-    final r = await _api.get("/Currency/$id/history");
+    final r = await _api.get("/currency/$id/history");
     if (r.statusCode != null && r.statusCode! < 400 && r.data is List) {
       return (r.data as List).map((e) => CurrencyHistoryItem.fromJson(e as Map<String, dynamic>)).toList();
     }
@@ -29,7 +29,7 @@ class CurrencyService {
   }
 
   static Future<Currency> create(Currency currency) async {
-    final r = await _api.post("/Currency", currency.toJson());
+    final r = await _api.post("/currency", currency.toJson());
     if (r.statusCode != null && r.statusCode! < 400) {
       return Currency.fromJson(r.data as Map<String, dynamic>);
     }
@@ -37,7 +37,7 @@ class CurrencyService {
   }
 
   static Future<Currency> update(String id, Currency currency) async {
-    final r = await _api.put("/Currency/$id", currency.toJson());
+    final r = await _api.put("/currency/$id", currency.toJson());
     if (r.statusCode != null && r.statusCode! < 400) {
       return Currency.fromJson(r.data as Map<String, dynamic>);
     }
@@ -45,6 +45,6 @@ class CurrencyService {
   }
 
   static Future<void> delete(String id) async {
-    await _api.delete("/Currency/$id");
+    await _api.delete("/currency/$id");
   }
 }

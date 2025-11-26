@@ -3,16 +3,46 @@
         {
             "DownstreamPathTemplate": "/api/Currency",
             "DownstreamScheme": "http",
-            "DownstreamHostandPorts": [
+            "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5002
+                    "Port": 5294
                 }
             ],
             "UpstreamPathTemplate": "/currency",
             "UpstreamHttpMethod": [
                 "GET",
                 "POST"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Currency/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5294
+                }
+            ],
+            "UpstreamPathTemplate": "/currency/{id}",
+            "UpstreamHttpMethod": [
+                "GET",
+                "PUT",
+                "DELETE"
+            ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Currency/{id}/history",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5294
+                }
+            ],
+            "UpstreamPathTemplate": "/currency/{id}/history",
+            "UpstreamHttpMethod": [
+                "GET"
             ]
         },
         {

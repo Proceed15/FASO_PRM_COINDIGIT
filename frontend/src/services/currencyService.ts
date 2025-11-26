@@ -8,7 +8,7 @@ export interface Currency {
   reverse: boolean;
 }
 
-const BASE_URL = "http://localhost:5002/api/Currency";
+const BASE_URL = "http://localhost:5294/api/currency";//PORTA DO GATWAY 
 
 // PERFORMANCE
 interface CacheItem<T> {
