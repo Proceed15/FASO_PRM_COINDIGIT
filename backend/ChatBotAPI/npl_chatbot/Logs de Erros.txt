@@ -1,3 +1,4 @@
+Resolvidos:
 Terminal (venv):
 
 python run.py
