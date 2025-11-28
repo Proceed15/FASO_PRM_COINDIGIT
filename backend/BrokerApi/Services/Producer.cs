@@ -1,6 +1,6 @@
-using Core;
+using BrokerApi.Core;
 
-namespace BrokerApi.API.Services
+namespace BrokerApi.Services
 {
     public class Producer
     {

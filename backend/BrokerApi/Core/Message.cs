@@ -1,9 +1,9 @@
-namespace BrokerApi.API.Core
+namespace BrokerApi.Core
 {
     public class Message : IMessage
     {
         public Guid Id { get; } = Guid.NewGuid();
-        public string RoutingKey { get; }
+        public string? RoutingKey { get; }
         public byte[] Body { get; }
         public int DeliveryCount { get; set; } = 0;
         public DateTime CreatedAt { get; } = DateTime.UtcNow;
@@ -12,6 +12,7 @@ namespace BrokerApi.API.Core
         {
             RoutingKey = routingKey;
             Body = body;
+            DeliveryCount = 0;
         }
 
         public override string ToString() => $"Message(Id={Id}, RoutingKey={RoutingKey}, DeliveryCount={DeliveryCount})";

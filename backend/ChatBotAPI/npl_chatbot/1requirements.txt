@@ -1,4 +1,5 @@
-Versão Antiga
+
+
 flask
 spacy
 textblob
