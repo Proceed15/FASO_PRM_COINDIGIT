@@ -22,7 +22,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"] ?? "sua-chave-jwt-aqui")
+                Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"] ?? "Apollo_ Key_Athena_Key_SSH256bits_Key")
             )
         };
     });
