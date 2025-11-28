@@ -32,7 +32,7 @@ public class UserService : IUserService
         var existingUser = _userRepository.GetByEmail(userDto.Email);
         if (existingUser != null)
         {
-            throw new ArgumentException("Este email já está cadastrado.");
+            throw new ArgumentException("Já existe um usuário com esse e-mail.");
         }
 
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);

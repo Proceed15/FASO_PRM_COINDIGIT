@@ -26,7 +26,7 @@ function parseJwt(token: string) {
 
 export default function LoginPage() {
   const router = useRouter();
-  const { setUser } = useContext(UserContext);//pra ir direto no header
+  const { setUser } = useContext(UserContext);
 
   const [formData, setFormData] = useState({
     email: "",

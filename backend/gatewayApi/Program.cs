@@ -33,7 +33,21 @@ builder.Services.AddAuthorization();
 // registra ocelot com a configuração carregada
 builder.Services.AddOcelot(builder.Configuration);
 
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
+// CORS
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();
