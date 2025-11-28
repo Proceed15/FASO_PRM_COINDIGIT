@@ -1,4 +1,4 @@
-using CurrencyAPI.API.DTOs; // Importe seus DTOs
+/*using CurrencyAPI.API.DTOs; // Importe seus DTOs
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -27,3 +27,4 @@ namespace CurrencyAPI.API.Controllers
         }
     }
 }
+*/
