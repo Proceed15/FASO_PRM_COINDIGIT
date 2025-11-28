@@ -1,11 +1,11 @@
-namespace BrokerApi.API.Core
+namespace BrokerApi.Core
 {
-    public interface IExchange
+    public interface IMessage
     {
         Guid Id { get; }
-        string RoutingKey { get; }
-        byte[] body { get; }
-        int DeliveryCount { get; }
+        string? RoutingKey { get; }
+        byte[] Body { get; }
+        int DeliveryCount { get; set; }
         DateTime CreatedAt { get; }
     }
 }
