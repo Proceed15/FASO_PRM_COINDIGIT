@@ -17,5 +17,4 @@ Link de um Repositório de Caracteres Especiais: https://jandreh.com/caracteres-
 
 CoinDigit @2025
 
-
 MIT License AuthoredWork
