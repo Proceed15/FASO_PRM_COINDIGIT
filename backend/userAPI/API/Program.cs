@@ -28,21 +28,15 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-//acess FRONTEND LOCAL http://localhost:3000 & http://localhost:qualquer origin cujo host seja localhost
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost", policy =>
-    {
-        policy
-            .SetIsOriginAllowed(origin =>
-            {
-                var uri = new Uri(origin);
-                return uri.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase);
-            })
-            .AllowAnyHeader()
+    options.AddPolicy("AllowFrontEnd",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
             .AllowAnyMethod()
-            .AllowCredentials();
-    });
+            .AllowAnyHeader();
+        });
 });
 
 builder.Services.AddAuthorization();
@@ -50,7 +44,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo
+        options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "User API",
         Version = "v1",
@@ -102,8 +96,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-//app.UseCors("AllowFrontEnd");
-app.UseCors("AllowLocalhost");
+app.UseCors("AllowFrontEnd");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
