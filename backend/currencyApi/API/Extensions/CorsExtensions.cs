@@ -12,7 +12,8 @@ namespace CurrencyAPI.API.Extensions
                 {
                     builder.WithOrigins("http://localhost:3000")
                            .AllowAnyMethod()
-                           .AllowAnyHeader();
+                           .AllowAnyHeader() //CORS ACEPT
+                           .AllowCredentials();
                 });
             });
 
