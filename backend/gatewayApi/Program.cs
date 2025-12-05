@@ -8,10 +8,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls("http://localhost:5000");
 
-// garantir que ocelot.json seja carregado antes de AddOcelot
+//JSON CONF
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 
-// autenticação JWT
+//CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontEnd", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
+//TOKEN JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer("Bearer", options =>
     {
@@ -27,32 +39,35 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// autorização (necessário quando usar AuthenticationOptions no ocelot.json)
 builder.Services.AddAuthorization();
-
-// registra ocelot com a configuração carregada
 builder.Services.AddOcelot(builder.Configuration);
-
-// CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
-});
 
 var app = builder.Build();
 
-// CORS
-app.UseCors("AllowAll");
+//ACEPT CORS
+app.UseCors("AllowFrontEnd");
 
+//ACEPPT OPITIONS do cors
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS")
+    {
+        //puxar dps do mobile
+        context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:3000");
+        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        context.Response.StatusCode = 204;
+        return;
+    }
+
+    await next();
+});
+
+//AUTH
 app.UseAuthentication();
 app.UseAuthorization();
 
-// inicializa o Ocelot
+//ATIVA 
 await app.UseOcelot();
 
 app.Run();
