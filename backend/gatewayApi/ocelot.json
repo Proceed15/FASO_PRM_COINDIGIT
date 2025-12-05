@@ -3,70 +3,70 @@
     {
       "DownstreamPathTemplate": "/api/Currency",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5294 }],
       "UpstreamPathTemplate": "/api/Currency",
       "UpstreamHttpMethod": ["GET", "POST", "OPTIONS"]
     },
     {
       "DownstreamPathTemplate": "/api/Currency/{id}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5294 }],
       "UpstreamPathTemplate": "/api/Currency/{id}",
       "UpstreamHttpMethod": ["GET", "PUT", "DELETE", "OPTIONS"]
     },
     {
       "DownstreamPathTemplate": "/api/Currency/{id}/history",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5294 }],
       "UpstreamPathTemplate": "/api/Currency/{id}/history",
       "UpstreamHttpMethod": ["GET"]
     },
     {
       "DownstreamPathTemplate": "/api/Currency/convert",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5294 }],
       "UpstreamPathTemplate": "/api/Currency/convert",
       "UpstreamHttpMethod": ["GET"]
     },
     {
       "DownstreamPathTemplate": "/api/Currency/summary",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5294 }],
       "UpstreamPathTemplate": "/api/Currency/summary",
       "UpstreamHttpMethod": ["GET"]
     },
     {
       "DownstreamPathTemplate": "/api/Currency/{id}/chart",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5294 }],
       "UpstreamPathTemplate": "/api/Currency/{id}/chart",
       "UpstreamHttpMethod": ["GET"]
     },
     {
       "DownstreamPathTemplate": "/api/History",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5294 }],
       "UpstreamPathTemplate": "/api/History",
       "UpstreamHttpMethod": ["GET", "POST", "OPTIONS"]
     },
     {
       "DownstreamPathTemplate": "/api/History/{currencyId}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5294 }],
       "UpstreamPathTemplate": "/api/History/{currencyId}",
       "UpstreamHttpMethod": ["GET"]
     },
     {
       "DownstreamPathTemplate": "/api/History/{currencyId}/range",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5294 }],
       "UpstreamPathTemplate": "/api/History/{currencyId}/range",
       "UpstreamHttpMethod": ["GET"]
     },
     {
       "DownstreamPathTemplate": "/api/History/{id}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5294 }],
       "UpstreamPathTemplate": "/api/History/{id}",
       "UpstreamHttpMethod": ["DELETE"]
     },
