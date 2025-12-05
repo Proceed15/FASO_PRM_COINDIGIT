@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services.nlp_services import analyze_text
-from services.integration_service import buscar_cotacao_csharp # Importe o novo service
+#from services.integration_service import buscar_cotacao_csharp # Importe o novo service
 bp_analysis = Blueprint("analysis", __name__)
 
 @bp_analysis.route("/analyze", methods=["POST"])
