@@ -111,6 +111,27 @@
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5120 }],
       "UpstreamPathTemplate": "/api/auth/profile",
       "UpstreamHttpMethod": ["GET", "OPTIONS"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Wallet/{userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5004 }],
+      "UpstreamPathTemplate": "/api/Wallet/{userId}",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Wallet/{userId}/items",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5004 }],
+      "UpstreamPathTemplate": "/api/Wallet/{userId}/items",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Wallet/{userId}/items/{symbol}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5004 }],
+      "UpstreamPathTemplate": "/api/Wallet/{userId}/items/{symbol}",
+      "UpstreamHttpMethod": ["DELETE"]
     }
   ],
 

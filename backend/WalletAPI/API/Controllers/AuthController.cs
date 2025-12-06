@@ -23,33 +23,40 @@ namespace WalletAPI.API.Controllers
         [HttpPost("token")]
         public IActionResult Token([FromBody] LoginRequest request)
         {
-            if (request == null) return BadRequest();
+            if (request == null) return BadRequest("Payload ausente.");
+            if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
+                return BadRequest("Usuário e senha são obrigatórios.");
 
-            // Fake login: accept single hardcoded username/password
+            // Login de teste (substitua por validação real via userAPI depois)
             if (request.Username != "josé" || request.Password != "josé12345")
                 return Unauthorized();
 
-            // Use a test user id
+            // Exemplo de userId fixo para teste
             var userId = 101;
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+                new Claim(ClaimTypes.Name, request.Username)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? "ReplaceWithAReallyStrongKeyForDevPurposes"));
+            var keyStr = _configuration["Jwt:Key"] ?? "ReplaceWithAReallyStrongKeyForDevPurposes";
+            var issuer = _configuration["Jwt:Issuer"];
+            var audience = _configuration["Jwt:Audience"];
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyStr));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
+                issuer: issuer,
+                audience: audience,
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: creds
             );
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-            return Ok(tokenString);
+            return Ok(new { token = tokenString, expires = token.ValidTo });
         }
     }
 }
