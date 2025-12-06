@@ -1,45 +1,31 @@
 using System.Collections.Concurrent;
-using BrokerApi.Core;
+using Core;
 
-namespace BrokerApi.Infra
+namespace BrokerApi.API.Infra
 {
 
     public class InMemoryQueue : IQueue
     {
-        private readonly ConcurrentQueue<IMessage> _queue = new();
-        private readonly SemaphoreSlim _sem = new(0);
+        private readonly ConcurrentQueue<IMessage> _q = new();
+        private readonly SemaphoreSlim _signal = new(0);
 
         public string Name { get; }
+        public int Count => _q.Count;
 
-        public InMemoryQueue(string name)
-        {
-            Name = name;
-        }
+        public InMemoryQueue(string name) => Name = name;
 
         public Task EnqueueAsync(IMessage message)
         {
-            _queue.Enqueue(message);
-            _sem.Release();
+            _q.Enqueue(message);
+            _signal.Release();
             return Task.CompletedTask;
         }
 
         public async Task<IMessage?> DequeueAsync(CancellationToken ct)
         {
-            try
-            {
-                await _sem.WaitAsync(ct);
-            }
-            catch (OperationCanceledException)
-            {
-                return null;
-            }
-
-            if (_queue.TryDequeue(out var msg))
-                return msg;
-
-            return null;
+            await _signal.WaitAsync(ct);
+            _q.TryDequeue(out var msg);
+            return msg;
         }
-
-        public int Count => _queue.Count;
     }
 }

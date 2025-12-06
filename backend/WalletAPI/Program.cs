@@ -1,23 +1,12 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using RabbitMQ.Client;
-using System.Text;
-using System.Text.Json;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuração do RabbitMQ
-builder.Services.AddSingleton<IConnectionFactory>(sp => new ConnectionFactory
-{
-    HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost",
-    UserName = "admin",
-    Password = "admin"
-});
-
-builder.Services.AddSingleton<RabbitMQ.Client.IConnection>(sp => sp.GetRequiredService<IConnectionFactory>().CreateConnection());
-builder.Services.AddSingleton<WalletMessagePublisher>();
-builder.Services.AddHostedService<WalletMessageConsumer>();
+// Add services to the container.
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+//Tabela Compras Vendas, Registro por Cliente, Ligação Wallet com a Lista de transações própria de muitos para muitos indo para a CurrencyAPI, retorna as moedas que foram transferidas por um Usuário Vinculado a Wallet pela UserApi
+//User Api 1 para Muitos Wallet
+//Currency Api Muitos para Muitos Wallet, lista de Transações 
+builder.Services.AddOpenApi();
+builder.WebHost.UseUrls("http://localhost:5004");
 
 var app = builder.Build();
 
@@ -33,8 +22,8 @@ app.UseHttpsRedirection();
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
-//weatherforecast
-app.MapGet("/", () =>
+
+app.MapGet("/weatherforecast", () =>
 {
     var forecast =  Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
@@ -49,3 +38,8 @@ app.MapGet("/", () =>
 .WithName("GetWeatherForecast");*/
 
 app.Run();
+
+/*record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+{
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}*/

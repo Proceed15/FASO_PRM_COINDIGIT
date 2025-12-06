@@ -41,21 +41,6 @@ nlp_chatbot/
 
 ## Criação do ambiente virtual
 
-ins7all all biblio7ecas:
--pip install spacy
--python -m spacy download en_core_web_sm
--pip install textblob
--python -m textblob.download_corpora
--pip install nltk
--python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
--python run.py
-dir
-
-install python:
--cd $env:USERPROFILE\Downloads
--curl -o python.exe https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe
--.\python.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
-
 ```bash
 # Crie e ative o ambiente virtual
 python -m venv venv

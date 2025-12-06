@@ -1,4 +1,4 @@
-#Backend .gitignore file
+#Backend .gitignore file for User API
 Debug/
 bin/
 obj/

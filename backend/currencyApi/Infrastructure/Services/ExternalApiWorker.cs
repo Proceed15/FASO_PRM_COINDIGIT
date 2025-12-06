@@ -50,18 +50,13 @@ namespace CurrencyAPI.Infrastructure.Services
                             if (currency.Symbol != currency.Backing)
                             {
                                 var currencyUrl = "";
-                                if (string.IsNullOrWhiteSpace(currency.Symbol) || string.IsNullOrWhiteSpace(currency.Backing))
-                                {
-                                    Console.WriteLine($"Símbolos inválidos para moeda: {currency.Symbol} / {currency.Backing}");
-                                    continue;
-                                }
                                 if (currency.Reverse)
                                 {
-                                    currencyUrl = $"{_cryptoPricesUrl}?symbol={currency.Backing}{currency.Symbol}".ToUpper();
+                                    currencyUrl = $"{_cryptoPricesUrl}?symbol={currency.Backing}{currency.Symbol}";
                                 }
                                 else
                                 {
-                                    currencyUrl = $"{_cryptoPricesUrl}?symbol={currency.Symbol}{currency.Backing}".ToUpper();
+                                    currencyUrl = $"{_cryptoPricesUrl}?symbol={currency.Symbol}{currency.Backing}";
                                 }
                                 // Console.WriteLine($"Consultando moeda {currency.Symbol} - URL: {currencyUrl}");
 
@@ -72,23 +67,16 @@ namespace CurrencyAPI.Infrastructure.Services
                                     var content = await response.Content.ReadAsStringAsync(stoppingToken);
                                     var apiResponse = JsonSerializer.Deserialize<CryptoApiResponseDto>(content);
 
-                                    if (apiResponse != null && decimal.TryParse(apiResponse.Price, out var price))
+                                    var historyDto = new HistoryDto
                                     {
-                                        var historyDto = new HistoryDto
-                                        {
-                                            CurrencyId = currency.Id,
-                                            Price = price,
-                                            Date = DateTime.UtcNow
-                                        };
+                                        CurrencyId = currency.Id,
+                                        Price = decimal.Parse(apiResponse.Price),
+                                        Date = DateTime.UtcNow
+                                    };
 
-                                        await historyService.AddAsync(historyDto.ToEntity());
+                                    await historyService.AddAsync(historyDto.ToEntity());
 
-                                        // Console.WriteLine($"[{DateTime.Now}] Preços de Cripto: {JsonSerializer.Serialize(historyDto)}");
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine($"Resposta inválida da API para moeda {currency.Symbol}");
-                                    }
+                                    // Console.WriteLine($"[{DateTime.Now}] Preços de Cripto: {JsonSerializer.Serialize(historyDto)}");
                                 }
                                 else
                                 {

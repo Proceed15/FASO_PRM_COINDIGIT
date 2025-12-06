@@ -42,12 +42,8 @@ export default function RegisterPage() {
             };
             await userService.register(newUser);
             router.push("/login");
-        } catch (error: any) {
-            if (error.response && error.response.data && error.response.data.error) {
-                setError(error.response.data.error);
-            } else {
-                setError(`Erro ao registrar usuário: ${error}`);
-            }
+        } catch (error) {
+            setError(`Erro ao registrar usuário: ${error}`);
         }
     };
 

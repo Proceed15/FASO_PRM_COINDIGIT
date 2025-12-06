@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
-using BrokerApi.Services;
-using BrokerApi.Core;
+using Services;
 
 namespace BrokerApi.API.Controller
 {

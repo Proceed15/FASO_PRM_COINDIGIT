@@ -1,6 +1,6 @@
-using BrokerApi.Core;
+using Core;
 
-namespace BrokerApi.Services
+namespace BrokerApi.API.Services
 {
     public interface IBroker
     {

@@ -1,8 +1,8 @@
 using System.Collections.Concurrent;
-using BrokerApi.Core;
-using BrokerApi.Infra;
+using Core;
+using Infra;
 
-namespace BrokerApi.Services
+namespace BrokerApi.API.Services
 {
     public class Broker : IBroker
     {
