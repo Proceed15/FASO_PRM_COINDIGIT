@@ -48,6 +48,6 @@ git flow hotfix start corrigir-algo
 
 //git
 git branch - lista branchs
-git checkout feature/Mobile_Isabel - muda de branch
-git flow feature publish Mobile_Isabel - publicar a feature pro repositório remoto
+git checkout feature/Isabel_Mobile - muda de branch
+git flow feature publish Isabel_Mobile - publicar a feature pro repositório remoto
 
