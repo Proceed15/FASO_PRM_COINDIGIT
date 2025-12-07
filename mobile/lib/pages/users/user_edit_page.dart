@@ -44,7 +44,7 @@ class _UserEditPageState extends State<UserEditPage> {
         password: passwordCtrl.text.isEmpty ? null : passwordCtrl.text,
       );
       updated.id = user!.id; // garante que o id está vindo
-      final success = await UserService.update(updated);
+      //final success = await UserService.update(updated);
 
       if (!mounted) return;
       Navigator.pop(context);

@@ -5,7 +5,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 class UserService {
   static final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: "http://localhost:5120",
+      baseUrl: "http://localhost:5000",
       headers: {"Content-Type": "application/json"},
     ),
   );

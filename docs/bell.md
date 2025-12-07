@@ -51,3 +51,28 @@ git branch - lista branchs
 git checkout feature/Isabel_Mobile - muda de branch
 git flow feature publish Isabel_Mobile - publicar a feature pro repositório remoto
 
+//APIS START
+
+cd backend/userAPI
+dotnet run
+
+cd backend/currencyApi
+dotnet run
+
+cd backend/gatewayApi
+dotnet run
+
+cd frontend
+npm run dev
+npm install next
+
+cd mobile
+flutter run
+
+//add pacotes do flutter fonts
+flutter pub add google_fonts - fonts
+flutter pub add shared_preferences - shared
+
+flutter pub get - atualiza
+
+

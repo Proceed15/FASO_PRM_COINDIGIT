@@ -16,12 +16,14 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontEnd", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+        policy
+            .SetIsOriginAllowed(_ => true)  //vale td
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials(); 
     });
 });
+
 
 //TOKEN JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -53,7 +55,8 @@ app.Use(async (context, next) =>
     if (context.Request.Method == "OPTIONS")
     {
         //puxar dps do mobile
-        context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:3000");
+        //context.Response.Headers.Append("Access-Control-Allow-Origin", "http://localhost:3000");
+        context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
         context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type, Authorization");
         context.Response.StatusCode = 204;
