@@ -36,3 +36,5 @@ flutter run -d chrome --renderer html
 chrome.exe --user-data-dir="C:/ChromeDevSession" --disable-web-security
 "C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir="C:\ChromeDev"
 
+//excluir feature direto no rep remoto:
+git push origin --delete feature/Wallet_Api_Working 
