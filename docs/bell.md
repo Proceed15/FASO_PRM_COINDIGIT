@@ -38,3 +38,16 @@ chrome.exe --user-data-dir="C:/ChromeDevSession" --disable-web-security
 
 //excluir feature direto no rep remoto:
 git push origin --delete feature/Wallet_Api_Working 
+
+//feature:
+git flow init
+git flow feature start MinhaFeature
+git flow feature finish MinhaFeature
+git flow release start v1.0.0
+git flow hotfix start corrigir-algo
+
+//git
+git branch - lista branchs
+git checkout feature/Mobile_Isabel - muda de branch
+git flow feature publish Mobile_Isabel - publicar a feature pro repositório remoto
+
