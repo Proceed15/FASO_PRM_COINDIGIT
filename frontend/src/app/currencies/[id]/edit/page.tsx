@@ -42,7 +42,8 @@ export default function CurrencyEditPage({ params }: CurrencyEditProps) {
         ...formData,
         id: params.id,
       });
-      router.push(`/currencies/${params.id}`);
+      router.push(`/currencies/${params.id}/view`);
+      //router.push(`/currencies/${params.id}`); N ACREDITO QUE ERA ISSO
     } catch (error: any) {
       console.error("Erro ao atualizar moeda:", error);
       setError(
