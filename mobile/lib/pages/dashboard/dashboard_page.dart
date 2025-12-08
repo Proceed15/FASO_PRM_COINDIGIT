@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/user_service.dart';
+//import '../../services/user_service.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -47,7 +47,7 @@ class DashboardPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bem-vindo, ${UserService.loggedUser?.name ?? 'Usuário'}"),//userNAME
+       // title: Text("Bem-vindo, ${UserService.loggedUser?.name ?? 'Usuário'}"),//userNAME
         centerTitle: true,
         actions: [
           IconButton(

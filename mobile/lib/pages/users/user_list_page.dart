@@ -30,7 +30,7 @@ class _UserListPageState extends State<UserListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Usuários")),
-      floatingActionButton: FloatingActionButton(onPressed: () => Navigator.pushNamed(context, "/users/create").then((_) => load()), child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(onPressed: () => Navigator.pushNamed(context, "/user/create").then((_) => load()), child: const Icon(Icons.add)),
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : users.isEmpty
@@ -45,7 +45,7 @@ class _UserListPageState extends State<UserListPage> {
                         title: Text(u.name, style: const TextStyle(color: Colors.white)),
                         subtitle: Text(u.email, style: const TextStyle(color: Colors.white70)),
                         trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.white70),
-                        onTap: () => Navigator.pushNamed(context, "/users/view", arguments: u).then((_) => load()),
+                        onTap: () => Navigator.pushNamed(context, "/user/view", arguments: u).then((_) => load()),
                       ),
                     );
                   },
