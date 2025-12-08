@@ -9,15 +9,19 @@ public class WalletService : IWalletService
 {
     private readonly IWalletRepository _repo;
     private readonly ICurrencyPriceClient _prices;
+    private readonly IUserClient _users;
 
-    public WalletService(IWalletRepository repo, ICurrencyPriceClient prices)
+    public WalletService(IWalletRepository repo, ICurrencyPriceClient prices, IUserClient users)
     {
         _repo = repo;
         _prices = prices;
+        _users = users;
     }
 
     public async Task<WalletSummaryDto?> GetWalletAsync(int userId, CancellationToken ct = default)
     {
+        if (!await _users.ExistsAsync(userId, ct)) return null;
+
         var wallet = await _repo.GetByUserIdAsync(userId, ct);
         if (wallet is null) return null;
 
@@ -38,7 +42,14 @@ public class WalletService : IWalletService
 
     public async Task<WalletSummaryDto> UpsertWalletItemAsync(int userId, WalletItemUpsertDto upsert, CancellationToken ct = default)
     {
+        if (!await _users.ExistsAsync(userId, ct))
+            throw new KeyNotFoundException($"Usuário {userId} não encontrado.");
+
+        if (string.IsNullOrWhiteSpace(upsert.Symbol)) throw new ArgumentException("Símbolo é obrigatório.");
+        if (upsert.Amount < 0) throw new ArgumentException("Quantidade deve ser >= 0.");
+
         var updated = await _repo.UpsertItemAsync(userId, upsert.Symbol, upsert.Amount, ct);
+
         var itemsDto = new List<WalletItemDto>();
         decimal totalUsd = 0m;
 
@@ -56,6 +67,7 @@ public class WalletService : IWalletService
 
     public async Task<bool> RemoveWalletItemAsync(int userId, string symbol, CancellationToken ct = default)
     {
+        if (!await _users.ExistsAsync(userId, ct)) return false;
         return await _repo.RemoveItemAsync(userId, symbol, ct);
     }
 }

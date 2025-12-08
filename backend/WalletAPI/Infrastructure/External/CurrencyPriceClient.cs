@@ -14,7 +14,6 @@ public class CurrencyPriceClient : ICurrencyPriceClient
     {
         try
         {
-            // 1) Tenta um detalhe direto (se existir no seu CurrencyController)
             var detailResp = await _http.GetAsync($"/api/Currency/{Uri.EscapeDataString(symbol)}", ct);
             if (detailResp.IsSuccessStatusCode)
             {
@@ -22,7 +21,7 @@ public class CurrencyPriceClient : ICurrencyPriceClient
                 if (dto?.lastPriceUsd is not null) return dto.lastPriceUsd;
             }
 
-            // 2) Tenta summary e filtra pelo símbolo
+         
             var summaryResp = await _http.GetAsync("/api/Currency/summary", ct);
             if (summaryResp.IsSuccessStatusCode)
             {
@@ -31,7 +30,7 @@ public class CurrencyPriceClient : ICurrencyPriceClient
                 if (hit?.lastPriceUsd is not null) return hit.lastPriceUsd;
             }
 
-            // 3) Se nada retornar preço, devolve null (sem quebrar a API)
+            // Se nada retornar preço, devolve null (sem quebrar a API)
             return null;
         }
         catch

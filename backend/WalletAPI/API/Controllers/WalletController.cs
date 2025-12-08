@@ -11,6 +11,7 @@ public class WalletController : ControllerBase
     private readonly IWalletService _service;
     public WalletController(IWalletService service) => _service = service;
 
+    // GET /api/wallet/{userId}
     [HttpGet("{userId:int}")]
     public async Task<ActionResult<WalletSummaryDto>> Get(int userId, CancellationToken ct)
     {
@@ -19,19 +20,31 @@ public class WalletController : ControllerBase
         return Ok(summary);
     }
 
+    // POST /api/wallet/{userId}/items
     [HttpPost("{userId:int}/items")]
     public async Task<ActionResult<WalletSummaryDto>> UpsertItem(int userId, [FromBody] WalletItemUpsertDto upsert, CancellationToken ct)
     {
-        if (string.IsNullOrWhiteSpace(upsert.Symbol) || upsert.Amount < 0)
-            return BadRequest("Símbolo é obrigatório e quantidade deve ser >= 0.");
-
-        var summary = await _service.UpsertWalletItemAsync(userId, upsert, ct);
-        return Ok(summary);
+        try
+        {
+            var summary = await _service.UpsertWalletItemAsync(userId, upsert, ct);
+            return Ok(summary);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound($"Usuário {userId} não encontrado.");
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
+    // DELETE /api/wallet/{userId}/items/{symbol}
     [HttpDelete("{userId:int}/items/{symbol}")]
     public async Task<ActionResult> RemoveItem(int userId, string symbol, CancellationToken ct)
     {
+        if (string.IsNullOrWhiteSpace(symbol)) return BadRequest("Símbolo é obrigatório.");
+
         var ok = await _service.RemoveWalletItemAsync(userId, symbol, ct);
         return ok ? NoContent() : NotFound();
     }

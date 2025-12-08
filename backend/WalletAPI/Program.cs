@@ -7,6 +7,8 @@ using WalletAPI.Application.Services;
 using WalletAPI.Infrastructure.Data;
 using WalletAPI.Infrastructure.External;
 using WalletAPI.Infrastructure.Repositories;
+using WalletAPI.Infrastructure.External;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,10 +29,17 @@ builder.Services.AddScoped<IWalletRepository, WalletRepository>();
 builder.Services.AddScoped<IWalletService, WalletService>();
 
 // HttpClient para currencyApi
-var currencyBase = builder.Configuration["ExternalServices:CurrencyApiBaseUrl"] ?? "http://localhost:5051";
+var currencyBase = builder.Configuration["ExternalServices:CurrencyApiBaseUrl"] ?? "http://localhost:5002";
 builder.Services.AddHttpClient<ICurrencyPriceClient, CurrencyPriceClient>(client =>
 {
     client.BaseAddress = new Uri(currencyBase);
+});
+
+// HttpClient para userAPI via gateway (http://localhost:5000)
+var gatewayBase = builder.Configuration["ExternalServices:GatewayBaseUrl"] ?? "http://localhost:5000";
+builder.Services.AddHttpClient<IUserClient, UserClient>(client =>
+{
+    client.BaseAddress = new Uri(gatewayBase);
 });
 
 // Autenticação JWT (opcional, habilitado)
@@ -64,7 +73,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 if (!string.IsNullOrWhiteSpace(jwtKey))
 {
