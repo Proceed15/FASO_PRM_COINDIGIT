@@ -57,9 +57,9 @@
 
               children: [
                 Image.asset(
-                  'images/Logo_CoinDigit.png',
-                  width: 140,
-                  height: 140,
+                  'assets/images/Logo_CoinDigit.png',
+                  width: 250,
+                  height: 250,
                 ),
                 const SizedBox(height: 20),
 

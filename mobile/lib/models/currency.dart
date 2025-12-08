@@ -1,58 +1,57 @@
 class Currency {
-  String? id;
-  String symbol;
-  String name;
-  String backing;
-  bool reverse;
-  double? price;
+  final String? id;
+  final String symbol;
+  final String name;
+  final String backing;
+  final bool reverse;
 
   Currency({
     this.id,
     required this.symbol,
     required this.name,
     required this.backing,
-    this.reverse = false,
-    this.price,
+    required this.reverse,
   });
 
   factory Currency.fromJson(Map<String, dynamic> json) => Currency(
-        id: json['id']?.toString(),
-        symbol: json['symbol'] ?? json['Symbol'] ?? "",
-        name: json['name'] ?? json['Name'] ?? "",
-        backing: json['backing'] ?? json['Backing'] ?? "",
-        reverse: json['reverse'] == true || json['Reverse'] == true,
-        price: json['price'] != null ? double.tryParse(json['price'].toString()) : null,
+        id: json['id'] != null ? json['id'].toString() : null,
+        symbol: json['symbol']?.toString() ?? "",
+        name: json['name']?.toString() ?? "",
+        backing: json['backing']?.toString() ?? "",
+        reverse: json['reverse'] == null
+            ? false
+            : (json['reverse'] is bool
+                ? json['reverse']
+                : json['reverse'].toString().toLowerCase() == 'true'),
       );
 
-  Map<String, dynamic> toJson() {
-    final m = <String, dynamic>{};
-    if (id != null) m['id'] = id;
-    m['symbol'] = symbol;
-    m['name'] = name;
-    m['backing'] = backing;
-    m['reverse'] = reverse;
-    if (price != null) m['price'] = price;
-    return m;
+  Map<String, dynamic> toJson({bool includeId = true}) {
+    final map = {
+      "symbol": symbol,
+      "name": name,
+      "backing": backing,
+      "reverse": reverse,
+    };
+    if (includeId && id != null) {
+      map["id"] = id!;
+    }
+    return map;
   }
 }
 
 class CurrencyHistoryItem {
-  String id;
-  String currencyId;
-  double price;
-  DateTime date;
+  final DateTime date;
+  final double price;
 
   CurrencyHistoryItem({
-    required this.id,
-    required this.currencyId,
-    required this.price,
     required this.date,
+    required this.price,
   });
 
-  factory CurrencyHistoryItem.fromJson(Map<String, dynamic> json) => CurrencyHistoryItem(
-        id: json['id']?.toString() ?? '',
-        currencyId: json['currencyId']?.toString() ?? '',
-        price: double.tryParse(json['price']?.toString() ?? '0') ?? 0,
-        date: DateTime.tryParse(json['date'] ?? json['createdAt'] ?? '') ?? DateTime.now(),
-      );
+  factory CurrencyHistoryItem.fromJson(Map<String, dynamic> json) {
+    return CurrencyHistoryItem(
+      date: DateTime.parse(json['date'].toString()),
+      price: (json['price'] as num).toDouble(),
+    );
+  }
 }
