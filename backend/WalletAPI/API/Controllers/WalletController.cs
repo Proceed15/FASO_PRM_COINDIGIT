@@ -48,4 +48,27 @@ public class WalletController : ControllerBase
         var ok = await _service.RemoveWalletItemAsync(userId, symbol, ct);
         return ok ? NoContent() : NotFound();
     }
+
+    // POST /api/wallet/transfer
+    [HttpPost("transfer")]
+    public async Task<ActionResult<TransferResultDto>> Transfer([FromBody] TransferRequestDto request, CancellationToken ct)
+    {
+        try
+        {
+            var result = await _service.TransferAsync(request, ct);
+            return Ok(result);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message); // saldo insuficiente ou remetente sem saldo
+        }
+    }
 }

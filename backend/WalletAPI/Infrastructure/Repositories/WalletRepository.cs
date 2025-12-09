@@ -72,4 +72,61 @@ public class WalletRepository : IWalletRepository
         await _db.SaveChangesAsync(ct);
         return true;
     }
+
+    public async Task<(WalletTransaction tx, decimal senderBalanceAfter, decimal receiverBalanceAfter)>
+        TransferAsync(int fromUserId, int toUserId, string symbol, decimal amount, decimal? priceUsdAtTx, CancellationToken ct = default)
+    {
+        using var txscope = await _db.Database.BeginTransactionAsync(ct);
+
+        var normSymbol = symbol.Trim().ToUpperInvariant();
+
+        // Carrega carteiras
+        var sender = await _db.Wallets.Include(w => w.Items).FirstOrDefaultAsync(w => w.UserId == fromUserId, ct)
+                     ?? throw new InvalidOperationException("Carteira do remetente não existe.");
+        var receiver = await _db.Wallets.Include(w => w.Items).FirstOrDefaultAsync(w => w.UserId == toUserId, ct);
+        if (receiver is null)
+        {
+            receiver = (await _db.Wallets.AddAsync(new UserWallet { UserId = toUserId }, ct)).Entity;
+            await _db.SaveChangesAsync(ct);
+            await _db.Entry(receiver).Collection(w => w.Items).LoadAsync(ct);
+        }
+
+        // Verifica saldo remetente
+        var sItem = sender.Items.FirstOrDefault(i => i.Symbol == normSymbol)
+                    ?? throw new InvalidOperationException("Remetente não possui o ativo.");
+        if (sItem.Amount < amount) throw new InvalidOperationException("Saldo insuficiente.");
+
+        // Debita remetente
+        sItem.Amount -= amount;
+        if (sItem.Amount == 0) _db.WalletItems.Remove(sItem);
+        sender.UpdatedAt = DateTime.UtcNow;
+
+        // Credita destinatário
+        var rItem = receiver.Items.FirstOrDefault(i => i.Symbol == normSymbol);
+        if (rItem is null)
+            _db.WalletItems.Add(new WalletItem { UserWalletId = receiver.Id, Symbol = normSymbol, Amount = amount });
+        else
+            rItem.Amount += amount;
+        receiver.UpdatedAt = DateTime.UtcNow;
+
+        // Registra transação
+        var tx = new WalletTransaction
+        {
+            FromUserId = fromUserId,
+            ToUserId = toUserId,
+            Symbol = normSymbol,
+            Amount = amount,
+            PriceUsdAtTx = priceUsdAtTx,
+            TotalUsdAtTx = priceUsdAtTx.HasValue ? priceUsdAtTx * amount : null
+        };
+        _db.Transactions.Add(tx);
+
+        await _db.SaveChangesAsync(ct);
+        await txscope.CommitAsync(ct);
+
+        var senderBal = sender.Items.FirstOrDefault(i => i.Symbol == normSymbol)?.Amount ?? 0m;
+        var receiverBal = (await _db.WalletItems.Where(i => i.UserWalletId == receiver.Id && i.Symbol == normSymbol).FirstOrDefaultAsync(ct))?.Amount ?? 0m;
+
+        return (tx, senderBal, receiverBal);
+    }
 }

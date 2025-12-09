@@ -9,6 +9,7 @@ public class WalletDbContext : DbContext
 
     public DbSet<UserWallet> Wallets => Set<UserWallet>();
     public DbSet<WalletItem> WalletItems => Set<WalletItem>();
+    public DbSet<WalletTransaction> Transactions => Set<WalletTransaction>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -28,6 +29,17 @@ public class WalletDbContext : DbContext
             walletItem.Property(i => i.Symbol).IsRequired().HasMaxLength(20);
             walletItem.HasIndex(i => new { i.UserWalletId, i.Symbol }).IsUnique();
             walletItem.Property(i => i.Amount).HasColumnType("decimal(18,8)");
+        });
+
+        modelBuilder.Entity<WalletTransaction>(b =>
+        {
+            b.HasKey(t => t.Id);
+            b.Property(t => t.Symbol).IsRequired().HasMaxLength(20);
+            b.Property(t => t.Amount).HasColumnType("decimal(18,8)");
+            b.Property(t => t.PriceUsdAtTx).HasColumnType("decimal(18,8)");
+            b.Property(t => t.TotalUsdAtTx).HasColumnType("decimal(18,8)");
+            b.HasIndex(t => t.CreatedAt);
+            b.HasIndex(t => new { t.FromUserId, t.ToUserId, t.Symbol });
         });
     }
 }

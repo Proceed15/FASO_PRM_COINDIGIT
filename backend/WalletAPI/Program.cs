@@ -7,7 +7,6 @@ using WalletAPI.Application.Services;
 using WalletAPI.Infrastructure.Data;
 using WalletAPI.Infrastructure.External;
 using WalletAPI.Infrastructure.Repositories;
-using WalletAPI.Infrastructure.External;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
