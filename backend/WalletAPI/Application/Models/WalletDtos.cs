@@ -1,7 +1,36 @@
-namespace WalletAPI.Application.Models;
+namespace WalletAPI.Application.Models
+{
+    public class WalletSummaryDto
+    {
+        public Guid WalletId { get; set; }
+        public int UserId { get; set; }
+        public List<WalletItemDto> Items { get; set; } = new();
+        public decimal? TotalUsd { get; set; }
+    }
 
-public record WalletItemDto(string Symbol, decimal Amount, decimal? LastPriceUsd, decimal? TotalUsd);
+    public class WalletItemDto
+    {
+        public string Symbol { get; set; } = string.Empty;
+        public decimal Amount { get; set; }
+        public decimal? LastPriceUsd { get; set; }
+        public decimal? TotalUsd { get; set; }
+    }
 
-public record WalletSummaryDto(int UserId, IReadOnlyList<WalletItemDto> Items, decimal TotalUsd);
+    public class WalletItemUpsertDto
+    {
+        public string Symbol { get; set; } = string.Empty;
+        public decimal Amount { get; set; }
+    }
 
-public record WalletItemUpsertDto(string Symbol, decimal Amount);
+    public class CreateWalletRequestDto
+    {
+        public int UserId { get; set; }
+    }
+
+    public class CreateWalletResponseDto
+    {
+        public Guid WalletId { get; set; }
+        public int UserId { get; set; }
+        public DateTime CreatedAt { get; set; }
+    }
+}

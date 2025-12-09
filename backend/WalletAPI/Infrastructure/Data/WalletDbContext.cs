@@ -1,45 +1,46 @@
 using Microsoft.EntityFrameworkCore;
 using WalletAPI.Domain.Entities;
 
-namespace WalletAPI.Infrastructure.Data;
-
-public class WalletDbContext : DbContext
+namespace WalletAPI.Infrastructure.Data
 {
-    public WalletDbContext(DbContextOptions<WalletDbContext> options) : base(options) { }
-
-    public DbSet<UserWallet> Wallets => Set<UserWallet>();
-    public DbSet<WalletItem> WalletItems => Set<WalletItem>();
-    public DbSet<WalletTransaction> Transactions => Set<WalletTransaction>();
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public class WalletDbContext : DbContext
     {
-        modelBuilder.Entity<UserWallet>(b =>
-        {
-            b.HasKey(w => w.Id);
-            b.HasIndex(w => w.UserId).IsUnique();
-            b.HasMany(w => w.Items)
-             .WithOne()
-             .HasForeignKey(i => i.UserWalletId)
-             .OnDelete(DeleteBehavior.Cascade);
-        });
+        public WalletDbContext(DbContextOptions<WalletDbContext> options) : base(options) { }
 
-        modelBuilder.Entity<WalletItem>(walletItem =>
-        {
-            walletItem.HasKey(i => i.Id);
-            walletItem.Property(i => i.Symbol).IsRequired().HasMaxLength(20);
-            walletItem.HasIndex(i => new { i.UserWalletId, i.Symbol }).IsUnique();
-            walletItem.Property(i => i.Amount).HasColumnType("decimal(18,8)");
-        });
+        public DbSet<Wallet> Wallets => Set<Wallet>();
+        public DbSet<WalletItem> WalletItems => Set<WalletItem>();
+        public DbSet<WalletTransaction> Transactions => Set<WalletTransaction>();
 
-        modelBuilder.Entity<WalletTransaction>(b =>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            b.HasKey(t => t.Id);
-            b.Property(t => t.Symbol).IsRequired().HasMaxLength(20);
-            b.Property(t => t.Amount).HasColumnType("decimal(18,8)");
-            b.Property(t => t.PriceUsdAtTx).HasColumnType("decimal(18,8)");
-            b.Property(t => t.TotalUsdAtTx).HasColumnType("decimal(18,8)");
-            b.HasIndex(t => t.CreatedAt);
-            b.HasIndex(t => new { t.FromUserId, t.ToUserId, t.Symbol });
-        });
+            modelBuilder.Entity<Wallet>(b =>
+            {
+                b.HasKey(x => x.Id);
+                b.HasIndex(x => new { x.UserId });
+            });
+
+            modelBuilder.Entity<WalletItem>(b =>
+            {
+                b.HasKey(x => x.Id);
+                b.HasIndex(x => new { x.WalletId, x.Symbol }).IsUnique();
+                b.Property(x => x.Amount).HasColumnType("decimal(18,8)");
+                b.Property(x => x.Symbol).HasMaxLength(20);
+                b.HasOne(x => x.Wallet)
+                     .WithMany(w => w.Items)
+                     .HasForeignKey(x => x.WalletId)
+                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<WalletTransaction>(b =>
+            {
+                b.HasKey(x => x.Id);
+                b.HasIndex(x => new { x.WalletId, x.CreatedAt });
+                b.HasIndex(x => x.TargetWalletId);
+                b.Property(x => x.Symbol).HasMaxLength(20);
+                b.Property(x => x.Amount).HasColumnType("decimal(18,8)");
+                b.Property(x => x.PriceUsdAtTx).HasColumnType("decimal(18,8)");
+                b.Property(x => x.TotalUsdAtTx).HasColumnType("decimal(18,8)");
+            });
+        }
     }
 }
