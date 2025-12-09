@@ -28,7 +28,7 @@ class _CurrencyCreatePageState extends State<CurrencyCreatePage> {
       );
       await CurrencyService.create(currency);
       if (!mounted) return;
-      Navigator.pop(context, true); // reload lista
+      Navigator.pop(context, true); //RELOAD
     } catch (e) {
       setState(() => error = "Erro ao criar moeda: $e");
     }

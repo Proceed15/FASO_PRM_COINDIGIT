@@ -3,13 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 final appTheme = ThemeData(
   brightness: Brightness.dark,
-  scaffoldBackgroundColor: const Color(0xFF101320),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 9, 15, 41),
 
   colorScheme: const ColorScheme.dark(
-    primary: Color(0xFF265DBF),
-    secondary: Color(0xFF265DBF),
-    surface: Color(0xFF0c0c1a),
-    background: Color(0xFF101320),
+    primary: Color.fromARGB(255, 20, 58, 124),
+    secondary: Color.fromARGB(255, 20, 58, 124),
+    surface: Color.fromARGB(255, 20, 58, 124),
+   //background: Color(0xFF101320),
   ),
 
   primaryColor: const Color(0xFF265DBF),
@@ -22,7 +22,7 @@ final appTheme = ThemeData(
 
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: const Color(0xFF0c0c1a),
+    fillColor: const Color(0xFF1D1D3F),
     labelStyle: const TextStyle(color: Colors.white70),
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
     focusedBorder: OutlineInputBorder(

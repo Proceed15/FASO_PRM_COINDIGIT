@@ -18,11 +18,11 @@ class _CurrencyEditPageState extends State<CurrencyEditPage> {
   Currency? currency;
   String? error;
 
-  // Carrega os dados da moeda
+  //LOAD DADOS MOEDA
   Future<void> load(Currency c) async {
     setState(() => loading = true);
     try {
-      currency = await CurrencyService.getById(c.id!); // ✅ garante não-nulo
+      currency = await CurrencyService.getById(c.id!); //NOT NULL
       symbolCtrl.text = currency?.symbol ?? "";
       nameCtrl.text = currency?.name ?? "";
       backingCtrl.text = currency?.backing ?? "";
@@ -33,21 +33,21 @@ class _CurrencyEditPageState extends State<CurrencyEditPage> {
     setState(() => loading = false);
   }
 
-  // Salva alterações
+  //SAVE
   Future<void> save() async {
     if (currency == null || currency!.id == null) return;
     setState(() { loading = true; });
     try {
       final updated = Currency(
-        id: currency!.id!, // ✅ força não-nulo
+        id: currency!.id!, //FORCE NOT NULL
         symbol: symbolCtrl.text.trim(),
         name: nameCtrl.text.trim(),
         backing: backingCtrl.text.trim(),
         reverse: reverse,
       );
-      await CurrencyService.update(currency!.id!, updated); // ✅ força não-nulo
+      await CurrencyService.update(currency!.id!, updated); //FORCE NOT NULL
       if (!mounted) return;
-      Navigator.pop(context, true); // retorna true para reload da lista
+      Navigator.pop(context, true); //RELOAD DA LISTA
     } catch (e) {
       setState(() => error = "Erro ao salvar: $e");
     }

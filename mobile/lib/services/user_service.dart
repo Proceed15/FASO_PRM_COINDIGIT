@@ -1,14 +1,14 @@
 import 'api_client.dart';
 import '../models/user.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
   static final _api = ApiClient();
 
   static Future<List<User>> getAll() async {
     final res = await _api.get("/api/User");
-    return (res.data as List)
-        .map((e) => User.fromJson(e))
-        .toList();
+    return (res.data as List).map((e) => User.fromJson(e)).toList();
   }
 
   static Future<User> getById(String id) async {
@@ -41,12 +41,58 @@ class UserService {
     await _api.delete("/api/User/${int.parse(id)}");
   }
 
-  static Future<bool> login(String email, String password) async {
+  /*static Future<bool> login(String email, String password) async {
     final res = await _api.post("/api/auth/login", {
       "email": email,
       "password": password,
     });
 
     return res.statusCode == 200;
+  }*/
+
+  static Future<bool> login(String email, String password) async {
+    final res = await _api.post("/api/auth/login", {
+      "email": email,
+      "password": password,
+    });
+
+    print("LOGIN STATUS: ${res.statusCode}");
+    print("LOGIN BODY: ${res.data}");
+
+    if (res.statusCode == 200) {
+      // ✅ Busca todos os usuários
+      final usersRes = await _api.get("/api/User");
+
+      print("USERS BODY:");
+      print(usersRes.data);
+
+      // ✅ GARANTE QUE REALMENTE É UMA LISTA
+      final List list = usersRes.data is List
+          ? usersRes.data
+          : usersRes.data["data"] ?? usersRes.data["users"] ?? [];
+
+      // ✅ PROCURA PELO EMAIL
+      final userJson = list.cast<Map>().firstWhere(
+        (u) => u["email"].toString().toLowerCase() == email.toLowerCase(),
+        orElse: () => {},
+      );
+
+      if (userJson.isEmpty) {
+        print("❌ USUÁRIO NÃO ENCONTRADO PELO EMAIL");
+        return false;
+      }
+
+      final prefs = await SharedPreferences.getInstance();
+
+      // ✅ AGORA SALVA O USUÁRIO CERTO
+      await prefs.setString("user", jsonEncode(userJson));
+
+      print("✅ USUÁRIO SALVO NO CACHE:");
+      print(userJson);
+
+      return true;
+    }
+
+    return false;
   }
 }

@@ -1,124 +1,141 @@
-  import 'package:flutter/material.dart';
-  import '../../services/user_service.dart';
+import 'package:flutter/material.dart';
+import '../../services/user_service.dart';
 
-  class LoginPage extends StatefulWidget {
-    const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
-    @override
-    State<LoginPage> createState() => _LoginPageState();
-  }
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
 
-  class _LoginPageState extends State<LoginPage> {
-    final emailCtrl = TextEditingController();
-    final passCtrl = TextEditingController();
-    bool loading = false;
-    String? error;
+class _LoginPageState extends State<LoginPage> {
+  final emailCtrl = TextEditingController();
+  final passCtrl = TextEditingController();
+  bool loading = false;
+  String? error;
 
-    Future<void> doLogin() async {
-      if (emailCtrl.text.trim().isEmpty || passCtrl.text.trim().isEmpty) {
-        setState(() {
-          error = "Por favor, preencha e-mail e senha.";
-        });
-        return;
-      }
-
+  Future<void> doLogin() async {
+    if (emailCtrl.text.trim().isEmpty || passCtrl.text.trim().isEmpty) {
       setState(() {
-        loading = true;
-        error = null;
+        error = "Por favor, preencha e-mail e senha.";
       });
-
-      try {
-        final ok = await UserService.login(
-          emailCtrl.text.trim(),
-          passCtrl.text.trim(),
-        );
-
-        if (ok) {
-          if (!mounted) return;
-          Navigator.pushReplacementNamed(context, "/dashboard");
-        } else {
-          setState(() => error = "Email ou senha inválidos.");
-        }
-      } catch (e) {
-        setState(() => error = "Erro no login: ${e.toString()}");
-      }
-
-      setState(() => loading = false);
+      return;
     }
 
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        body: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+    setState(() {
+      loading = true;
+      error = null;
+    });
 
-              children: [
-                Image.asset(
-                  'assets/images/Logo_CoinDigit.png',
-                  width: 250,
-                  height: 250,
-                ),
-                const SizedBox(height: 20),
+    try {
+      final ok = await UserService.login(
+        emailCtrl.text.trim(),
+        passCtrl.text.trim(),
+      );
 
-                const Text(
-                  "CoinDigit",
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                ),
+      if (ok) {
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, "/dashboard");
+      } else {
+        setState(() => error = "Email ou senha inválidos.");
+      }
+    } catch (e) {
+      setState(() => error = "Erro no login: ${e.toString()}");
+    }
 
-                const SizedBox(height: 30),
+    setState(() => loading = false);
+  }
 
-                TextField(
-                  controller: emailCtrl,
-                  decoration: const InputDecoration(labelText: "Email"),
-                ),
-                const SizedBox(height: 15),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
 
-                TextField(
-                  controller: passCtrl,
-                  obscureText: true,
-                  decoration: const InputDecoration(labelText: "Senha"),
-                ),
+            children: [
+              Image.asset(
+                'assets/images/Logo_CoinDigit.png',
+                width: 140,
+                height: 140,
+              ),
+              const SizedBox(height: 20),
 
-                if (error != null) ...[
-                  const SizedBox(height: 10),
-                  Text(error!, style: const TextStyle(color: Colors.redAccent)),
-                ],
+              const Text(
+                "C O I N D I G I T",
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
 
-                const SizedBox(height: 25),
+              const SizedBox(height: 30),
 
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: loading ? null : doLogin,
-                    child: loading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ),
-                          )
-                        : const Text("Entrar"),
-                  ),
-                ),
+              TextField(
+                controller: emailCtrl,
+                decoration: const InputDecoration(labelText: "Email"),
+              ),
+              const SizedBox(height: 15),
 
+              TextField(
+                controller: passCtrl,
+                obscureText: true,
+                decoration: const InputDecoration(labelText: "Senha"),
+              ),
+
+              if (error != null) ...[
                 const SizedBox(height: 10),
+                Text(error!, style: const TextStyle(color: Colors.redAccent)),
+              ],
 
-                TextButton(
+              const SizedBox(height: 30),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 17,
+                    ),
+                  ),
+                  onPressed: loading ? null : doLogin,
+                  child: loading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text("Entrar"),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 17,
+                    ), 
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
                   onPressed: () => Navigator.pushNamed(context, "/register"),
                   child: const Text(
                     "Criar uma conta",
                     style: TextStyle(color: Colors.white70),
                   ),
                 ),
-              ],
-            ),
+              ),
+
+            ],
           ),
         ),
-      );
-    }
+      ),
+    );
   }
+}
