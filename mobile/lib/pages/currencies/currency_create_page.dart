@@ -20,11 +20,18 @@ class _CurrencyCreatePageState extends State<CurrencyCreatePage> {
   Future<void> create() async {
     setState(() { loading = true; error = null; });
     try {
-      final currency = Currency(symbol: symbolCtrl.text.trim(), name: nameCtrl.text.trim(), backing: backingCtrl.text.trim(), reverse: reverse);
+      final currency = Currency(
+        symbol: symbolCtrl.text.trim(),
+        name: nameCtrl.text.trim(),
+        backing: backingCtrl.text.trim(),
+        reverse: reverse,
+      );
       await CurrencyService.create(currency);
       if (!mounted) return;
-      Navigator.pop(context);
-    } catch (e) { setState(() => error = "Erro ao criar moeda"); }
+      Navigator.pop(context, true); //RELOAD
+    } catch (e) {
+      setState(() => error = "Erro ao criar moeda: $e");
+    }
     setState(() { loading = false; });
   }
 
@@ -41,10 +48,22 @@ class _CurrencyCreatePageState extends State<CurrencyCreatePage> {
           const SizedBox(height: 15),
           TextField(controller: backingCtrl, decoration: const InputDecoration(labelText: "Backing")),
           const SizedBox(height: 15),
-          Row(children: [Checkbox(value: reverse, onChanged: (v) => setState(() => reverse = v ?? false)), const Text("Reverse")]),
-          if (error != null) Text(error!, style: const TextStyle(color: Colors.redAccent)),
+          Row(children: [
+            Checkbox(value: reverse, onChanged: (v) => setState(() => reverse = v ?? false)),
+            const Text("Reverse")
+          ]),
+          if (error != null)
+            Text(error!, style: const TextStyle(color: Colors.redAccent)),
           const SizedBox(height: 25),
-          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: loading ? null : create, child: loading ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white)) : const Text("Criar"))),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: loading ? null : create,
+              child: loading
+                  ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white))
+                  : const Text("Criar"),
+            ),
+          ),
         ]),
       ),
     );

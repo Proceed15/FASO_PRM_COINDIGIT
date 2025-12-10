@@ -1,45 +1,43 @@
 class User {
-  String? id;
-  String name;
-  String email;
-  String? role;
-  String? phone;
-  String? address;
-  String? photo;
-  String? password;
+  final String? id;
+  final String name;
+  final String email;
+  final String password;
+  final String? phone;
+  final String? address;
+  final String? photo;
 
   User({
-     this.id,
+    this.id,
     required this.name,
     required this.email,
-    this.role,
+    required this.password,
     this.phone,
     this.address,
     this.photo,
-    this.password,
-    //this.role,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json['id']?.toString(),
-        name: json['name'] ?? json['Name'] ?? "",
-        email: json['email'] ?? json['Email'] ?? "",
-        phone: json['phone'] ?? json['Phone'],
-        address: json['address'] ?? json['Address'],
-        photo: json['photo'] ?? json['Photo'],
-        role: json['role'] ?? json['Role'],
-      );
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id']?.toString(),
+      name: json['name'] ?? '',
+      email: json['email'] ?? '',
+      password: json['password'] ?? '',
+      phone: json['phone'],
+      address: json['address'],
+      photo: json['photo'],
+    );
+  }
 
   Map<String, dynamic> toJson() {
-    final m = <String, dynamic>{};
-    if (id != null) m['Id'] = id;
-    m['Name'] = name;
-    m['Email'] = email;
-    if (phone != null) m['Phone'] = phone;
-    if (address != null) m['Address'] = address;
-    if (photo != null) m['Photo'] = photo;
-    if (password != null) m['Password'] = password;
-    if (role != null) m['Role'] = role;
-    return m;
+    return {
+      if (id != null) "id": int.parse(id!),
+      "name": name,
+      "email": email,
+      "password": password,
+      "phone": phone ?? "",
+      "address": address ?? "",
+      "photo": photo ?? "",
+    };
   }
 }

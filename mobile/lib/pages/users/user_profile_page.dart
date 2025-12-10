@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/user.dart';
-import '../../services/user_service.dart';
+//import '../../services/user_service.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});

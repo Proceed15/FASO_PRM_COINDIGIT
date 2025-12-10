@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> doLogin() async {
     if (emailCtrl.text.trim().isEmpty || passCtrl.text.trim().isEmpty) {
       setState(() {
-        error = "Por favor, preencha email e senha.";
+        error = "Por favor, preencha e-mail e senha.";
       });
       return;
     }
@@ -54,14 +54,19 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+
             children: [
-              const Icon(Icons.account_balance_wallet,
-                  size: 80, color: Colors.white),
+              Image.asset(
+                'assets/images/Logo_CoinDigit.png',
+                width: 140,
+                height: 140,
+              ),
               const SizedBox(height: 20),
 
-              const Text("CoinDigit Mobile",
-                  style: TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.bold)),
+              const Text(
+                "C O I N D I G I T",
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
 
               const SizedBox(height: 30),
 
@@ -79,22 +84,28 @@ class _LoginPageState extends State<LoginPage> {
 
               if (error != null) ...[
                 const SizedBox(height: 10),
-                Text(error!,
-                    style: const TextStyle(color: Colors.redAccent)),
+                Text(error!, style: const TextStyle(color: Colors.redAccent)),
               ],
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 30),
 
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 17,
+                    ),
+                  ),
                   onPressed: loading ? null : doLogin,
                   child: loading
                       ? const SizedBox(
                           height: 20,
                           width: 20,
                           child: CircularProgressIndicator(
-                              color: Colors.white, strokeWidth: 2),
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
                         )
                       : const Text("Entrar"),
                 ),
@@ -102,14 +113,25 @@ class _LoginPageState extends State<LoginPage> {
 
               const SizedBox(height: 10),
 
-              TextButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, "/register"),
-                child: const Text(
-                  "Criar uma conta",
-                  style: TextStyle(color: Colors.white70),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 17,
+                    ), 
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, "/register"),
+                  child: const Text(
+                    "Criar uma conta",
+                    style: TextStyle(color: Colors.white70),
+                  ),
                 ),
               ),
+
             ],
           ),
         ),

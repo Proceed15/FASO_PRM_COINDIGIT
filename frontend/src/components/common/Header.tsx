@@ -14,6 +14,10 @@ import {
   ChevronDown,
   LogIn,
   UserPlus,
+  Atom,
+  HandCoins,
+  Wallet,
+  BotMessageSquare,
 } from "lucide-react";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -36,8 +40,8 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
-    setMenuOpen(false); // <- fecha o menu lateral
-    router.push("/");   // <- vai para tela inicial
+    setMenuOpen(false); 
+    router.push("/");  
   };
 
   const handleLogin = () => router.push("/login");
@@ -46,7 +50,6 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
   const isActive = (path: string) =>
     pathname === path ? "bg-blue-600 text-white" : "hover:bg-blue-600";
 
-  // Aguarda carregar o usuário antes de renderizar o header
   if (isLoading) return null;
 
   return (
@@ -130,6 +133,8 @@ const Header: React.FC<{ siteName?: string; pageName: string }> = ({
               { path: "/currencies", icon: Coins, label: "Moedas" },
               { path: "/users", icon: Users, label: "Usuários" },
               { path: `/users/${user?.id}/view`, icon: User, label: "Perfil", action: goToProfile },
+              { path: "/chatbot", icon: BotMessageSquare, label: "ChatBot" },
+              { path: "/wallet", icon: Wallet, label: "Carteira" },
             ].map(({ path, icon: Icon, label, action }) => {
               const active = pathname === path;
               return (

@@ -52,7 +52,7 @@ class _UserViewPageState extends State<UserViewPage> {
       appBar: AppBar(
         title: const Text("Detalhes do Usuário"),
         actions: [
-          IconButton(icon: const Icon(Icons.edit), onPressed: user == null ? null : () => Navigator.pushNamed(context, "/users/edit", arguments: user).then((_) => loadUser(user!))),
+          IconButton(icon: const Icon(Icons.edit), onPressed: user == null ? null : () => Navigator.pushNamed(context, "/user/edit", arguments: user).then((_) => loadUser(user!))),
           IconButton(icon: const Icon(Icons.delete), onPressed: user == null ? null : deleteUser),
         ],
       ),

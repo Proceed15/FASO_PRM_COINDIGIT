@@ -1,11 +1,39 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import '../../services/user_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/user.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  Future<void> loadUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cached = prefs.getString("user");
+
+    if (cached != null) {
+      setState(() {
+        user = User.fromJson(jsonDecode(cached));
+      });
+    }
+  }
+
   Future<void> logout(BuildContext context) async {
-    //await UserService.logout();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove("user"); //LIMPA CACHE DO USER
+
     Navigator.pushReplacementNamed(context, "/login");
   }
 
@@ -43,11 +71,11 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final username = UserService.loggedUser?.name ?? "Usuário"; //userNAME
+    final username = user?.name ?? "Usuário";
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bem-vindo, ${UserService.loggedUser?.name ?? 'Usuário'}"),//userNAME
+        title: Text("Bem-vindo, $username"),
         centerTitle: true,
         actions: [
           IconButton(

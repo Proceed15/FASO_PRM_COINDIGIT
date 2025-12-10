@@ -1,8 +1,0 @@
-Versão Antiga
-flask
-spacy
-textblob
-nltk
-scikit-learn
-transformers
-torch

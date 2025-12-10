@@ -27,22 +27,29 @@ class _CurrencyListPageState extends State<CurrencyListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Moedas")),
-      floatingActionButton: FloatingActionButton(onPressed: () => Navigator.pushNamed(context, "/currency/create").then((_) => load()), child: const Icon(Icons.add)),
-      body: loading ? const Center(child: CircularProgressIndicator()) : list.isEmpty ? const Center(child: Text("Nenhuma moeda")) : ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, i) {
-          final c = list[i];
-          return Card(
-            color: const Color(0xFF0c0c1a),
-            child: ListTile(
-              title: Text("${c.symbol} - ${c.name}", style: const TextStyle(color: Colors.white)),
-              subtitle: Text("Backing: ${c.backing}", style: const TextStyle(color: Colors.white70)),
-              trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 16),
-              onTap: () => Navigator.pushNamed(context, "/currency/view", arguments: c).then((_) => load()),
-            ),
-          );
-        },
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, "/currency/create").then((_) => load()),
+        child: const Icon(Icons.add)
       ),
+      body: loading
+          ? const Center(child: CircularProgressIndicator())
+          : list.isEmpty
+              ? const Center(child: Text("Nenhuma moeda"))
+              : ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (context, i) {
+                    final c = list[i];
+                    return Card(
+                      color: const Color(0xFF0c0c1a),
+                      child: ListTile(
+                        title: Text("${c.symbol} - ${c.name}", style: const TextStyle(color: Colors.white)),
+                        subtitle: Text("Backing: ${c.backing}", style: const TextStyle(color: Colors.white70)),
+                        trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 16),
+                        onTap: () => Navigator.pushNamed(context, "/currency/view", arguments: c).then((_) => load()),
+                      ),
+                    );
+                  },
+                ),
     );
   }
 }

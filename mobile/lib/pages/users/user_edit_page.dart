@@ -31,26 +31,34 @@ class _UserEditPageState extends State<UserEditPage> {
   }
 
   Future<void> save() async {
-    if (user == null) return;
+    if (user == null || user!.id == null) return;
+
     setState(() {
       loading = true;
       error = null;
     });
+
     try {
       final updated = User(
         id: user!.id,
         name: nameCtrl.text.trim(),
         email: emailCtrl.text.trim(),
-        password: passwordCtrl.text.isEmpty ? null : passwordCtrl.text,
+        password: passwordCtrl.text.isEmpty
+            ? user!.password
+            : passwordCtrl.text,
+        phone: user!.phone,
+        address: user!.address,
+        photo: user!.photo,
       );
-      updated.id = user!.id; // garante que o id está vindo
-      final success = await UserService.update(updated);
+
+      await UserService.update(updated);
 
       if (!mounted) return;
-      Navigator.pop(context);
+      Navigator.pop(context, true);
     } catch (e) {
-      setState(() => error = "Erro ao salvar");
+      setState(() => error = "Erro ao salvar usuário");
     }
+
     setState(() => loading = false);
   }
 
@@ -68,45 +76,39 @@ class _UserEditPageState extends State<UserEditPage> {
       body: loading
           ? const Center(child: CircularProgressIndicator())
           : error != null
-          ? Center(child: Text(error!))
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: nameCtrl,
-                    decoration: const InputDecoration(labelText: "Nome"),
+              ? Center(child: Text(error!))
+              : SingleChildScrollView(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: nameCtrl,
+                        decoration: const InputDecoration(labelText: "Nome"),
+                      ),
+                      const SizedBox(height: 15),
+                      TextField(
+                        controller: emailCtrl,
+                        decoration: const InputDecoration(labelText: "Email"),
+                      ),
+                      const SizedBox(height: 15),
+                      TextField(
+                        controller: passwordCtrl,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          labelText: "Nova senha (opcional)",
+                        ),
+                      ),
+                      const SizedBox(height: 25),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: save,
+                          child: const Text("Salvar"),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: emailCtrl,
-                    decoration: const InputDecoration(labelText: "Email"),
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: passwordCtrl,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: "Nova senha (opcional)",
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  if (error != null)
-                    Text(
-                      error!,
-                      style: const TextStyle(color: Colors.redAccent),
-                    ),
-                  const SizedBox(height: 25),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: save,
-                      child: const Text("Salvar"),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                ),
     );
   }
 }

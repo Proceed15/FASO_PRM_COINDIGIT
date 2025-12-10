@@ -93,12 +93,19 @@ weasel==0.4.1
 Werkzeug==3.1.3
 wrapt==1.17.2
 ```
+USAR PYTHON 3.10
 
 E instale com:
 
 ```bash
 pip install -r requirements.txt
+
+C:\Users\User\AppData\Local\Programs\Python\Python310\python.exe -m pip install --upgrade pip
+--versao 21.3 pip
 ```
+
+python -m pip install pip==21.3
+
 
 ## Setup adicional
 
@@ -110,6 +117,17 @@ python -m textblob.download_corpora
 # Baixe recursos do NLTK
 python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
 ```
+
+-ambiente ativo
+//pip install flask
+//pip install spacy / python -m spacy download pt_core_news_sm / python -m spacy download en_core_web_sm
+//pip install scikit-learn
+//pip install transformers
+//pip install torch
+//pip install numpy
+//pip install pandas
+//pip install flask-cors
+
 
 ## Execução
 

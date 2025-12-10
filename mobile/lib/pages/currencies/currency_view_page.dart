@@ -23,13 +23,6 @@ class _CurrencyViewPageState extends State<CurrencyViewPage> {
     setState(() => loading = false);
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final args = ModalRoute.of(context)!.settings.arguments;
-    if (args is Currency) loadCurrency(args);
-  }
-
   void deleteCurrency() async {
     if (currency?.id == null) return;
     final confirm = await showDialog<bool>(
@@ -42,8 +35,15 @@ class _CurrencyViewPageState extends State<CurrencyViewPage> {
     if (confirm == true) {
       await CurrencyService.delete(currency!.id!);
       if (!mounted) return;
-      Navigator.pop(context);
+      Navigator.pop(context, true);
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args = ModalRoute.of(context)!.settings.arguments;
+    if (args is Currency) loadCurrency(args);
   }
 
   @override
@@ -56,20 +56,24 @@ class _CurrencyViewPageState extends State<CurrencyViewPage> {
           IconButton(icon: const Icon(Icons.delete), onPressed: currency == null ? null : deleteCurrency),
         ],
       ),
-      body: loading ? const Center(child: CircularProgressIndicator()) : currency == null ? const Center(child: Text("Moeda não encontrada")) : Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Icon(Icons.monetization_on, size: 80, color: Colors.white70),
-          const SizedBox(height: 20),
-          Text("${currency!.symbol} - ${currency!.name}", style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 10),
-          Text("Backing: ${currency!.backing}", style: const TextStyle(color: Colors.white70)),
-          const SizedBox(height: 10),
-          Text("Reverse: ${currency!.reverse ? "Sim" : "Não"}", style: const TextStyle(color: Colors.white70)),
-          const SizedBox(height: 30),
-          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Navigator.pushNamed(context, "/currency/history", arguments: currency), child: const Text("Ver Histórico"))),
-        ]),
-      ),
+      body: loading
+          ? const Center(child: CircularProgressIndicator())
+          : currency == null
+              ? const Center(child: Text("Moeda não encontrada"))
+              : Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    const Icon(Icons.monetization_on, size: 80, color: Colors.white70),
+                    const SizedBox(height: 20),
+                    Text("${currency!.symbol} - ${currency!.name}", style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    Text("Backing: ${currency!.backing}", style: const TextStyle(color: Colors.white70)),
+                    const SizedBox(height: 10),
+                    Text("Reverse: ${currency!.reverse ? "Sim" : "Não"}", style: const TextStyle(color: Colors.white70)),
+                    const SizedBox(height: 30),
+                    SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Navigator.pushNamed(context, "/currency/history", arguments: currency), child: const Text("Ver Histórico"))),
+                  ]),
+                ),
     );
   }
 }
