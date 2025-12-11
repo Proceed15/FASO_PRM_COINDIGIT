@@ -1,15 +1,17 @@
 from flask import Blueprint, request, jsonify
-from services.nlp_services import analyze_text
+from services.nlp_services import processar_mensagem
 
 bp_analysis = Blueprint("analysis", __name__)
 
 @bp_analysis.route("/analyze", methods=["POST"])
 def analyze():
     data = request.json
-    text = data.get("text")
+    text = data.get("text", "")
 
     if not text:
-        return jsonify({"error": "Texto não fornecido"}), 400
+        return jsonify({"erro": "Texto vazio"}), 400
 
-    result = analyze_text(text)
-    return jsonify(result)
+    # Chama o serviço e retorna o resultado direto
+    resultado = processar_mensagem(text)
+    
+    return jsonify(resultado)

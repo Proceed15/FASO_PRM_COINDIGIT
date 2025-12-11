@@ -1,4 +1,8 @@
-from flask import render_template
+from flask import Blueprint, render_template
+# Cria o Blueprint
+bp_home = Blueprint('home', __name__)
 
-def home():
+@bp_home.route('/')
+def index():
+    # Renderiza o template index.html localizado na pasta 'templates'
     return render_template("index.html")

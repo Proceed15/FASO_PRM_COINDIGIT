@@ -1,0 +1,6 @@
+@BrokerApi_HostAddress = http://localhost:5216
+
+GET {{BrokerApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

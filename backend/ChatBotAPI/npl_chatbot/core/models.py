@@ -1,7 +1,14 @@
 import spacy
-from sklearn.feature_extraction.text import TfidfVectorizer
 from transformers import pipeline
 
-nlp = spacy.load("en_core_web_sm")
+# Carregamento único para eficiência
+print("Carregando modelos de IA...")
+try:
+    nlp = spacy.load("en_core_web_sm")
+except:
+    from spacy.cli import download
+    download("en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
+
 sentiment_pipeline = pipeline("sentiment-analysis")
-tfidf_vectorizer = TfidfVectorizer()
+print("Modelos carregados.")

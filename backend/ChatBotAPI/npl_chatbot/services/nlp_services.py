@@ -1,34 +1,80 @@
-from core.models import nlp, sentiment_pipeline, tfidf_vectorizer
+import requests
+import spacy
+from datetime import datetime
 
-def analyze_text(text: str):
-    doc = nlp(text)
+# Carrega o Spacy
+try:
+    nlp = spacy.load("en_core_web_sm")
+except:
+    import spacy.cli
+    spacy.cli.download("en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
 
-    tokens = [token.text for token in doc]
-    lemmas = [token.lemma_ for token in doc]
-    pos_tags = [(token.text, token.pos_) for token in doc]
-    dependencies = [(token.text, token.dep_, token.head.text) for token in doc]
+API_URL = "http://localhost:5002/api/Currency"
 
-    entities = [(ent.text, ent.label_) for ent in doc.ents]
-    noun_chunks = [chunk.text for chunk in doc.noun_chunks]
+def processar_mensagem(texto_usuario):
+    # 1. Extrair a Sigla (ex: BTC, USDC)
+    doc = nlp(texto_usuario.upper())
+    sigla_encontrada = None
 
-    tfidf_vectorizer.fit([text])
-    tfidf_features = tfidf_vectorizer.transform([text]).toarray().tolist()
+    for token in doc:
+        # Ignora palavras comuns
+        if token.text in ["QUAL", "VALOR", "PRECO", "PRICE", "COTO", "AGORA", "DO", "DA"]:
+            continue
+        
+        # Pega palavras entre 3 e 5 letras
+        if 3 <= len(token.text) <= 5 and token.text.isalpha():
+            sigla_encontrada = token.text
+            break
+    
+    if not sigla_encontrada:
+        return {"erro": "Não entendi qual moeda você quer. Tente 'Valor do BTC'."}
 
-    sentiment = sentiment_pipeline(text)[0]
+    # 2. Buscar dados na API C#
+    try:
+        print(f"DEBUG: Buscando dados para {sigla_encontrada}...")
+        response = requests.get(API_URL, timeout=5)
+        
+        if response.status_code != 200:
+            return {"erro": f"Erro na API C#: Status {response.status_code}"}
+        
+        lista_moedas = response.json()
+        
+    except Exception as e:
+        return {"erro": f"API Offline ou erro de conexão: {str(e)}"}
 
-    return {
-        "tokens": tokens,
-        "lemmas": lemmas,
-        "pos_tags": pos_tags,
-        "dependencies": dependencies,
-        "tfidf_features": tfidf_features,
-        "sentiment": sentiment,
-        "syntax_analysis": {
-            "entities": entities,
-            "noun_chunks": noun_chunks
-        },
-        "knowledge_discovery": {
-            "named_entities": entities,
-            "noun_chunks": noun_chunks
-        }
-    }
+    # 3. Filtrar e Extrair Preço do Histórico
+    moeda_encontrada = None
+
+    for item in lista_moedas:
+        # A API retorna "symbol": "USDC" na raiz
+        sym = item.get("symbol")
+        
+        if sym == sigla_encontrada:
+            moeda_encontrada = item
+            break
+    
+    if moeda_encontrada:
+        # AQUI ESTAVA O PROBLEMA: O preço está dentro de "histories"
+        historicos = moeda_encontrada.get("histories", [])
+        
+        if not historicos or len(historicos) == 0:
+             return {"erro": f"Encontrei {sigla_encontrada}, mas ela não possui histórico de preços cadastrado."}
+
+        # Lógica para pegar o preço mais recente:
+        # Ordenamos a lista de históricos pela data (campo 'date') de forma decrescente (reverse=True)
+        # Assumindo que a data vem no formato ISO string (ex: "2025-06-10T...") que é ordenável como string
+        try:
+            ultimo_historico = sorted(historicos, key=lambda x: x['date'], reverse=True)[0]
+            price = ultimo_historico.get("price")
+            
+            return {
+                "symbol": sigla_encontrada,
+                "price": price 
+            }
+        except Exception as e:
+             return {"erro": f"Erro ao ler histórico da moeda: {str(e)}"}
+
+    else:
+        return {"erro": f"Moeda '{sigla_encontrada}' não encontrada na API."}
+        
