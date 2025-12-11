@@ -69,6 +69,9 @@ npm install next
 cd mobile
 flutter run
 
+cd backend/ChatBotAPI/npl_chatbot
+python run.py
+
 //add pacotes do flutter fonts
 flutter pub add google_fonts - fonts
 flutter pub add shared_preferences - shared

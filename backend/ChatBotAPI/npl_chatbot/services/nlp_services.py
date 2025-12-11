@@ -19,7 +19,44 @@ def processar_mensagem(texto_usuario):
 
     for token in doc:
         # Ignora palavras comuns
-        if token.text in ["QUAL", "VALOR", "PRECO", "PRICE", "COTO", "AGORA", "DO", "DA"]:
+        if token.text in [
+    "O", "A", "OS", "AS",
+    "DO", "DA", "DOS", "DAS",
+    "UM", "UMA", "UNS", "UMAS",
+    "DE", "NO", "NA", "NOS", "NAS",
+    "POR", "PRA", "PRAA", "PRO", "PARA",
+    "QUE", "QUEM", "QUAL", "QUAIS",
+    "QUANTO", "QUANTA", "QUANTOS", "QUANTAS",
+    "COMO", "ONDE", "QUANDO", "PORQUE",
+    "PQ", "PORQUE", "PQUE", "PK",
+    "AI", "AÍ", "EH", "É",
+    "VALE", "CUSTA", "CUSTO", "CUSTAM",
+    "QUERO", "QUERIA", "PRECISO",
+    "MOSTRA", "MOSTRE", "MOSTRAR",
+    "DIZ", "DIGA", "FALE", "FALA",
+    "TEM", "TENHO", "SABE", "SABER",
+    "ME", "TE", "SE",
+    "OI", "OLA", "OLÁ", "EAE", "BLZ", "TKP",
+    "TUDO", "BEM", "BELEZA",
+    "MANO", "PARCEIRO", "AMIGO", "AMIGA",
+    "HOJE", "ONTEM", "AMANHA", "AMANHÃ",
+    "AGORA", "DEPOIS", "ANTES",
+    "MAIS", "MENOS",
+    "VALOR", "PRECO", "PREÇO",
+    "MOEDA", "COTACAO", "COTAÇÃO",
+    "ATUAL", "ATUALIZADO",
+    "ULTIMO", "ÚLTIMO",
+    "ULTIMA", "ÚLTIMA",
+    "DADO", "DADOS",
+    "INFO", "INFORMACAO", "INFORMAÇÃO",
+    "TUDO", "TODO", "TODA",
+    "AQUI", "ALI", "LÁ",
+    "MEIO", "META", "METAO",
+    "BORA", "BORA?", "TIPO",
+    "TANTO", "AINDA",
+    "VALE", "MELHOR", "PORRA", "MERDA",
+    "VAI", "FOI", "ESTA", "ESTE", "ISSO", "AQUELE",
+    "SERA", "SERÁ", "TAMBEM", "TAMBÉM",]:
             continue
         
         # Pega palavras entre 3 e 5 letras
