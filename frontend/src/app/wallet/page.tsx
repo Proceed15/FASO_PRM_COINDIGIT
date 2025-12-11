@@ -1,41 +1,91 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "@/components/common/Header";
-import { getWalletsByUser } from "@/services/walletService";
-import Link from "next/link";
+import LoadingScreen from "@/components/common/LoadingScreen";
+import { UserContext } from "@/contexts/UserContext";
+import walletService from "../../services/walletService";
+
+import WalletList from "./components/WalletList";
+import WalletDetails from "./components/WalletDetails";
 
 export default function WalletPage() {
-  const userId = 101; // TEMPORÁRIO — enquanto não integra com Auth
-  const [wallets, setWallets] = useState([]);
+  const { user, isLoading } = useContext(UserContext);
+
+  const [wallets, setWallets] = useState<any[]>([]);
+  const [selectedWallet, setSelectedWallet] = useState<any | null>(null);
+  const [loadingWallets, setLoadingWallets] = useState(true);
+
+  const loadWallets = async () => {
+    if (!user?.id) return;
+
+    try {
+      setLoadingWallets(true);
+      const data = await walletService.getUserWallets(Number(user.id));
+      setWallets(data);
+    } catch (error) {
+      console.error("Erro ao carregar carteiras:", error);
+    } finally {
+      setLoadingWallets(false);
+    }
+  };
 
   useEffect(() => {
-    getWalletsByUser(userId).then((res) => setWallets(res.data));
-  }, []);
+    if (user?.id) loadWallets();
+  }, [user]);
+
+  if (isLoading || loadingWallets) {
+    return <LoadingScreen message="Carregando sua carteira..." />;
+  }
+
+  if (!user?.id) {
+    return (
+      <div className="text-white p-8">
+        <Header pageName="Carteira" />
+        <p className="text-center text-xl mt-10">
+          Você precisa estar logado para acessar sua carteira.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0a1647] text-white">
-      <Header pageName="Wallets" />
+      <Header pageName="Carteira" />
 
-      <div className="max-w-4xl mx-auto mt-10 p-6 bg-[#171e33] rounded-xl shadow-xl">
-        <h1 className="text-2xl font-bold text-[#FFD23F]">Minhas Wallets</h1>
+      <div className="container mx-auto px-6 py-8">
 
-        <Link href="/wallet/create">
-          <button className="mt-4 bg-[#FFD23F] text-black px-4 py-2 rounded font-bold">
-            Criar nova Wallet
-          </button>
-        </Link>
+        {/* LISTA DE CARTEIRAS */}
+        {!selectedWallet && (
+          <WalletList
+            wallets={wallets}
+            onSelect={(walletId) =>
+              setSelectedWallet(wallets.find((w) => w.walletId === walletId))
+            }
+            onCreate={async () => {
+              await walletService.createWallet(Number(user.id));
+              await loadWallets();
+            }}
+          />
+        )}
 
-        <div className="mt-6 space-y-4">
-          {wallets.map((w: any) => (
-            <Link key={w.id} href={`/wallet/${w.id}`}>
-              <div className="p-4 bg-[#11172b] border border-[#FFD23F] rounded-lg cursor-pointer hover:bg-[#0f1426]">
-                <p className="text-lg font-bold">{w.name}</p>
-                <p className="opacity-70">ID: {w.id}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
+        {/* DETALHES DA CARTEIRA */}
+        {selectedWallet && (
+          <WalletDetails
+            wallet={selectedWallet}
+            onBack={() => {
+              setSelectedWallet(null);
+              loadWallets();
+            }}
+            refreshWallet={async () => {
+              const fresh = await walletService.getWalletDetails(
+                Number(user.id),
+                selectedWallet.walletId
+              );
+              setSelectedWallet(fresh);
+            }}
+          />
+        )}
       </div>
     </div>
   );

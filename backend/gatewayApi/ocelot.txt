@@ -1,6 +1,53 @@
 {
   "Routes": [
-    //CURRENCIES
+--WALLET
+    {
+      "DownstreamPathTemplate": "/api/Auth/token",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5004 }],
+      "UpstreamPathTemplate": "/api/wallet/auth/token",
+      "UpstreamHttpMethod": ["POST", "OPTIONS"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Wallet/{userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5004 }],
+      "UpstreamPathTemplate": "/api/Wallet/{userId}",
+      "UpstreamHttpMethod": ["GET", "POST", "OPTIONS"]
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Wallet/{userId}/{walletId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5004 }],
+      "UpstreamPathTemplate": "/api/Wallet/{userId}/{walletId}",
+      "UpstreamHttpMethod": ["GET", "OPTIONS"]
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Wallet/{userId}/{walletId}/items",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5004 }],
+      "UpstreamPathTemplate": "/api/Wallet/{userId}/{walletId}/items",
+      "UpstreamHttpMethod": ["POST", "OPTIONS"]
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Wallet/{userId}/{walletId}/items/{symbol}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5004 }],
+      "UpstreamPathTemplate": "/api/Wallet/{userId}/{walletId}/items/{symbol}",
+      "UpstreamHttpMethod": ["DELETE", "OPTIONS"]
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Wallet/transfer",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5004 }],
+      "UpstreamPathTemplate": "/api/Wallet/transfer",
+      "UpstreamHttpMethod": ["POST", "OPTIONS"]
+    },
+--CURRENCY
     {
       "DownstreamPathTemplate": "/api/Currency",
       "DownstreamScheme": "http",
@@ -8,6 +55,7 @@
       "UpstreamPathTemplate": "/api/Currency",
       "UpstreamHttpMethod": ["GET", "POST", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/Currency/{id}",
       "DownstreamScheme": "http",
@@ -15,33 +63,37 @@
       "UpstreamPathTemplate": "/api/Currency/{id}",
       "UpstreamHttpMethod": ["GET", "PUT", "DELETE", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/Currency/{id}/history",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
       "UpstreamPathTemplate": "/api/Currency/{id}/history",
-      "UpstreamHttpMethod": ["GET"]
+      "UpstreamHttpMethod": ["GET", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/Currency/convert",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
       "UpstreamPathTemplate": "/api/Currency/convert",
-      "UpstreamHttpMethod": ["GET"]
+      "UpstreamHttpMethod": ["GET", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/Currency/summary",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
       "UpstreamPathTemplate": "/api/Currency/summary",
-      "UpstreamHttpMethod": ["GET"]
+      "UpstreamHttpMethod": ["GET", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/Currency/{id}/chart",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
       "UpstreamPathTemplate": "/api/Currency/{id}/chart",
-      "UpstreamHttpMethod": ["GET"]
+      "UpstreamHttpMethod": ["GET", "OPTIONS"]
     },
     {
       "DownstreamPathTemplate": "/api/History",
@@ -50,28 +102,31 @@
       "UpstreamPathTemplate": "/api/History",
       "UpstreamHttpMethod": ["GET", "POST", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/History/{currencyId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
       "UpstreamPathTemplate": "/api/History/{currencyId}",
-      "UpstreamHttpMethod": ["GET"]
+      "UpstreamHttpMethod": ["GET", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/History/{currencyId}/range",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
       "UpstreamPathTemplate": "/api/History/{currencyId}/range",
-      "UpstreamHttpMethod": ["GET"]
+      "UpstreamHttpMethod": ["GET", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/History/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5002 }],
       "UpstreamPathTemplate": "/api/History/{id}",
-      "UpstreamHttpMethod": ["DELETE"]
+      "UpstreamHttpMethod": ["DELETE", "OPTIONS"]
     },
-    //USER
+--USER
     {
       "DownstreamPathTemplate": "/api/User",
       "DownstreamScheme": "http",
@@ -79,6 +134,7 @@
       "UpstreamPathTemplate": "/api/User",
       "UpstreamHttpMethod": ["GET", "POST", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/User/{id}",
       "DownstreamScheme": "http",
@@ -86,6 +142,7 @@
       "UpstreamPathTemplate": "/api/User/{id}",
       "UpstreamHttpMethod": ["GET", "PUT", "DELETE", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/auth/login",
       "DownstreamScheme": "http",
@@ -93,6 +150,7 @@
       "UpstreamPathTemplate": "/api/auth/login",
       "UpstreamHttpMethod": ["POST", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/auth/logout",
       "DownstreamScheme": "http",
@@ -100,6 +158,7 @@
       "UpstreamPathTemplate": "/api/auth/logout",
       "UpstreamHttpMethod": ["POST", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/auth/RefreshToken",
       "DownstreamScheme": "http",
@@ -107,6 +166,7 @@
       "UpstreamPathTemplate": "/api/auth/RefreshToken",
       "UpstreamHttpMethod": ["POST", "OPTIONS"]
     },
+
     {
       "DownstreamPathTemplate": "/api/auth/profile",
       "DownstreamScheme": "http",
@@ -114,18 +174,16 @@
       "UpstreamPathTemplate": "/api/auth/profile",
       "UpstreamHttpMethod": ["GET", "OPTIONS"]
     },
-    //CHATBOT
+--CHATBOT
     {
       "DownstreamPathTemplate": "/analyze",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 5005 }
-      ],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5005 }],
       "UpstreamPathTemplate": "/api/chatbot/analyze",
-      "UpstreamHttpMethod": [ "POST", "OPTIONS" ]
+      "UpstreamHttpMethod": ["POST", "OPTIONS"]
     }
   ],
-  
+--ROTA DO GATEWAY
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000"
   }

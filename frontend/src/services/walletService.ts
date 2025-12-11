@@ -1,43 +1,71 @@
 import axios from "axios";
 
-const API = "http://localhost:5000/api"; // Gateway Ocelot
+const BASE_URL = "http://localhost:5000/api/Wallet"; // Gateway
 
-export const getWalletsByUser = async (userId: number) => {
-  return axios.get(`${API}/wallet/${userId}`);
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+  return {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };
 
-export const getWalletDetails = async (walletId: number) => {
-  return axios.get(`${API}/wallet/details/${walletId}`);
+export const walletService = {
+  async getUserWallets(userId: number) {
+    const response = await axios.get(`${BASE_URL}/${userId}`, getAuthHeaders());
+    return response.data;
+  },
+
+  async createWallet(userId: number) {
+    const response = await axios.post(
+      `${BASE_URL}/${userId}`,
+      {},
+      getAuthHeaders()
+    );
+    return response.data;
+  },
+
+  async getWalletDetails(userId: number, walletId: string) {
+    const response = await axios.get(
+      `${BASE_URL}/${userId}/${walletId}`,
+      getAuthHeaders()
+    );
+    return response.data;
+  },
+
+  async addItem(userId: number, walletId: string, item: { symbol: string; amount: number }) {
+    const response = await axios.post(
+      `${BASE_URL}/${userId}/${walletId}/items`,
+      item,
+      getAuthHeaders()
+    );
+    return response.data;
+  },
+
+  async deleteItem(userId: number, walletId: string, symbol: string) {
+    await axios.delete(
+      `${BASE_URL}/${userId}/${walletId}/items/${symbol}`,
+      getAuthHeaders()
+    );
+  },
+
+  async transfer(data: {
+    fromUserId: number;
+    toUserId: number;
+    fromWalletId: string;
+    toWalletId: string;
+    symbol: string;
+    amount: number;
+  }) {
+    const response = await axios.post(
+      `${BASE_URL}/transfer`,
+      data,
+      getAuthHeaders()
+    );
+    return response.data;
+  },
 };
 
-export const createWallet = async (data: { userId: number; name: string }) => {
-  return axios.post(`${API}/wallet/create`, data);
-};
-
-export const getWalletItems = async (walletId: number) => {
-  return axios.get(`${API}/wallet/items/${walletId}`);
-};
-
-export const createWalletItem = async (data: {
-  walletId: number;
-  currencyId: number;
-  quantity: number;
-  purchasePrice: number;
-  usdValue: number;
-}) => {
-  return axios.post(`${API}/wallet/items/create`, data);
-};
-
-export const deleteWalletItem = async (itemId: number) => {
-  return axios.delete(`${API}/wallet/items/${itemId}`);
-};
-
-export const transferBetweenWallets = async (data: {
-  walletFrom: number;
-  walletTo: number;
-  amount: number;
-  fee: number;
-  type: string;
-}) => {
-  return axios.post(`${API}/wallet/transaction/transfer`, data);
-};
+export default walletService;
