@@ -41,7 +41,7 @@ export default function ChatbotPage() {
   };
 
   return (
-    <div className="min-h-[600px] bg-[#283976] text-white">
+    <div className="min-h-[750px] bg-[#283976] text-white">
       <Header pageName="ChatBot" />
 
       <div className="max-w-4xl mx-auto mt-[55px] mb-10 p-6 bg-[#171e33] rounded-xl shadow-xl">
