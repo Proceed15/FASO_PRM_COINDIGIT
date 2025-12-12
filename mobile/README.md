@@ -65,5 +65,3 @@ O celular e o computador devem estar na mesma rede Wi-Fi. Utilize o IP da sua m�
 * Envia a transação para a Wallet API.
 
 4. **Feedback Visual:** Notificações (Snackbars) instantâneas para sucesso ou falha nas operações financeiras.
-
----
