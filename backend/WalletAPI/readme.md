@@ -53,3 +53,9 @@ A Wallet API se comunica diretamente via HTTP com outros serviços para validar 
 * Currency API: Consumida para obter a cotação atual dos ativos (lastPriceUsd) e calcular o saldo total em Dólar.
 
 * User API: Pode ser consultada para validar a existência de usuários antes de criar carteiras ou transferências.
+
+## 7. Observações
+
+* A comunicação é totalmente síncrona.
+
+* O banco de dados SQLite é gerado localmente na primeira execução.
