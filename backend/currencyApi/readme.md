@@ -37,10 +37,11 @@ O serviço iniciará (por padrão) na porta: `http://localhost:5002`
 
 ## 5. Endpoints Principais
 
-Método,Rota,Descrição
-GET,/api/Currency,Lista todas as moedas cadastradas e seus preços atuais.
-GET,/api/Currency/{symbol},Busca detalhes e histórico de uma moeda específica (ex: BTC).
-GET,/api/CurrencyChart/top-currencies,Retorna dados formatados e simplificados para renderização de gráficos no Frontend.
+| Método | Rota | Descrição |
+| :--- | :--- | :--- |
+| **GET** | `/api/Currency` | Lista todas as moedas cadastradas e seus preços atuais. |
+| **GET** | `/api/Currency/{symbol}` | Busca detalhes e histórico de uma moeda específica (ex: BTC). |
+| **GET** | `/api/CurrencyChart/top-currencies` | Retorna dados formatados e simplificados para renderização de gráficos no Frontend. |
 
 ## 6. Dicionário de Dados
 
