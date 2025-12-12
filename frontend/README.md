@@ -34,14 +34,14 @@ npm install
 # Inicie o servidor de desenvolvimento
 npm run dev
 Acesse a aplicação no navegador: http://localhost:3000
-
-5. Configuração de Ambiente
+```
+# 5. Configuração de Ambiente
 Crie um arquivo .env.local na raiz para configurar o endereço do Gateway:
 
 Snippet de código
-```
+
 NEXT_PUBLIC_API_URL=http://localhost:5000
-6. Funcionalidades Principais
+# 6. Funcionalidades Principais
 Autenticação: Telas de Login e Registro integradas à rota /user do Gateway. Armazena o JWT em cookies ou localStorage.
 
 Dashboard Financeiro: Exibe o saldo total e a composição da carteira consumindo a rota /wallet.
