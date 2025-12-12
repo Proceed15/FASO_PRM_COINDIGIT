@@ -158,11 +158,11 @@ export default function ChatbotPage() {
             <br/>
             <p className="text-white">1. Identificação (Login): <p className="inline text-red-300">Meu nome é (SeuNomeDeUsuário)</p></p>
             <p className="text-white">2. Consultar Carteira: <p className="inline text-red-300">Qual é o meu Saldo?</p></p>
-            <p className="text-white">3. Cotação de Moedas: <p className="inline text-red-300">Qual o valor do BTC?</p> ou apenas <p className="inline text-red-300">ETH</p></p>
+            <p className="text-white">3. Cotação de Moedas: <p className="inline text-red-300">Qual o valor do BTC?</p> ou apenas <p className="inline text-red-300">BTC</p></p>
             <p className="text-white">4. Depósito (Injeção de Fundos): <p className="inline text-red-300">Depositar 1000 USD para (NomeDeUsuário)</p></p>
             <p className="text-white">5. Transferência entre Usuários:
             (Logue como outro usuário antes, ex: "Meu nome é Admin")
-            Comando: <p className="inline text-red-300">Transferir 0.3 BTC para (NomeDeUsuário)</p></p>
+            <p>6. Comando: <p className="inline text-red-300">Transferir 0.3 BTC para (NomeDeUsuário)</p></p></p>
             <br/>
           </p>
         </div>
