@@ -47,7 +47,9 @@ GET,/api/CurrencyChart/top-currencies,Retorna dados formatados e simplificados p
 O serviço suporta mais de 300 ativos, incluindo:
 
 * Cripto: BTC, ETH, SOL, BNB, XRP, etc.
+
 * Stablecoins: USDT, USDC.
+  
 * Fiats (Simulado): USD, BRL.
 
 ## 7. Integrações
