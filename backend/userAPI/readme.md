@@ -42,8 +42,11 @@ Abaixo estão as rotas essenciais para o funcionamento do sistema:MétodoRotaDes
 
 ## 6. Integrações
 
-A User API é consumida principalmente por outros serviços para validar identidades:Chatbot API: Consulta a lista de usuários para traduzir nomes (ex: "Maria") em IDs técnicos (ex: 99) para realizar transferências.Gateway API: Centraliza as requisições de Login e Registro vindas do Frontend e Mobile.
+A User API é consumida principalmente por outros serviços para validar identidades:
+* **Chatbot API:** Consulta a lista de usuários para traduzir nomes (ex: "Maria") em IDs técnicos (ex: 99) para realizar transferências.
+* **Gateway API:** Centraliza as requisições de Login e Registro vindas do Frontend e Mobile.
 
 ## 7. Observações
 
-A base de dados SQLite é criada automaticamente na primeira execução (Code First).As chaves de segurança do JWT devem estar configuradas no appsettings.json para validar os tokens gerados.
+* **A base de dados SQLite** é criada automaticamente na primeira execução (Code First).
+* **As chaves de segurança do JWT** devem estar configuradas no appsettings.json para validar os tokens gerados.
