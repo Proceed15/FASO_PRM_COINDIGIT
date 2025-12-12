@@ -34,17 +34,18 @@ dotnet restore
 # Execute a aplicação
 dotnet run
 ```
-O serviço iniciará (por padrão) na porta: http://localhost:51205. 
+O serviço iniciará (por padrão) na porta: `http://localhost:5120`
 
 ## 5. Endpoints Principais
 
 Abaixo estão as rotas essenciais para o funcionamento do sistema:
 
-Método,Rota,Descrição
-POST,/api/User/register,"Cria um novo usuário. Requer: Nome, Email e Senha."
-POST,/api/User/login,Autentica o usuário. Retorna um objeto contendo o Token JWT.
-GET,/api/User,Lista todos os usuários cadastrados (utilizado pelo Chatbot para encontrar IDs pelo nome).
-GET,/api/User/{id},Busca os detalhes públicos de um usuário específico pelo ID.
+| Método | Rota | Descrição |
+| :--- | :--- | :--- |
+| **POST** | `/api/User/register` | Cria um novo usuário. Requer: Nome, Email e Senha. |
+| **POST** | `/api/User/login` | Autentica o usuário. Retorna um objeto contendo o **Token JWT**. |
+| **GET** | `/api/User` | Lista todos os usuários cadastrados (utilizado pelo Chatbot para encontrar IDs pelo nome). |
+| **GET** | `/api/User/{id}` | Busca os detalhes públicos de um usuário específico pelo ID. |
 
 ## 6. Integrações
 
