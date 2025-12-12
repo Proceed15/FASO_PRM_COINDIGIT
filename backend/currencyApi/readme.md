@@ -22,14 +22,13 @@ O projeto segue o padrão de **Clean Architecture**:
 
 Para rodar o serviço localmente:
 
-```bash
-# Navegue até a pasta raiz do serviço
+### Navegue até a pasta raiz do serviço
 cd currencyAPI
 
-# Restaure as dependências
+### Restaure as dependências
 dotnet restore
 
-# Execute a aplicação
+### Execute a aplicação
 dotnet run
 
 Método,Rota,Descrição
