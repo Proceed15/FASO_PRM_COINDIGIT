@@ -9,7 +9,8 @@ except:
     import spacy.cli
     spacy.cli.download("en_core_web_sm")
     nlp = spacy.load("en_core_web_sm")
-
+# Chaves das APIs Devem Vir Aqui
+# ==============================================================================
 # --- CONFIGURAÇÕES ---
 CURRENCY_API_URL = "http://localhost:5002/api/Currency"
 WALLET_API_URL   = "http://localhost:5004/api/Wallet"
@@ -62,7 +63,7 @@ def realizar_login(nome):
     if user:
         CURRENT_USER_ID = user['id']
         CURRENT_USER_NAME = user['name']
-        return {"intent": "login", "message": f"👋 Olá <strong>{CURRENT_USER_NAME}</strong>! (ID: {CURRENT_USER_ID})"}
+        return {"intent": "login", "message": f"Olá {CURRENT_USER_NAME}! (ID: {CURRENT_USER_ID})"}
     return {"erro": f"Usuário '{nome}' não encontrado."}
 
 def deposito_simples(valor, simbolo, nome_destino):
@@ -79,7 +80,7 @@ def deposito_simples(valor, simbolo, nome_destino):
     try:
         r = requests.post(url, json=payload, timeout=5)
         if r.status_code in [200, 201]:
-            return {"intent": "saldo", "message": f"✅ Depósito (Injeção) de <strong>{valor} {simbolo.upper()}</strong> realizado na conta de {user['name']}."}
+            return {"intent": "saldo", "message": f"Depósito de {valor} {simbolo.upper()} realizado na conta de {user['name']}."}
         return {"erro": f"Erro API: {r.status_code}"}
     except Exception as e: return {"erro": str(e)}
 
@@ -116,7 +117,7 @@ def realizar_transferencia(valor, simbolo, nome_destino):
         if r.status_code in [200, 201]:
             return {
                 "intent": "saldo", 
-                "message": f"💸 <strong>Transferência Realizada!</strong><br>Enviado: {valor} {simbolo.upper()}<br>Para: {user_dest['name']}"
+                "message": f"Transferência Realizada! Enviado: {valor} {simbolo.upper()} Para: {user_dest['name']}"
             }
         elif r.status_code == 400:
             return {"erro": "Saldo insuficiente ou dados inválidos."}
@@ -140,12 +141,12 @@ def consultar_saldo():
                     sym = i.get("symbol") or "?"
                     # Ajuste para evitar erros matemáticos com floats
                     soma_itens += (i.get("totalUsd") or 0)
-                    itens_str += f"<br>• {qtd} {sym}"
+                    itens_str += f"• {qtd} {sym}"
                 
                 if val_wallet == 0 and soma_itens > 0: total_geral += soma_itens
                 else: total_geral += val_wallet
 
-            return {"intent": "saldo", "message": f"Sr(a) {CURRENT_USER_NAME}, total: <strong>$ {total_geral:,.2f}</strong><br><br><strong>Ativos:</strong>{itens_str}"}
+            return {"intent": "saldo", "message": f"Sr(a) {CURRENT_USER_NAME}, total: $ {total_geral:,.2f} Ativos:{itens_str}"}
         return {"erro": "Carteira não encontrada."}
     except Exception as e: return {"erro": str(e)}
 
@@ -156,7 +157,7 @@ def buscar_cotacao(sigla):
         if item and item.get("histories"):
             price = sorted(item["histories"], key=lambda x: x['date'], reverse=True)[0]['price']
             nome = get_nome_moeda(sigla)
-            return {"intent": "cotacao", "symbol": sigla, "price": price, "message": f"O preço de <strong>{nome} ({sigla})</strong> é $ {price:,.4f}"}
+            return {"intent": "cotacao", "symbol": sigla, "price": price, "message": f"O preço de {nome} ({sigla}) é $ {price:,.4f}"}
         return {"erro": f"Moeda {sigla} não encontrada."}
     except: return {"erro": "Erro CurrencyAPI"}
 
@@ -217,6 +218,6 @@ def processar_mensagem(texto):
 
     # E. COTAÇÃO
     sigla = next((t.text for t in doc if is_moeda(t.text)), None)
-    if sigla: return buscar_cotacao(sigla)
 
+    if sigla: return buscar_cotacao(sigla)
     return {"erro": "Não entendi."}
