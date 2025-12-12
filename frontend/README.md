@@ -37,7 +37,7 @@ npm run dev
 Acesse a aplicação no navegador: http://localhost:3000
 
 # 5. Configuração de Ambiente
-Crie um arquivo .env.local na raiz para configurar o endereço do Gateway:
+Crie um arquivo `.env.local` na raiz para configurar o endereço do Gateway:
 
 ```bash
 Snippet de código
