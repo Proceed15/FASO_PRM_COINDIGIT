@@ -34,4 +34,16 @@ dotnet restore
 # Execute a aplicação
 dotnet run
 ```
-O serviço iniciará (por padrão) na porta: http://localhost:51205. Endpoints PrincipaisAbaixo estão as rotas essenciais para o funcionamento do sistema:MétodoRotaDescriçãoPOST/api/User/registerCria um novo usuário. Requer: Nome, Email e Senha.POST/api/User/loginAutentica o usuário. Retorna um objeto contendo o Token JWT.GET/api/UserLista todos os usuários cadastrados (utilizado pelo Chatbot para encontrar IDs pelo nome).GET/api/User/{id}Busca os detalhes públicos de um usuário específico pelo ID.6. IntegraçõesA User API é consumida principalmente por outros serviços para validar identidades:Chatbot API: Consulta a lista de usuários para traduzir nomes (ex: "Maria") em IDs técnicos (ex: 99) para realizar transferências.Gateway API: Centraliza as requisições de Login e Registro vindas do Frontend e Mobile.7. ObservaçõesA base de dados SQLite é criada automaticamente na primeira execução (Code First).As chaves de segurança do JWT devem estar configuradas no appsettings.json para validar os tokens gerados.
+O serviço iniciará (por padrão) na porta: http://localhost:51205. 
+
+## 5. Endpoints Principais
+
+Abaixo estão as rotas essenciais para o funcionamento do sistema:MétodoRotaDescriçãoPOST/api/User/registerCria um novo usuário. Requer: Nome, Email e Senha.POST/api/User/loginAutentica o usuário. Retorna um objeto contendo o Token JWT.GET/api/UserLista todos os usuários cadastrados (utilizado pelo Chatbot para encontrar IDs pelo nome).GET/api/User/{id}Busca os detalhes públicos de um usuário específico pelo ID.
+
+## 6. Integrações
+
+A User API é consumida principalmente por outros serviços para validar identidades:Chatbot API: Consulta a lista de usuários para traduzir nomes (ex: "Maria") em IDs técnicos (ex: 99) para realizar transferências.Gateway API: Centraliza as requisições de Login e Registro vindas do Frontend e Mobile.
+
+## 7. Observações
+
+A base de dados SQLite é criada automaticamente na primeira execução (Code First).As chaves de segurança do JWT devem estar configuradas no appsettings.json para validar os tokens gerados.
