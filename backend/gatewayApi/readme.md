@@ -34,8 +34,8 @@ Rota Externa (Gateway)Rota Interna (Microserviço)Destino (Host:Porta)/user/*/ap
 
 ## 5. Configuração
 
-* O Gateway deve ser o primeiro serviço a ser acessado pelos clientes (Frontend/Mobile).
+* O Gateway deve ser o **primeiro serviço** a ser acessado pelos clientes (Frontend/Mobile).
   
 * Certifique-se de que todos os microsserviços de destino estejam rodando para que o roteamento funcione corretamente.
   
-* O CORS deve estar habilitado para permitir chamadas do Frontend (:3000) e dispositivos móveis.
+* O CORS deve estar habilitado para permitir chamadas do Frontend (`:3000`) e dispositivos móveis.
