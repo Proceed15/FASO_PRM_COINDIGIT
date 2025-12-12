@@ -130,7 +130,7 @@ export default function CurrencyListPage() {
               className="bg-[#11172b] border border-[#fffcb7] text-white rounded-lg px-3 py-2 w-full sm:max-w-md outline-none"
             />
             <Button
-              className="bg-yellow-500 hover:bg-[#c8a823] text-white font-semibold rounded px-4 py-2 active:scale-95 transition-transform duration-150"
+              className="bg-yellow-500 hover:bg-yellow-400 text-white font-semibold rounded px-4 py-2 active:scale-95 transition-transform duration-150"
               onClick={() => router.push("/currencies/create")}
             >
               Nova Moeda
