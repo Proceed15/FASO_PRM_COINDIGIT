@@ -34,16 +34,15 @@ Como o aplicativo roda em um ambiente isolado (emulador ou celular), a configura
 O endereço `localhost` da sua máquina de desenvolvimento é mapeado para `10.0.2.2.` Você deve configurar a URL base da API no código (geralmente em um arquivo de constantes, ex: `lib/constants.dart`):
 
 ```Dart
-
 // Configuração para Android Emulator
 const String BASE_URL = "[http://10.0.2.2:5000](http://10.0.2.2:5000)";
-
 ```
 
 **Para Simulador iOS:**
 
 O simulador iOS compartilha a rede do host, então pode-se utilizar:
 
+```Dart
 const String BASE_URL = "http://localhost:5000";
 ```
 
