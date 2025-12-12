@@ -39,14 +39,18 @@ Acesse a aplicação no navegador: http://localhost:3000
 # 5. Configuração de Ambiente
 Crie um arquivo .env.local na raiz para configurar o endereço do Gateway:
 
+```bash
 Snippet de código
 
 NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
 # 6. Funcionalidades Principais
-Autenticação: Telas de Login e Registro integradas à rota /user do Gateway. Armazena o JWT em cookies ou localStorage.
 
-Dashboard Financeiro: Exibe o saldo total e a composição da carteira consumindo a rota /wallet.
+1. **Autenticação:** Telas de Login e Registro integradas à rota `/user` do Gateway. Armazena o JWT em cookies ou localStorage.
 
-Market Data: Lista criptomoedas e exibe gráficos de preço consumindo a rota /currency.
+2. **Dashboard Financeiro:** Exibe o saldo total e a composição da carteira consumindo a rota `/wallet`.
 
-Smart Chat: Widget flutuante que envia comandos de texto para a rota /chatbot e exibe as respostas processadas.
+3. **Market Data:** Lista criptomoedas e exibe gráficos de preço consumindo a rota `/currency`.
+
+4. **Smart Chat:** Widget flutuante que envia comandos de texto para a rota `/chatbot` e exibe as respostas processadas.
