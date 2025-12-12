@@ -51,4 +51,3 @@ A Currency API é passiva e responde a consultas de outros serviços via HTTP:
 Wallet API: Consulta preços para validar trades e calcular o saldo total do usuário.
 
 Chatbot API: Consulta cotações solicitadas pelos usuários via chat.
-
