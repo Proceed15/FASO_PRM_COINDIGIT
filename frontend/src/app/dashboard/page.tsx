@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import currencyService, { Currency } from "@/services/currencyService";
 import Header from "@/components/common/Header";
 import { Button } from "@/components/ui/button";
-import { User, Eye, Plus, LineChart } from "lucide-react";
+import { User, Eye, Plus, LineChart, Wallet } from "lucide-react";
 import { UserContext } from "@/contexts/UserContext";
 import * as Recharts from "recharts";
 
@@ -78,18 +78,26 @@ export default function DashboardPage() {
             <div className="items-center justify-center flex flex-col gap-4 w-full md:w-[220px]">
               <Button
                 onClick={() => router.push("/currencies")}
-                className="bg-[#FFD23F] text-black font-bold py-6 rounded-xl hover:bg-yellow-500 flex items-center justify-center gap-2 w-full transition duration-200 active:scale-95"
+                className="bg-[#FFD23F] text-black font-bold py-7 rounded-xl hover:bg-yellow-500 flex items-center justify-center gap-2 w-full transition duration-200 active:scale-95"
               >
-                <Eye className="w-5 h-5" />
+                <Eye className="w-6 h-6" />
                 Visualizar Moedas
               </Button>
 
               <Button
                 onClick={() => router.push("/currencies/create")}
-                className="bg-[#FFD23F] text-black font-bold py-6 rounded-xl hover:bg-yellow-500 flex items-center justify-center gap-2 w-full transition duration-200 active:scale-95"
+                className="bg-[#FFD23F] text-black font-bold py-7 rounded-xl hover:bg-yellow-500 flex items-center justify-center gap-2 w-full transition duration-200 active:scale-95"
               >
-                <Plus className="w-5 h-5" />
+                <Plus className="w-6 h-6" />
                 Adicionar Moedas
+              </Button>
+
+              <Button
+                onClick={() => router.push("/wallet")}
+                className="bg-[#FFD23F] text-black font-bold py-7 rounded-xl hover:bg-yellow-500 flex items-center justify-center gap-2 w-full transition duration-200 active:scale-95"
+              >
+                <Wallet className="w-6 h-6" />
+                Visualizar Carteiras
               </Button>
             </div>
 
@@ -139,36 +147,12 @@ export default function DashboardPage() {
               )}
             </div>
           </div>
-{/*
-          <div className="bg-[#0D1437] p-6 rounded-xl flex flex-col md:flex-row gap-6 items-center justify-center w-full">
-            <select className="bg-[#283976] border border-gray-500 px-3 py-2 rounded-lg w-full md:w-auto">
-              <option>USD - United States Dollar</option>
-            </select>
-
-            <span className="text-xl">⇄</span>
-
-            <select className="bg-[#283976] border border-gray-500 px-3 py-2 rounded-lg w-full md:w-auto">
-              <option>BTC - Bitcoin</option>
-            </select>
-
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-              className="bg-[#283976] border border-gray-500 px-3 py-2 rounded-lg w-full md:w-[120px] text-center"
-            />
-
-            <span className="text-2xl font-bold text-[#FFD23F] text-center">
-              = 0,2000000
-            </span>
-          </div>
-*/}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <Button
               onClick={() => router.push(`/users/${user?.id}/edit`)}
               className="bg-[#0D1437] hover:bg-[#1a1f4a] py-6 rounded-xl flex items-center justify-center gap-2 w-full transition duration-200 active:scale-95"
             >
-              <User className="w-5 h-5" />
+              <User className="w-6 h-6" />
               Editar Usuário
             </Button>
 
@@ -176,7 +160,7 @@ export default function DashboardPage() {
               onClick={() => router.push("/users")}
               className="bg-[#0D1437] hover:bg-[#1a1f4a] py-6 rounded-xl flex items-center justify-center gap-2 w-full transition duration-200 active:scale-95"
             >
-              <Eye className="w-5 h-5" />
+              <Eye className="w-6 h-6" />
               Visualizar Usuários
             </Button>
 
@@ -184,7 +168,7 @@ export default function DashboardPage() {
               onClick={() => router.push("/register")}
               className="bg-[#0D1437] hover:bg-[#1a1f4a] py-6 rounded-xl flex items-center justify-center gap-2 w-full transition duration-200 active:scale-95"
             >
-              <Plus className="w-5 h-5" />
+              <Plus className="w-6 h-6" />
               Adicionar Usuários
             </Button>
 
