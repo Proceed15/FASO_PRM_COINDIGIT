@@ -153,16 +153,16 @@ export default function ChatbotPage() {
         <div className="bg-[#11172b] border border-[#fffcb7] p-3 rounded-lg mb-5">
           <p className="text-[#fffcb7] font-bold mb-2">
             <br/>
-            <p className="text-red-300">Como usar o CHATBOT:</p>
-            <p className="text-red-300" >Este bot reconhece comandos de linguagem natural. Siga a ordem lógica abaixo para testar:</p>
+            <p className="text-blue-300">Como usar o CHATBOT:</p>
+            <p className="text-blue-300" >Este bot reconhece comandos de linguagem natural. Siga a ordem lógica abaixo para testar:</p>
             <br/>
-            <p className="text-white">1. Identificação (Login): Meu nome é (SeuNomeDeUsuário)</p>
-            <p className="text-white">2. Consultar Carteira: Qual é o meu Saldo?</p>
-            <p className="text-white">3. Cotação de Moedas: Qual o valor do BTC? ou apenas ETH</p>
-            <p className="text-white">4. Depósito (Injeção de Fundos): Depositar 1000 USD para (NomeDeUsuário)</p>
+            <p className="text-white">1. Identificação (Login): <p className="inline text-red-300">Meu nome é (SeuNomeDeUsuário)</p></p>
+            <p className="text-white">2. Consultar Carteira: <p className="inline text-red-300">Qual é o meu Saldo?</p></p>
+            <p className="text-white">3. Cotação de Moedas: <p className="inline text-red-300">Qual o valor do BTC?</p> ou apenas <p className="inline text-red-300">ETH</p></p>
+            <p className="text-white">4. Depósito (Injeção de Fundos): <p className="inline text-red-300">Depositar 1000 USD para (NomeDeUsuário)</p></p>
             <p className="text-white">5. Transferência entre Usuários:
             (Logue como outro usuário antes, ex: "Meu nome é Admin")
-            Comando: Transferir 0.3 BTC para (NomeDeUsuário)</p>
+            Comando: <p className="inline text-red-300">Transferir 0.3 BTC para (NomeDeUsuário)</p></p>
             <br/>
           </p>
         </div>
