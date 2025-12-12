@@ -31,4 +31,18 @@ dotnet restore
 
 # Execute a aplicação
 dotnet run
-O serviço iniciará (por padrão) na porta: http://localhost:50045. Endpoints PrincipaisMétodoRotaDescriçãoGET/api/Wallet/{userId}Retorna todas as carteiras e o saldo total de um usuário.POST/api/Wallet/{userId}Cria uma nova carteira para o usuário (se necessário).GET/api/Wallet/{userId}/{walletId}Retorna detalhes de uma carteira específica.POST/api/Wallet/{userId}/{walletId}/itemsRealiza um Depósito (adiciona fundos/items à carteira).DELETE/api/Wallet/{userId}/{walletId}/items/{symbol}Remove um item/ativo específico da carteira.POST/api/Wallet/transferRealiza transferência de valores entre dois usuários (P2P).6. IntegraçõesA Wallet API se comunica diretamente via HTTP com outros serviços para validar operações:Currency API: Consumida para obter a cotação atual dos ativos (lastPriceUsd) e calcular o saldo total em Dólar.User API: Pode ser consultada para validar a existência de usuários antes de criar carteiras ou transferências.
+```
+
+O serviço iniciará (por padrão) na porta: `http://localhost:5004`
+
+## 5. Endpoints Principais
+
+MétodoRotaDescriçãoGET/api/Wallet/{userId}Retorna todas as carteiras e o saldo total de um usuário.POST/api/Wallet/{userId}Cria uma nova carteira para o usuário (se necessário).GET/api/Wallet/{userId}/{walletId}Retorna detalhes de uma carteira específica.POST/api/Wallet/{userId}/{walletId}/itemsRealiza um Depósito (adiciona fundos/items à carteira).DELETE/api/Wallet/{userId}/{walletId}/items/{symbol}Remove um item/ativo específico da carteira.POST/api/Wallet/transferRealiza transferência de valores entre dois usuários (P2P).
+
+## 6. Integrações
+
+A Wallet API se comunica diretamente via HTTP com outros serviços para validar operações:
+
+* Currency API: Consumida para obter a cotação atual dos ativos (lastPriceUsd) e calcular o saldo total em Dólar.
+
+* User API: Pode ser consultada para validar a existência de usuários antes de criar carteiras ou transferências.
