@@ -25,7 +25,7 @@ import 'pages/users/user_profile_page.dart';
 import 'pages/chatbot/chatbot_page.dart';
 
 // Wallet
-import 'pages/wallets/wallet_view_page.dart';
+import 'pages/wallets/wallet_page.dart';
 
 final Map<String, WidgetBuilder> appRoutes = {
   // Auth
@@ -51,7 +51,4 @@ final Map<String, WidgetBuilder> appRoutes = {
 
   // Chatbot
   '/chatbot': (context) => const ChatbotPage(),
-
-  // Wallet
-  '/wallet': (context) => const WalletViewPage(),
 };
