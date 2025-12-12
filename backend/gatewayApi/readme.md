@@ -30,9 +30,7 @@ O Gateway iniciará (por padrão) na porta: `http://localhost:5000` (ou conforme
 
 O arquivo `ocelot.json` define como as requisições externas são encaminhadas para os serviços internos:
 
-```
 Rota Externa (Gateway)Rota Interna (Microserviço)Destino (Host:Porta)/user/*/api/User/*User API (:5120)/wallet/*/api/Wallet/*Wallet API (:5004)/currency/*/api/Currency/*Currency API (:5002)/chatbot/*/analyzeChatbot API (:5005)
-```
 
 ## 5. Configuração
 
