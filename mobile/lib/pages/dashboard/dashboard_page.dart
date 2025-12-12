@@ -43,7 +43,7 @@ class _DashboardPageState extends State<DashboardPage> {
     required VoidCallback onTap,
   }) {
     return Card(
-      color: const Color(0xFF0c0c1a),
+      color: const Color(0xFF171E33),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: onTap,
