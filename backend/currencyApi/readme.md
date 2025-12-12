@@ -31,5 +31,25 @@ dotnet restore
 
 # Execute a aplicação
 dotnet run
-O serviço iniciará (por padrão) na porta: http://localhost:50025. Endpoints PrincipaisMétodoRotaDescriçãoGET/api/CurrencyLista todas as moedas cadastradas e seus preços atuais.GET/api/Currency/{symbol}Busca detalhes e histórico de uma moeda específica (ex: BTC).GET/api/CurrencyChart/top-currenciesRetorna dados formatados e simplificados para renderização de gráficos no Frontend.6. Dicionário de DadosO serviço suporta mais de 300 ativos, incluindo:Cripto: BTC, ETH, SOL, BNB, XRP, etc.Stablecoins: USDT, USDC.Fiats (Simulado): USD, BRL.7. IntegraçõesA Currency API é passiva e responde a consultas de outros serviços via HTTP:Wallet API: Consulta preços para validar trades e calcular o saldo total do usuário.Chatbot API: Consulta cotações solicitadas pelos usuários via chat.
-Quando estiver pronto, digite **"próximo"** para eu enviar o do **Gateway API**.
+
+Método,Rota,Descrição
+GET,/api/Currency,Lista todas as moedas cadastradas e seus preços atuais.
+GET,/api/Currency/{symbol},Busca detalhes e histórico de uma moeda específica (ex: BTC).
+GET,/api/CurrencyChart/top-currencies,Retorna dados formatados e simplificados para renderização de gráficos no Frontend.
+
+6. Dicionário de Dados
+O serviço suporta mais de 300 ativos, incluindo:
+
+Cripto: BTC, ETH, SOL, BNB, XRP, etc.
+
+Stablecoins: USDT, USDC.
+
+Fiats (Simulado): USD, BRL.
+
+7. Integrações
+A Currency API é passiva e responde a consultas de outros serviços via HTTP:
+
+Wallet API: Consulta preços para validar trades e calcular o saldo total do usuário.
+
+Chatbot API: Consulta cotações solicitadas pelos usuários via chat.
+
