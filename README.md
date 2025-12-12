@@ -1,4 +1,4 @@
-# FASO PRM COINDIGIT
+# FASO PRM COIN DIGIT
 
 <<<<<< develop ver 1.3
 =
