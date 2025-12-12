@@ -2,7 +2,6 @@ import requests
 import spacy
 import re
 
-# Carrega o Spacy
 try:
     nlp = spacy.load("en_core_web_sm")
 except:
@@ -10,186 +9,168 @@ except:
     spacy.cli.download("en_core_web_sm")
     nlp = spacy.load("en_core_web_sm")
 
-# --- CONFIGURAÇÕES DE API ---
+# --- CONFIGURAÇÕES ---
 CURRENCY_API_URL = "http://localhost:5002/api/Currency"
 WALLET_API_URL   = "http://localhost:5004/api/Wallet"
 USER_API_URL     = "http://localhost:5120/api/User"
 
-# --- ESTADO DA SESSÃO ---
-# Inicialmente ninguém está logado (None)
-# Nota: Em produção real, isso seria gerenciado por token/sessão por usuário, 
-# mas para teste local funciona bem usar uma global.
 CURRENT_USER_ID = None 
 CURRENT_USER_NAME = None
 
-# --- 1. BUSCAR USUÁRIO NA API (Nova Função) ---
-def autenticar_usuario(nome_falado):
-    global CURRENT_USER_ID, CURRENT_USER_NAME
-    
-    print(f"DEBUG: Buscando usuário com nome parecido com '{nome_falado}'...")
-    
+# ==============================================================================
+# 1. FUNÇÕES AUXILIARES
+# ==============================================================================
+
+def buscar_usuario_por_nome(termo_busca):
+    termo_busca = termo_busca.upper().strip()
     try:
-        # Busca todos os usuários (GET /api/User)
         response = requests.get(USER_API_URL, timeout=5)
-        
-        if response.status_code != 200:
-            return {"erro": "Não consegui conectar na UserAPI para verificar seu nome."}
-        
-        lista_usuarios = response.json()
-        
-        # Procura alguém com o nome citado (busca insensível a maiúsculas/minúsculas)
-        usuario_encontrado = None
-        for user in lista_usuarios:
-            # Verifica se o nome falado está DENTRO do nome do usuário (ex: "André" em "André Souza")
-            nome_db = user.get("name", "").upper()
-            if nome_falado.upper() in nome_db:
-                usuario_encontrado = user
-                break
-        
-        if usuario_encontrado:
-            CURRENT_USER_ID = usuario_encontrado.get("id")
-            CURRENT_USER_NAME = usuario_encontrado.get("name")
-            return {
-                "intent": "login",
-                "message": f"Olá <strong>{CURRENT_USER_NAME}</strong>! Encontrei seu cadastro (ID: {CURRENT_USER_ID}).<br>Agora posso acessar sua carteira."
-            }
-        else:
-            return {"erro": f"Não encontrei nenhum usuário chamado '{nome_falado}' no sistema."}
-
-    except Exception as e:
-        return {"erro": f"Erro ao conectar na UserAPI: {str(e)}"}
-
-# --- 2. CONSULTAR SALDO (Atualizado para usar ID dinâmico) ---
-def consultar_saldo_usuario():
-    # Verifica se já sabemos quem é o usuário
-    if CURRENT_USER_ID is None:
-        return {"erro": "Eu ainda não sei quem é você. Por favor, diga: <strong>'Meu nome é [Seu Nome]'</strong>."}
-
-    url = f"{WALLET_API_URL}/{CURRENT_USER_ID}"
-    
-    try:
-        response = requests.get(url, timeout=5)
-        if response.status_code == 200:
-            carteiras = response.json()
-            if not carteiras:
-                return {"message": "Sua conta existe, mas não possui carteiras.", "intent": "saldo"}
-
-            total_geral = 0
-            detalhes = ""
-            for wallet in carteiras:
-                total_geral += wallet.get("totalUsd", 0)
-                items = wallet.get("items", [])
-                if items:
-                    for item in items:
-                        detalhes += f"<br>- {item['amount']} {item['symbol']}"
-
-            msg = f"Sr(a) {CURRENT_USER_NAME}, seu patrimônio é <strong>$ {total_geral:,.2f}</strong>."
-            if detalhes:
-                msg += f"<br><br><strong>Ativos:</strong>{detalhes}"
-            return {"intent": "saldo", "message": msg}
-        
-        elif response.status_code == 404:
-            return {"erro": "Carteira não encontrada."}
-        else:
-            return {"erro": f"Erro na API: {response.status_code}"}
-    except Exception as e:
-        return {"erro": str(e)}
-
-# --- 3. DEPÓSITO (Atualizado para usar ID dinâmico) ---
-def realizar_deposito(valor, simbolo):
-    if CURRENT_USER_ID is None:
-        return {"erro": "Identifique-se primeiro dizendo 'Meu nome é...'"}
-
-    # (Lógica idêntica à anterior, mas usando CURRENT_USER_ID)
-    try:
-        # Pega carteira
-        resp_wallet = requests.get(f"{WALLET_API_URL}/{CURRENT_USER_ID}")
-        carteiras = resp_wallet.json()
-        if not carteiras: return {"erro": "Sem carteira ativa."}
-        
-        wallet_id = carteiras[0].get("walletId")
-        
-        # Faz depósito
-        url_post = f"{WALLET_API_URL}/{CURRENT_USER_ID}/{wallet_id}/items"
-        payload = {"symbol": simbolo.upper(), "amount": float(valor)}
-        
-        requests.post(url_post, json=payload)
-        
-        return {
-            "intent": "saldo",
-            "message": f"✅ Depósito de {valor} {simbolo} realizado para {CURRENT_USER_NAME}."
-        }
-    except Exception as e:
-        return {"erro": str(e)}
-
-# --- 4. BUSCAR COTAÇÃO (Sem alterações) ---
-def buscar_cotacao_moeda(sigla):
-    # (Mantém o código que já fizemos de CurrencyAPI)
-    # ... Coloque aqui a função buscar_cotacao_moeda que já estava pronta ...
-    try:
-        response = requests.get(CURRENCY_API_URL, timeout=5)
-        if response.status_code != 200: return {"erro": "Erro na CurrencyAPI"}
+        if response.status_code != 200: return None
         
         lista = response.json()
-        # Procura moeda
-        item = next((i for i in lista if i.get("symbol") == sigla), None)
         
-        if item:
-            historicos = item.get("histories", [])
-            if not historicos: return {"erro": f"Sem histórico para {sigla}."}
-            
-            # Ordena por data
-            ultimo = sorted(historicos, key=lambda x: x['date'], reverse=True)[0]
-            return {"symbol": sigla, "price": ultimo.get("price")}
-        else:
-            return {"erro": f"Moeda '{sigla}' não encontrada."}
-    except Exception as e:
-        return {"erro": f"Erro Currency: {str(e)}"}
+        # 1. Match Exato
+        for user in lista:
+            if user.get("name", "").upper() == termo_busca: return user
+        # 2. Match Parcial
+        for user in lista:
+            if termo_busca in user.get("name", "").upper(): return user
+        return None
+    except: return None
 
-# --- PROCESSADOR PRINCIPAL ---
-def processar_mensagem(texto_usuario):
-    texto_upper = texto_usuario.upper()
-
-    # A. INTENÇÃO: IDENTIFICAÇÃO (Novo!)
-    # Frases: "Meu nome é André", "Eu sou o André", "Sou André"
-    if "MEU NOME" in texto_upper or "SOU O" in texto_upper or "SOU A" in texto_upper:
-        # Tenta pegar o nome. Remove as palavras chave e pega o resto
-        nome_limpo = texto_usuario.upper().replace("MEU NOME É", "").replace("MEU NOME E", "").replace("EU SOU O", "").replace("SOU O", "").strip()
-        # Remove pontuação final
-        nome_limpo = nome_limpo.replace(".", "")
+def garantir_carteira_usuario(user_id):
+    url = f"{WALLET_API_URL}/{user_id}"
+    try:
+        resp = requests.get(url, timeout=5)
+        if resp.status_code == 200 and resp.json():
+            return resp.json()[0].get("walletId")
         
-        if len(nome_limpo) > 1:
-            return autenticar_usuario(nome_limpo)
-        else:
-            return {"erro": "Não entendi seu nome. Tente: 'Meu nome é [Nome]'."}
+        requests.post(url, json={}, timeout=5)
+        resp2 = requests.get(url, timeout=5)
+        return resp2.json()[0].get("walletId") if resp2.json() else None
+    except: return None
 
-    # B. INTENÇÃO: SALDO
-    if any(p in texto_upper for p in ["SALDO", "CARTEIRA", "CONTA"]):
-        return consultar_saldo_usuario()
+# ==============================================================================
+# 2. AÇÕES DE NEGÓCIO
+# ==============================================================================
 
-    # C. INTENÇÃO: DEPÓSITO
-    if "DEPOSITAR" in texto_upper:
-        match_valor = re.search(r"\d+(\.\d+)?", texto_usuario)
-        doc = nlp(texto_upper)
-        sigla = None
-        for token in doc:
-            if 3 <= len(token.text) <= 5 and token.text not in ["DEPOSITAR", "QUERO"]:
-                sigla = token.text
-        
-        if match_valor and sigla:
-            return realizar_deposito(match_valor.group(), sigla)
-        return {"erro": "Diga o valor e a moeda. Ex: 'Depositar 100 USD'."}
+def realizar_login(nome):
+    global CURRENT_USER_ID, CURRENT_USER_NAME
+    user = buscar_usuario_por_nome(nome)
+    if user:
+        CURRENT_USER_ID = user['id']
+        CURRENT_USER_NAME = user['name']
+        return {"intent": "login", "message": f"👋 Olá <strong>{CURRENT_USER_NAME}</strong>! (ID: {CURRENT_USER_ID})"}
+    return {"erro": f"Usuário '{nome}' não encontrado."}
 
-    # D. INTENÇÃO: COTAÇÃO
+def deposito_para_usuario(valor, simbolo, nome_destino):
+    user = buscar_usuario_por_nome(nome_destino)
+    if not user: return {"erro": f"Usuário '{nome_destino}' não encontrado."}
+    
+    wallet_id = garantir_carteira_usuario(user['id'])
+    if not wallet_id: return {"erro": f"Erro na carteira de {user['name']}."}
+    
+    url = f"{WALLET_API_URL}/{user['id']}/{wallet_id}/items"
+    # Força símbolo em maiúsculo
+    payload = {"symbol": simbolo.upper(), "amount": float(valor)}
+    
+    try:
+        r = requests.post(url, json=payload, timeout=5)
+        if r.status_code in [200, 201]:
+            return {"intent": "saldo", "message": f"✅ Depositei <strong>{valor} {simbolo.upper()}</strong> para {user['name']}."}
+        return {"erro": f"Erro API: {r.status_code}"}
+    except Exception as e: return {"erro": str(e)}
+
+def consultar_saldo():
+    if not CURRENT_USER_ID: return {"erro": "Diga: 'Eu sou o [Nome]'"}
+    
+    try:
+        r = requests.get(f"{WALLET_API_URL}/{CURRENT_USER_ID}", timeout=5)
+        if r.status_code == 200:
+            cart = r.json()
+            total_geral = 0
+            itens_str = ""
+
+            for c in cart:
+                # CORREÇÃO DO TOTAL: Se a carteira vier zerada, soma os itens manualmente
+                val_wallet = c.get("totalUsd") or 0
+                
+                soma_itens = 0
+                items = c.get("items") or []
+                
+                for i in items:
+                    qtd = i.get("amount") or 0
+                    sym = i.get("symbol") or "?"
+                    val_item = i.get("totalUsd") or 0 # Pega o valor calculado do item se existir
+                    soma_itens += val_item
+                    
+                    itens_str += f"<br>• {qtd} {sym}"
+                
+                # Se o total da wallet for 0 mas a soma dos itens for maior, usa a soma dos itens
+                if val_wallet == 0 and soma_itens > 0:
+                    total_geral += soma_itens
+                else:
+                    total_geral += val_wallet
+
+            return {"intent": "saldo", "message": f"Sr(a) {CURRENT_USER_NAME}, total: <strong>$ {total_geral:,.2f}</strong><br><br><strong>Ativos:</strong>{itens_str}"}
+        return {"erro": "Carteira não encontrada."}
+    except Exception as e: return {"erro": str(e)}
+
+def buscar_cotacao(sigla):
+    try:
+        r = requests.get(CURRENCY_API_URL)
+        # Filtra para achar a moeda
+        item = next((i for i in r.json() if i.get("symbol") == sigla), None)
+        if item and item.get("histories"):
+            price = sorted(item["histories"], key=lambda x: x['date'], reverse=True)[0]['price']
+            return {"symbol": sigla, "price": price}
+        return {"erro": f"Moeda {sigla} não encontrada."}
+    except: return {"erro": "Erro CurrencyAPI"}
+
+# ==============================================================================
+# 3. PROCESSADOR (CORRIGIDO COM .isalpha())
+# ==============================================================================
+
+def processar_mensagem(texto):
+    texto_upper = texto.upper()
     doc = nlp(texto_upper)
-    sigla_cotacao = None
-    for token in doc:
-        if token.text in ["QUAL", "VALOR", "PRECO", "PRICE", "MEU", "NOME", "SOU"]: continue
-        if 3 <= len(token.text) <= 5 and token.text.isalpha():
-            sigla_cotacao = token.text
-            break
-            
-    if sigla_cotacao:
-        return buscar_cotacao_moeda(sigla_cotacao)
 
-    return {"erro": "Não entendi. Se apresente dizendo 'Meu nome é...'. e tente novamente"}
+    # LOGIN
+    match_nome = re.search(r"(?:MEU NOME [ÉE]|SOU [OA]|EU SOU [OA]?)\s+(.*)", texto_upper)
+    if match_nome:
+        return realizar_login(match_nome.group(1).strip(" .?!"))
+
+    # DEPÓSITO
+    if "DEPOSITAR" in texto_upper:
+        match_val = re.search(r"\d+(\.\d+)?", texto)
+        
+        # --- CORREÇÃO AQUI: t.text.isalpha() ---
+        # Garante que só pega letras (BTC, USD) e ignora números (200, 100)
+        sigla = next((t.text for t in doc if 3 <= len(t.text) <= 5 and t.text.isalpha() and t.text not in ["PARA", "DEPOSITAR", "QUERO"]), None)
+        
+        if match_val and sigla:
+            valor = match_val.group()
+            # Verifica destinatário
+            if "PARA" in texto_upper:
+                try:
+                    nome_dest = texto_upper.split("PARA")[1].strip(" .?!")
+                    if nome_dest: return deposito_para_usuario(valor, sigla, nome_dest)
+                except: pass
+            
+            # Depósito próprio
+            if CURRENT_USER_ID:
+                return deposito_para_usuario(valor, sigla, CURRENT_USER_NAME)
+            else:
+                return {"erro": "Identifique-se primeiro."}
+        
+        return {"erro": "Use: 'Depositar 100 USD'."}
+
+    # SALDO
+    if any(k in texto_upper for k in ["SALDO", "CONTA", "CARTEIRA"]):
+        return consultar_saldo()
+
+    # COTAÇÃO
+    sigla = next((t.text for t in doc if 3 <= len(t.text) <= 5 and t.text.isalpha() and t.text not in ["VALOR", "PRICE"]), None)
+    if sigla: return buscar_cotacao(sigla)
+
+    return {"erro": "Não entendi."}
