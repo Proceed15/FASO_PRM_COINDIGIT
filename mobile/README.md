@@ -51,29 +51,19 @@ const String BASE_URL = "http://localhost:5000";
 O celular e o computador devem estar na mesma rede Wi-Fi. Utilize o IP da sua máquina (ex: `192.168.x.x`).
 
 # 5. Funcionalidades Principais
-Autenticação Segura: Login integrado à User API via Gateway, com armazenamento seguro do Token.
 
-Resumo de Carteira: Visualização imediata do saldo total convertido em Dólar e lista de ativos.
+1. **Autenticação Segura:** Login integrado à User API via Gateway, com armazenamento seguro do Token.
 
-Transferência Rápida (P2P): Fluxo otimizado para envio de valores entre usuários:
+2. **Resumo de Carteira:** Visualização imediata do saldo total convertido em Dólar e lista de ativos.
 
-Busca o destinatário.
+3. **Transferência Rápida (P2P):** Fluxo otimizado para envio de valores entre usuários:
 
-Valida saldo.
+* Busca o destinatário.
 
-Envia a transação para a Wallet API.
+* Valida saldo.
 
-Feedback Visual: Notificações (Snackbars) instantâneas para sucesso ou falha nas operações financeiras.
+* Envia a transação para a Wallet API.
 
+4. **Feedback Visual:** Notificações (Snackbars) instantâneas para sucesso ou falha nas operações financeiras.
 
 ---
-
-Com isso, finalizamos todos os READMEs para as pastas do seu projeto!
-1.  **User API**
-2.  **Wallet API**
-3.  **Currency API**
-4.  **Gateway API**
-5.  **Frontend**
-6.  **Mobile**
-
-Todos estão padronizados e refletem a arquitetura de microsserviços sem mensageria que definimos. Boa sorte com a entrega!
