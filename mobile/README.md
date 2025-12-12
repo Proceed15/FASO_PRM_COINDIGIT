@@ -24,7 +24,9 @@ flutter pub get
 
 # Execute a aplicação no dispositivo selecionado
 flutter run
-4. Configuração de Rede (Gateway)
+
+```
+# 4. Configuração de Rede (Gateway)
 Como o aplicativo roda em um ambiente isolado (emulador ou celular), a configuração de rede difere da Web:
 
 Para Emulador Android:
@@ -43,7 +45,7 @@ const String BASE_URL = "http://localhost:5000";
 Para Dispositivo Físico:
 O celular e o computador devem estar na mesma rede Wi-Fi. Utilize o IP da sua máquina (ex: 192.168.x.x).
 
-5. Funcionalidades Principais
+# 5. Funcionalidades Principais
 Autenticação Segura: Login integrado à User API via Gateway, com armazenamento seguro do Token.
 
 Resumo de Carteira: Visualização imediata do saldo total convertido em Dólar e lista de ativos.
