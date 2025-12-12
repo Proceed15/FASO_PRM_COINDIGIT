@@ -16,7 +16,7 @@ export default function ChatbotPage() {
       setLoading(true);
       setResponse(null);
 
-      // OCELOT - gateway
+      // OCELOT - GATEWAY
       const res = await fetch("http://127.0.0.1:5000/api/chatbot/analyze", {
         method: "POST",
         headers: {
@@ -45,7 +45,6 @@ export default function ChatbotPage() {
       <Header pageName="ChatBot" />
 
       <div className="max-w-4xl mx-auto mt-[55px] mb-10 p-6 bg-[#171e33] rounded-xl shadow-xl">
-
         <h1 className="text-2xl font-bold text-[#fffcb7] mb-4">
           C H A T B O T - COTAÇÃO DE MOEDAS
         </h1>
@@ -75,7 +74,7 @@ export default function ChatbotPage() {
           </div>
         )}
 
-        {/* RESPOSTA */}
+        {/* RESPOSTA FORMATADA */}
         {response && (
           <div className="mt-6 bg-[#020617] border border-[#fffcb7] rounded-lg p-4">
 
@@ -86,37 +85,22 @@ export default function ChatbotPage() {
               </p>
             )}
 
-            {/* SE VEIO MOEDA */}
-            {"moeda" in response && (
-              <div>
-                <h3 className="text-[#78ffef] text-xl font-bold mb-3">
-                  Resultado da Consulta
-                </h3>
-
-                <p>
-                  <span className="font-bold text-[#FFD23F]">Moeda: </span>
-                  {response.moeda}
-                </p>
-
-                <p>
-                  <span className="font-bold text-[#FFD23F]">Preço: </span>
-                  R$ {response.preco.toLocaleString("pt-BR")}
-                </p>
-
-                {response.data && (
-                  <p>
-                    <span className="font-bold text-[#FFD23F]">Última atualização: </span>
-                    {new Date(response.data).toLocaleString("pt-BR")}
-                  </p>
-                )}
-              </div>
+            {/* MENSAGEM FORMATADA */}
+            {"message" in response && (
+              <p className="text-[#78ffef] text-lg font-semibold">
+                {response.message}
+              </p>
             )}
 
-            {/* DEBUG JSON */}
-            <pre className="text-green-300 mt-4 text-xs opacity-60">
-              {JSON.stringify(response, null, 2)}
-            </pre>
-
+            {/* COTAÇÃO */}
+            {response.intent === "cotacao" && (
+              <p className="text-[#78ffef] text-lg font-semibold">
+                O preço da moeda <span className="text-[#FFD23F]">{response.symbol}</span> é{" "}
+                <span className="text-[#FFD23F]">
+                  R$ {Number(response.price).toLocaleString("pt-BR")}
+                </span>
+              </p>
+            )}
           </div>
         )}
 
