@@ -38,7 +38,9 @@ O serviço iniciará (por padrão) na porta: http://localhost:51205.
 
 ## 5. Endpoints Principais
 
-Abaixo estão as rotas essenciais para o funcionamento do sistema:MétodoRotaDescriçãoPOST/api/User/registerCria um novo usuário. Requer: Nome, Email e Senha.POST/api/User/loginAutentica o usuário. Retorna um objeto contendo o Token JWT.GET/api/UserLista todos os usuários cadastrados (utilizado pelo Chatbot para encontrar IDs pelo nome).GET/api/User/{id}Busca os detalhes públicos de um usuário específico pelo ID.
+Abaixo estão as rotas essenciais para o funcionamento do sistema:
+
+MétodoRotaDescriçãoPOST/api/User/registerCria um novo usuário. Requer: Nome, Email e Senha.POST/api/User/loginAutentica o usuário. Retorna um objeto contendo o Token JWT.GET/api/UserLista todos os usuários cadastrados (utilizado pelo Chatbot para encontrar IDs pelo nome).GET/api/User/{id}Busca os detalhes públicos de um usuário específico pelo ID.
 
 ## 6. Integrações
 
