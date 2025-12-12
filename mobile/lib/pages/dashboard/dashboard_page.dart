@@ -32,7 +32,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<void> logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove("user"); //LIMPA CACHE DO USER
+    await prefs.remove("user"); // LIMPA CACHE
 
     Navigator.pushReplacementNamed(context, "/login");
   }
@@ -105,6 +105,20 @@ class _DashboardPageState extends State<DashboardPage> {
               icon: Icons.person_outline,
               label: "Meu Perfil",
               onTap: () => Navigator.pushNamed(context, "/user/profile"),
+            ),
+
+            // NOVO — Chatbot
+            _menuButton(
+              icon: Icons.chat_bubble_outline,
+              label: "ChatBot",
+              onTap: () => Navigator.pushNamed(context, "/chatbot"),
+            ),
+
+            // NOVO — Wallet API
+            _menuButton(
+              icon: Icons.account_balance_wallet_outlined,
+              label: "Wallet",
+              onTap: () => Navigator.pushNamed(context, "/wallet"),
             ),
           ],
         ),
