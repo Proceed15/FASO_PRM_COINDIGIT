@@ -24,9 +24,6 @@ import 'pages/users/user_profile_page.dart';
 // Chatbot
 import 'pages/chatbot/chatbot_page.dart';
 
-// Wallet
-import 'pages/wallets/wallet_page.dart';
-
 final Map<String, WidgetBuilder> appRoutes = {
   // Auth
   '/login': (context) => const LoginPage(),
