@@ -58,7 +58,7 @@ O celular e o computador devem estar na mesma rede Wi-Fi. Utilize o IP da sua m�
 
 3. **Transferência Rápida (P2P):** Fluxo otimizado para envio de valores entre usuários:
 
-* ****Busca o destinatário.
+* Busca o destinatário.
 
 * Valida saldo.
 
