@@ -55,4 +55,4 @@ A User API é consumida principalmente por outros serviços para validar identid
 ## 7. Observações
 
 * A base de dados SQLite é criada automaticamente na primeira execução (Code First).
-* As chaves de segurança do JWT devem estar configuradas no appsettings.json para validar os tokens gerados.
+* As chaves de segurança do JWT devem estar configuradas no `appsettings.json` para validar os tokens gerados.
