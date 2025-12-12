@@ -37,13 +37,16 @@ O endereço `localhost` da sua máquina de desenvolvimento é mapeado para `10.0
 
 // Configuração para Android Emulator
 const String BASE_URL = "[http://10.0.2.2:5000](http://10.0.2.2:5000)";
-Para Simulador iOS:
+
+**Para Simulador iOS:**
+
 O simulador iOS compartilha a rede do host, então pode-se utilizar:
 
 const String BASE_URL = "http://localhost:5000";
 ```
 
-Para Dispositivo Físico:
+**Para Dispositivo Físico:**
+
 O celular e o computador devem estar na mesma rede Wi-Fi. Utilize o IP da sua máquina (ex: 192.168.x.x).
 
 # 5. Funcionalidades Principais
