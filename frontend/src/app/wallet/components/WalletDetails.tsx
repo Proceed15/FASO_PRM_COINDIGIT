@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect, useContext } from "react";
-import { ArrowLeft, Trash2, PlusCircle, HandCoins } from "lucide-react";
+import { UserPlus, ArrowLeft, Trash2, PlusCircle, HandCoins } from "lucide-react";
 import AddItemForm from "./AddItemForm";
 import TransferForm from "./TransferForm";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import walletService from "../../../services/walletService";
 import { UserContext } from "@/contexts/UserContext";
 import { Button } from "@/components/ui/button";
+import TransferToUserForm from "./TransferToUserForm";
 
 interface WalletDetailsProps {
   wallet: any;
@@ -17,7 +18,7 @@ interface WalletDetailsProps {
 
 export default function WalletDetails({ wallet, onBack, refreshWallet }: WalletDetailsProps) {
   const { user } = useContext(UserContext);
-
+  const [showTransferUser, setShowTransferUser] = useState(false);
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState(wallet.items || []);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -118,8 +119,15 @@ export default function WalletDetails({ wallet, onBack, refreshWallet }: WalletD
           onClick={() => setShowTransfer(true)}
           className="bg-orange-500 hover:bg-orange-400 px-5 py-3 rounded-xl text-white flex items-center gap-2"
         >
-          <HandCoins size={23} /> Transferir
+          <HandCoins size={23} /> Transferir para carteira
         </button>
+        <button
+          onClick={() => setShowTransferUser(true)}
+          className="bg-purple-500 hover:bg-purple-400 px-5 py-3 rounded-xl text-white flex items-center gap-2"
+        >
+          <UserPlus size={23} /> Transferir para usuário
+        </button>
+
       </div>
 
       {/* MODAL ADD */}
@@ -129,6 +137,15 @@ export default function WalletDetails({ wallet, onBack, refreshWallet }: WalletD
           walletItems={items}
           onClose={() => setShowAddForm(false)}
           onSuccess={(updatedItems) => setItems(updatedItems)}
+        />
+      )}
+
+      {/* Novo modal para transferir para outro usuário */}
+      {showTransferUser && (
+        <TransferToUserForm
+          walletId={wallet.walletId}
+          onClose={() => setShowTransferUser(false)}
+          onSuccess={async () => await refreshWallet()}
         />
       )}
 

@@ -14,7 +14,7 @@ export default function WalletPage() {
   const [wallets, setWallets] = useState<any[]>([]);
   const [selectedWallet, setSelectedWallet] = useState<any | null>(null);
 
-  // Carrega as wallets do usuário
+  //LOAD WALLETS
   const loadWallets = async () => {
     if (!user?.id) return;
 
@@ -30,7 +30,7 @@ export default function WalletPage() {
     if (user?.id) loadWallets();
   }, [user]);
 
-  // Usuário não logado
+  //LOGOUT
   if (!user?.id) {
     return (
       <div className="text-white p-8">
