@@ -46,16 +46,16 @@ GET,/api/CurrencyChart/top-currencies,Retorna dados formatados e simplificados p
 
 O serviço suporta mais de 300 ativos, incluindo:
 
-* Cripto: BTC, ETH, SOL, BNB, XRP, etc.
+* **Cripto:** BTC, ETH, SOL, BNB, XRP, etc.
 
-* Stablecoins: USDT, USDC.
+* **Stablecoins:** USDT, USDC.
   
-* Fiats (Simulado): USD, BRL.
+* **Fiats (Simulado):** USD, BRL.
 
 ## 7. Integrações
 
 A Currency API é passiva e responde a consultas de outros serviços via HTTP:
 
-* Wallet API: Consulta preços para validar trades e calcular o saldo total do usuário.
+* **Wallet API:** Consulta preços para validar trades e calcular o saldo total do usuário.
 
-* Chatbot API: Consulta cotações solicitadas pelos usuários via chat.
+* **Chatbot API:** Consulta cotações solicitadas pelos usuários via chat.
