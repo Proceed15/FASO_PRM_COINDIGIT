@@ -4,26 +4,63 @@
   <meta charset="UTF-8">
   <title>NLP Chatbot Analyzer</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Pequeno ajuste para destacar os comandos de exemplo */
+    .command-example {
+      font-family: monospace;
+      background-color: #e9ecef;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #d63384; /* Cor de destaque para código */
+    }
+  </style>
 </head>
 <body class="bg-light">
   <div class="container py-5">
     <div class="card shadow-lg">
       <div class="card-body">
+        
         <h1 class="card-title text-center mb-4">NLP Chatbot Analyzer</h1>
         
+        <div class="alert alert-info mb-4 shadow-sm" role="alert">
+          <h5 class="alert-heading fw-bold">Como usar o ChatBot</h5>
+          <p class="small mb-2">Este bot reconhece comandos de linguagem natural. Siga a ordem lógica abaixo para testar:</p>
+          
+          <ul class="list-group list-group-flush bg-transparent small">
+            <li class="list-group-item bg-transparent py-1">
+              <strong>1. Identificação (Login):</strong> <span class="command-example">Meu nome é (SeuNomeDeUsuário)</span>
+            </li>
+            <li class="list-group-item bg-transparent py-1">
+              <strong>2. Consultar Carteira:</strong> <span class="command-example">Qual é o meu Saldo?</span>
+            </li>
+            <li class="list-group-item bg-transparent py-1">
+              <strong>3. Cotação de Moedas:</strong> <span class="command-example">Qual o valor do BTC?</span> ou apenas <span class="command-example">ETH</span>
+            </li>
+            <li class="list-group-item bg-transparent py-1">
+              <strong>4. Depósito (Injeção de Fundos):</strong> <span class="command-example">Depositar 1000 USD para (NomeDeUsuário)</span>
+            </li>
+            <li class="list-group-item bg-transparent py-1">
+              <strong>5. Transferência entre Usuários:</strong>
+              <br>
+              <em>(Logue como outro usuário antes, ex: "Meu nome é Admin")</em>
+              <br>
+              Comando: <span class="command-example">Transferir 0.3 BTC para (NomeDeUsuário)</span>
+            </li>
+          </ul>
+        </div>
         <form id="analyzeForm">
           <div class="mb-3">
-            <label for="textInput" class="form-label">Texto para Análise</label>
-            <textarea id="textInput" class="form-control" rows="5" placeholder="Digite um texto..."></textarea>
+            <label for="textInput" class="form-label fw-bold">Texto para Análise</label>
+            <textarea id="textInput" class="form-control" rows="3" placeholder="Digite seu comando aqui... Ex: Meu nome é André"></textarea>
           </div>
           <div class="d-grid">
-            <button type="submit" class="btn btn-primary">Analisar</button>
+            <button type="submit" class="btn btn-primary btn-lg">Enviar Mensagem</button>
           </div>
         </form>
 
         <div class="mt-4">
           <h5>Resultado:</h5>
-          <pre id="output" class="bg-light border p-3 rounded small text-break"></pre>
+          <pre id="output" class="bg-light border p-3 rounded small text-break" style="min-height: 100px;"></pre>
         </div>
       </div>
     </div>
