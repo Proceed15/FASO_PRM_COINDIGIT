@@ -29,7 +29,8 @@ flutter run
 # 4. Configuração de Rede (Gateway)
 Como o aplicativo roda em um ambiente isolado (emulador ou celular), a configuração de rede difere da Web:
 
-Para Emulador Android:
+## Para Emulador Android:
+
 O endereço localhost da sua máquina de desenvolvimento é mapeado para 10.0.2.2. Você deve configurar a URL base da API no código (geralmente em um arquivo de constantes, ex: lib/constants.dart):
 
 ```Dart
