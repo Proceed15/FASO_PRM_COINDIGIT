@@ -34,7 +34,7 @@ npm install
 # Inicie o servidor de desenvolvimento
 npm run dev
 ```
-Acesse a aplicação no navegador: `http://localhost:3000`
+Acesse a aplicação no navegador: http://localhost:3000
 
 # 5. Configuração de Ambiente
 Crie um arquivo `.env.local` na raiz para configurar o endereço do Gateway:
