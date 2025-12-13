@@ -1,4 +1,4 @@
-# Projeto Corretora de Criptomoedas
+# CoinDigit, Projeto de Corretora de Criptomoedas
 
 **Disciplina:** Programação Multiplataforma / Integração de Sistemas  
 **Orientador:** André Cassulino Araújo Souza  
@@ -26,10 +26,11 @@ A arquitetura baseia-se em **microserviços independentes**, com **comunicação
 * **Backend:** .NET 8 (C#) com arquitetura limpa (Clean Architecture)
 * **Frontend Web:** Next.js + TypeScript + Tailwind CSS
 * **Mobile:** Flutter (Dart)
-* **Chatbot:** Python (Flask + SpaCy)
+* **Chatbot:** Python (Requests + Flask + SpaCy)
 * **Gateway:** Ocelot (.NET)
 * **Banco de dados:** SQLite (Individual por microserviço)
 * **Controle de versão:** GitHub
+* **Controle de Tarefas:** Github Projects
 
 ---
 
