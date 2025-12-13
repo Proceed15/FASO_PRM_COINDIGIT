@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/Wallet"; // Gateway
+const BASE_URL = "http://localhost:5000/api/Wallet"; //GATEWAY
+const USER_API = "http://localhost:5000/api/User";   //USER API
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
@@ -19,53 +20,41 @@ export const walletService = {
   },
 
   async createWallet(userId: number) {
-    const response = await axios.post(
-      `${BASE_URL}/${userId}`,
-      {},
-      getAuthHeaders()
-    );
+    const response = await axios.post(`${BASE_URL}/${userId}`, {}, getAuthHeaders());
     return response.data;
   },
 
   async getWalletDetails(userId: number, walletId: string) {
-    const response = await axios.get(
-      `${BASE_URL}/${userId}/${walletId}`,
-      getAuthHeaders()
-    );
+    const response = await axios.get(`${BASE_URL}/${userId}/${walletId}`, getAuthHeaders());
     return response.data;
   },
 
   async addItem(userId: number, walletId: string, item: { symbol: string; amount: number }) {
-    const response = await axios.post(
-      `${BASE_URL}/${userId}/${walletId}/items`,
-      item,
-      getAuthHeaders()
-    );
+    const response = await axios.post(`${BASE_URL}/${userId}/${walletId}/items`, item, getAuthHeaders());
     return response.data;
   },
 
   async deleteItem(userId: number, walletId: string, symbol: string) {
-    await axios.delete(
-      `${BASE_URL}/${userId}/${walletId}/items/${symbol}`,
-      getAuthHeaders()
-    );
+    await axios.delete(`${BASE_URL}/${userId}/${walletId}/items/${symbol}`, getAuthHeaders());
   },
 
   async transfer(data: {
     fromUserId: number;
     toUserId: number;
-    fromWalletId: string;
-    toWalletId: string;
+    fromWalletId?: string;
+    toWalletId?: string;
     symbol: string;
     amount: number;
   }) {
-    const response = await axios.post(
-      `${BASE_URL}/transfer`,
-      data,
-      getAuthHeaders()
-    );
+    const response = await axios.post(`${BASE_URL}/transfer`, data, getAuthHeaders());
     return response.data;
   },
+
+  //SEARCH ID - EMAIL
+  async getUserIdByEmail(email: string): Promise<number> {
+    const resp = await axios.get(`${USER_API}?email=${encodeURIComponent(email)}`, getAuthHeaders());
+    return resp.data.id;
+  }
 };
 
 export default walletService;

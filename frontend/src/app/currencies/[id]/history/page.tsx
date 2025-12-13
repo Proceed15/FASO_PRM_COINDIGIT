@@ -46,9 +46,7 @@ function groupHistoryByMonth(history: History[]) {
     if (item.price == null || item.price === 0) return;
 
     const date = new Date(item.date);
-    const yearMonth = `${date.getFullYear()}-${String(
-      date.getMonth() + 1
-    ).padStart(2, "0")}`;
+    const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 
     if (!grouped[yearMonth]) {
       grouped[yearMonth] = [];
@@ -121,13 +119,13 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
     <div className="min-h-screen bg-[#283976] text-white font-sans">
       <Header pageName="Gráfico de Cotação" />
 
-      <main className="max-w-5xl mx-auto p-8 mt-[30px] mb-[30px] bg-[#171e33] rounded-xl shadow-lg text-base md:text-lg leading-relaxed space-y-3">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-[45px] text-center md:text-left">
+      <main className="max-w-5xl mx-auto p-8 mt-8 mb-8 bg-[#171e33] rounded-xl shadow-lg text-base md:text-lg leading-relaxed space-y-3">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between text-center md:text-left">
           <h2 className="text-2xl md:text-3xl font-bold text-white">
             Histórico de Cotação - 2025
           </h2>
           {currency && (
-            <div className="flex items-center justify-center md:justify-end gap-2 mt-3 md:mt-0 mr-0 md:mr-[15px] text-[#78ffef] text-lg md:text-xl font-semibold">
+            <div className="flex items-center justify-center md:justify-end gap-2 mt-3 md:mt-0 text-[#78ffef] text-lg md:text-xl font-semibold">
               <CurrencyIconDetail
                 symbol={currency.symbol}
                 className="w-6 h-6 md:w-7 md:h-7"
@@ -135,7 +133,7 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
             </div>
           )}
         </div>
-
+        
         {error && <p className="text-red-500">{error}</p>}
 
         {loading.fetch ? (
@@ -209,7 +207,7 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
           </ResponsiveContainer>
         )}
 
-        <div className="w-full flex justify-end md:justify-end mt-6">
+        <div className="w-full flex justify-end mt-6">
           <button
             onClick={() => router.push(`/currencies/${id}/view`)}
             className="w-[100px] h-[40px] bg-[#265dbf] border hover:bg-blue-800 active:scale-95 transition-transform duration-150 rounded-lg"
@@ -219,6 +217,7 @@ export default function CurrencyHistoryPage({ params }: PageProps) {
           </button>
         </div>
       </main>
+      <div className="h-[15px] bg-[#283976]"></div>
     </div>
   );
 }

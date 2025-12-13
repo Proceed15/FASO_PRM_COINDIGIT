@@ -60,34 +60,34 @@ class UserService {
     print("LOGIN BODY: ${res.data}");
 
     if (res.statusCode == 200) {
-      // ✅ Busca todos os usuários
+      //BUSCA USERS
       final usersRes = await _api.get("/api/User");
 
       print("USERS BODY:");
       print(usersRes.data);
 
-      // ✅ GARANTE QUE REALMENTE É UMA LISTA
+      //LISTA
       final List list = usersRes.data is List
           ? usersRes.data
           : usersRes.data["data"] ?? usersRes.data["users"] ?? [];
 
-      // ✅ PROCURA PELO EMAIL
+      //PELO EMAIL
       final userJson = list.cast<Map>().firstWhere(
         (u) => u["email"].toString().toLowerCase() == email.toLowerCase(),
         orElse: () => {},
       );
 
       if (userJson.isEmpty) {
-        print("❌ USUÁRIO NÃO ENCONTRADO PELO EMAIL");
+        print("USUÁRIO NÃO ENCONTRADO PELO EMAIL");
         return false;
       }
 
       final prefs = await SharedPreferences.getInstance();
 
-      // ✅ AGORA SALVA O USUÁRIO CERTO
+      //SAVE
       await prefs.setString("user", jsonEncode(userJson));
 
-      print("✅ USUÁRIO SALVO NO CACHE:");
+      print("USUÁRIO SALVO NO CACHE:");
       print(userJson);
 
       return true;

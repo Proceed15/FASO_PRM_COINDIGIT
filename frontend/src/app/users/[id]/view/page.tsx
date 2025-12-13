@@ -60,7 +60,7 @@ export default function UserViewPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-[#283976]">
-      <Header pageName="Usuários" userName={user.name} userId={user.id} />
+      <Header pageName="Usuário"/>
       <div className="p-6 flex justify-center items-center min-h-screen">
         <div className="w-full max-w-4xl bg-[#171e33] border border-transparent rounded-lg p-6 shadow-lg space-y-6 text-white">
           <div className="h-[150px] flex items-center justify-center">

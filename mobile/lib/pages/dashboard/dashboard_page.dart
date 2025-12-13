@@ -32,7 +32,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<void> logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove("user"); //LIMPA CACHE DO USER
+    await prefs.remove("user"); // LIMPA CACHE
 
     Navigator.pushReplacementNamed(context, "/login");
   }
@@ -43,7 +43,7 @@ class _DashboardPageState extends State<DashboardPage> {
     required VoidCallback onTap,
   }) {
     return Card(
-      color: const Color(0xFF0c0c1a),
+      color: const Color(0xFF171E33),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: onTap,
@@ -91,20 +91,35 @@ class _DashboardPageState extends State<DashboardPage> {
           crossAxisSpacing: 14,
           mainAxisSpacing: 14,
           children: [
+            //MOEDAS
             _menuButton(
               icon: Icons.monetization_on,
               label: "Moedas",
               onTap: () => Navigator.pushNamed(context, "/currencies"),
             ),
+            //USERS
             _menuButton(
               icon: Icons.people,
               label: "Usuários",
               onTap: () => Navigator.pushNamed(context, "/users"),
             ),
+            //PERFIL
             _menuButton(
               icon: Icons.person_outline,
               label: "Meu Perfil",
               onTap: () => Navigator.pushNamed(context, "/user/profile"),
+            ),
+            //CHAT BOT
+            _menuButton(
+              icon: Icons.chat_bubble_outline,
+              label: "ChatBot",
+              onTap: () => Navigator.pushNamed(context, "/chatbot"),
+            ),
+            // WALLET
+            _menuButton(
+              icon: Icons.account_balance_wallet_outlined,
+              label: "Wallet",
+              onTap: () => Navigator.pushNamed(context, "/wallets"),
             ),
           ],
         ),

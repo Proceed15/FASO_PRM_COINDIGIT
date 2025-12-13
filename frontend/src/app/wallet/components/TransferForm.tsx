@@ -1,26 +1,29 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { X, HandCoins } from "lucide-react";
 import walletService from "../../../services/walletService";
 import { UserContext } from "@/contexts/UserContext";
 
 interface TransferFormProps {
   walletId: string;
   onClose: () => void;
+  onSuccess: () => void;
 }
 
-export default function TransferForm({ walletId, onClose }: TransferFormProps) {
+export default function TransferForm({ walletId, onClose, onSuccess }: TransferFormProps) {
   const { user } = useContext(UserContext);
 
   const [wallets, setWallets] = useState<any[]>([]);
   const [toWalletId, setToWalletId] = useState<string>("");
   const [symbol, setSymbol] = useState("");
   const [amount, setAmount] = useState<number>(0);
-
   const [loading, setLoading] = useState(false);
 
-  // Carregar carteiras do usuário (para selecionar destino)
+  // MENSAGEM DE SUCESSO
+  const [successMessage, setSuccessMessage] = useState("");
+
+  // CARREGAR WALLETS USUÁRIO PRA TRANSFER
   useEffect(() => {
     const load = async () => {
       if (!user?.id) return;
@@ -37,9 +40,10 @@ export default function TransferForm({ walletId, onClose }: TransferFormProps) {
     load();
   }, [user, walletId]);
 
+  // Dentro do submit
   const submit = async () => {
     if (!symbol || amount <= 0 || !toWalletId) {
-      alert("Preencha todos os campos corretamente.");
+      setSuccessMessage("Preencha todos os campos corretamente.");
       return;
     }
 
@@ -55,35 +59,48 @@ export default function TransferForm({ walletId, onClose }: TransferFormProps) {
         amount,
       });
 
-      alert("Transferência realizada com sucesso!");
-      onClose();
+      // MENSAGEM MODAL COM CARTEIRA DE DESTINO
+      setSuccessMessage(
+        `Transferência de ${amount} ${symbol.toUpperCase()} realizada para a carteira ${toWalletId.substring(0, 8)}!`
+      );
+
+      // Atualiza a lista no componente pai
+      await onSuccess();
+
+      // NÃO FECHAR O MODAL automaticamente
     } catch (error) {
       console.error("Erro ao transferir:", error);
-      alert("Erro na transferência.");
+      setSuccessMessage("Erro ao realizar transferência.");
     } finally {
       setLoading(false);
     }
   };
 
+
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center">
       <div className="bg-[#1b2c66] border border-white/20 rounded-xl p-6 w-full max-w-md shadow-xl">
 
-        {/* HEADER */}
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-white">Transferir Itens</h2>
+        {/* TOP BAR */}
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center gap-2 text-white text-lg font-semibold">
+            <HandCoins size={23} />
+            <span>Transferir Moeda</span>
+          </div>
 
+          {/* FECHAR */}
           <button
             onClick={onClose}
-            className="text-white hover:text-blue-300 transition"
+            className="text-white hover:text-red-500 transition"
           >
             <X size={26} />
           </button>
         </div>
 
-        {/* CAMPOS */}
+        {/* FORM */}
         <div className="flex flex-col gap-4 text-white">
-          {/* walletId destino */}
+
+          {/* Carteira destino */}
           <label>
             <span className="font-semibold">Carteira Destino:</span>
             <select
@@ -94,15 +111,15 @@ export default function TransferForm({ walletId, onClose }: TransferFormProps) {
               <option value="">Selecione...</option>
               {wallets.map((w) => (
                 <option key={w.walletId} value={w.walletId}>
-                  {w.walletId.substring(0, 12)}...
+                  {w.walletId.substring(0, 8)}
                 </option>
               ))}
             </select>
           </label>
 
-          {/* simbolo */}
+          {/* Simbolo */}
           <label>
-            <span className="font-semibold">Simbolo:</span>
+            <span className="font-semibold">Símbolo:</span>
             <input
               type="text"
               value={symbol}
@@ -112,7 +129,7 @@ export default function TransferForm({ walletId, onClose }: TransferFormProps) {
             />
           </label>
 
-          {/* quantidade */}
+          {/* Quantidade */}
           <label>
             <span className="font-semibold">Quantidade:</span>
             <input
@@ -124,11 +141,23 @@ export default function TransferForm({ walletId, onClose }: TransferFormProps) {
             />
           </label>
 
+          {/* MENSAGEM DE SUCESSO / ERRO */}
+          {successMessage && (
+            <div className={`
+              text-center px-3 py-2 rounded-md border 
+              ${successMessage.includes("sucesso")
+                ? "text-green-400 bg-green-900/30 border-green-400"
+                : "text-red-400 bg-red-900/30 border-red-400"}
+            `}>
+              {successMessage}
+            </div>
+          )}
+
           {/* BOTÕES */}
           <div className="flex justify-end gap-3 mt-4">
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-gray-500 hover:bg-gray-600 rounded-md text-white"
+              className="px-4 py-2 bg-red-500 hover:bg-red-400 rounded-md text-white shadow-md active:scale-95"
             >
               Cancelar
             </button>
@@ -136,7 +165,7 @@ export default function TransferForm({ walletId, onClose }: TransferFormProps) {
             <button
               onClick={submit}
               disabled={loading}
-              className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-md text-white active:scale-95 transition-transform"
+              className="px-4 py-2 bg-green-500 hover:bg-green-400 rounded-md text-white shadow-md active:scale-95"
             >
               {loading ? "Enviando..." : "Transferir"}
             </button>

@@ -2,7 +2,6 @@
 
 import { useContext, useEffect, useState } from "react";
 import Header from "@/components/common/Header";
-import LoadingScreen from "@/components/common/LoadingScreen";
 import { UserContext } from "@/contexts/UserContext";
 import walletService from "../../services/walletService";
 
@@ -10,23 +9,20 @@ import WalletList from "./components/WalletList";
 import WalletDetails from "./components/WalletDetails";
 
 export default function WalletPage() {
-  const { user, isLoading } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [wallets, setWallets] = useState<any[]>([]);
   const [selectedWallet, setSelectedWallet] = useState<any | null>(null);
-  const [loadingWallets, setLoadingWallets] = useState(true);
 
+  //LOAD WALLETS
   const loadWallets = async () => {
     if (!user?.id) return;
 
     try {
-      setLoadingWallets(true);
       const data = await walletService.getUserWallets(Number(user.id));
       setWallets(data);
     } catch (error) {
       console.error("Erro ao carregar carteiras:", error);
-    } finally {
-      setLoadingWallets(false);
     }
   };
 
@@ -34,10 +30,7 @@ export default function WalletPage() {
     if (user?.id) loadWallets();
   }, [user]);
 
-  if (isLoading || loadingWallets) {
-    return <LoadingScreen message="Carregando sua carteira..." />;
-  }
-
+  //LOGOUT
   if (!user?.id) {
     return (
       <div className="text-white p-8">
@@ -50,11 +43,10 @@ export default function WalletPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a1647] text-white">
+    <div className="min-h-screen bg-[#283976] text-white">
       <Header pageName="Carteira" />
 
       <div className="container mx-auto px-6 py-8">
-
         {/* LISTA DE CARTEIRAS */}
         {!selectedWallet && (
           <WalletList

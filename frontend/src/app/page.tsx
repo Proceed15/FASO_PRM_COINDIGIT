@@ -19,7 +19,7 @@ export default function Home() {
     }
   }, [isLoading, isInitialized]);
 
-  // LOADING...
+  // LOADING
   if (!isInitialized || isLoading || !showContent) {
     return <LoadingScreen message="Inicializando CoinDigit..." />;
   }

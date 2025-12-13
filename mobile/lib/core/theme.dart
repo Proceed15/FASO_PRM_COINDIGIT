@@ -12,7 +12,7 @@ final appTheme = ThemeData(
    //background: Color(0xFF101320),
   ),
 
-  primaryColor: const Color(0xFF265DBF),
+  primaryColor: Color.fromARGB(255, 20, 58, 124),
 
   textTheme: GoogleFonts.poppinsTextTheme(
     const TextTheme(
@@ -22,7 +22,7 @@ final appTheme = ThemeData(
 
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: const Color(0xFF1D1D3F),
+    fillColor: const Color.fromARGB(255, 19, 26, 53),
     labelStyle: const TextStyle(color: Colors.white70),
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
     focusedBorder: OutlineInputBorder(
@@ -33,7 +33,7 @@ final appTheme = ThemeData(
 
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: const Color(0xFF265DBF),
+      backgroundColor: Color.fromARGB(255, 20, 58, 124),
       foregroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(vertical: 14),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
