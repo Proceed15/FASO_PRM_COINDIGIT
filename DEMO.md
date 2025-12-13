@@ -11,7 +11,7 @@ Este documento guia a apresentação do projeto "Corretora de Criptomoedas", gar
 Certifique-se de que o ambiente está limpo e rodando:
 
 - [ ] **Backend:** Todas as APIs (`User`, `Wallet`, `Currency`, `Chatbot`) e o `Gateway` estão rodando.
-- [ ] **Banco de Dados:** (Opcional) Apagar o arquivo `.db` do SQLite para começar com dados zerados (ou garantir que já existam os usuários "Adrian" e "Isabel").
+- [ ] **Banco de Dados:** (Opcional) Apagar o arquivo `.db` do SQLite para começar com dados zerados (ou garantir que já existam alguns usuários como "Usuário_Exemplo" e "Isabel").
 - [ ] **Frontend Web:** Rodando em `localhost:3000`.
 - [ ] **Mobile:** Emulador aberto e app rodando.
 - [ ] **Logs:** Deixar os terminais das APIs visíveis (ou o Console do IDE) para mostrar as requisições acontecendo.
@@ -26,9 +26,9 @@ Certifique-se de que o ambiente está limpo e rodando:
 1.  **Acessar Web:** Abrir `http://localhost:3000`.
 2.  **Registro:**
     * Clicar em "Criar Conta".
-    * Nome: `Adrian`
-    * Email: `adrian@fatec.sp.gov.br`
-    * Senha: `123`
+    * Nome: `Usuário_Exemplo`
+    * Email: `Usuário_Exemplo@fatec.sp.gov.br`
+    * Senha: `1234`
     * *Ação:* Clicar em Cadastrar.
 3.  **Login:**
     * Logar com as credenciais criadas.
@@ -50,8 +50,8 @@ Certifique-se de que o ambiente está limpo e rodando:
 
 1.  **Ação:** Abrir o Widget de Chatbot.
 2.  **Identificação:**
-    * Digitar: `Meu nome é Adrian`
-    * Resposta esperada: "Olá Adrian! (ID: XX)".
+    * Digitar: `Meu nome é Usuário_Exemplo`
+    * Resposta esperada: "Olá Usuário_Exemplo! (ID: XX)".
 3.  **Consulta Vazia:**
     * Digitar: `Qual meu saldo?`
     * Resposta esperada: "Saldo: $ 0.00".
@@ -74,16 +74,16 @@ Certifique-se de que o ambiente está limpo e rodando:
     * Mostrar o saldo atual dela (ex: $ 0.00).
 
 ### CENA 5: Transferência P2P (Web -> Mobile)
-**Narrativa:** "O Adrian vai transferir Bitcoin para a Isabel em tempo real."
+**Narrativa:** "O Usuário_Exemplo vai transferir Bitcoin para a Isabel em tempo real."
 
-1.  **Voltar para a Web (Adrian):**
+1.  **Voltar para a Web (Usuário_Exemplo):**
     * Abrir o Chatbot novamente (ou tela de transferência).
 2.  **Comando Complexo:**
     * Digitar: `Transferir 0.5 BTC para Isabel`
     * *Obs:* O Bot precisa calcular quanto vale 0.5 BTC em Dólar na hora e fazer a transação.
     * Resposta esperada: "Transferência realizada de 0.5 BTC para Isabel".
 3.  **Verificação na Web:**
-    * Mostrar que o saldo do Adrian diminuiu.
+    * Mostrar que o saldo do Usuário_Exemplo diminuiu.
 
 ### CENA 6: Confirmação no Mobile
 **Narrativa:** "Vamos ver se a Isabel recebeu instantaneamente."
@@ -100,7 +100,7 @@ Certifique-se de que o ambiente está limpo e rodando:
 Se o professor perguntar "Como isso funcionou?", mostre:
 
 1.  **Gateway:** "Tudo passou pela porta 5000. O Frontend não falou direto com a Wallet."
-2.  **Sincronismo:** "Quando o Adrian transferiu, a WalletAPI chamou a CurrencyAPI para ver o preço do BTC naquele milissegundo antes de aprovar."
+2.  **Sincronismo:** "Quando o Usuário_Exemplo transferiu, a WalletAPI chamou a CurrencyAPI para ver o preço do BTC naquele milissegundo antes de aprovar."
 3.  **Segurança:** "Se tentarmos transferir sem saldo, a API retorna Erro 400 (Bad Request), validando a regra de negócio."
 
 ---
