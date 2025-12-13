@@ -3,6 +3,7 @@
 import { useState, useContext } from "react";
 import { X, PlusCircle } from "lucide-react";
 import { UserContext } from "@/contexts/UserContext";
+import walletService from "../../../services/walletService";
 
 interface AddItemFormProps {
   walletId: string;
@@ -23,31 +24,33 @@ export default function AddItemForm({ walletId, walletItems, onClose, onSuccess 
       setSuccessMessage("Preencha corretamente os campos.");
       return;
     }
+    if (!user?.id) {
+      setSuccessMessage("Você precisa estar logado.");
+      return;
+    }
 
     try {
       setLoading(true);
 
       const upperSymbol = symbol.toUpperCase();
-      const existingItem = walletItems.find(i => i.symbol === upperSymbol);
 
-      let updatedItems;
-      if (existingItem) {
-        updatedItems = walletItems.map(i =>
-          i.symbol === upperSymbol ? { ...i, amount: i.amount + amount } : i
-        );
-      } else {
-        updatedItems = [...walletItems, { symbol: upperSymbol, amount }];
-      }
+      // Persistir no backend para calcular lastPriceUsd/totalUsd e salvar
+      const resp = await walletService.addItem(
+        Number(user.id),
+        walletId,
+        { symbol: upperSymbol, amount }
+      );
 
-      // Atualiza no pai
-      onSuccess(updatedItems);
+      // resp é o WalletSummaryDto → use os itens retornados pelo backend
+      onSuccess(resp.items || []);
 
       setSuccessMessage(`${amount} ${upperSymbol} adicionadas com sucesso!`);
       setSymbol("");
       setAmount(0);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erro ao adicionar item:", error);
-      setSuccessMessage("Erro ao adicionar item.");
+      const msg = error?.response?.data?.error || "Erro ao adicionar item.";
+      setSuccessMessage(msg);
     } finally {
       setLoading(false);
     }
@@ -93,11 +96,10 @@ export default function AddItemForm({ walletId, walletItems, onClose, onSuccess 
 
           {successMessage && (
             <div
-              className={`text-center px-3 py-2 rounded-md border ${
-                successMessage.includes("sucesso")
+              className={`text-center px-3 py-2 rounded-md border ${successMessage.includes("sucesso")
                   ? "text-green-400 bg-green-900/30 border-green-400"
                   : "text-red-400 bg-red-900/30 border-red-400"
-              }`}
+                }`}
             >
               {successMessage}
             </div>
