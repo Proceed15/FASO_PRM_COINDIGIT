@@ -177,6 +177,14 @@
       "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5005 }],
       "UpstreamPathTemplate": "/api/chatbot/analyze",
       "UpstreamHttpMethod": ["POST", "OPTIONS"]
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/User/by-email",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5120 }],
+      "UpstreamPathTemplate": "/api/User/by-email",
+      "UpstreamHttpMethod": ["GET", "OPTIONS"]
     }
   ],
 

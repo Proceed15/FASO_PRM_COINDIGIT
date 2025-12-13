@@ -1,7 +1,8 @@
+// frontend/src/app/wallet/components/TransferToUserForm.tsx
 "use client";
 
 import { useContext, useState } from "react";
-import { X, UserPlus, HandCoins } from "lucide-react";
+import { X, UserPlus } from "lucide-react";
 import axios from "axios";
 import walletService from "../../../services/walletService";
 import { UserContext } from "@/contexts/UserContext";
@@ -24,36 +25,47 @@ export default function TransferToUserForm({ walletId, onClose, onSuccess }: Tra
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  //search user
   const searchUser = async () => {
     if (!recipientEmail) return;
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/User?email=${recipientEmail}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const res = await axios.get(
+        `http://localhost:5000/api/User/by-email?email=${encodeURIComponent(recipientEmail)}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       const userFound = res.data;
-      if (!userFound) {
+      if (!userFound?.id) {
         setMessage("Usuário não encontrado.");
         setRecipientUserId(null);
         setRecipientWallets([]);
+        setToWalletId("");
         return;
       }
       if (userFound.id === user?.id) {
         setMessage("Você digitou seu próprio email. Use o outro modal para transferir entre suas carteiras.");
         setRecipientUserId(null);
         setRecipientWallets([]);
+        setToWalletId("");
         return;
       }
 
       setRecipientUserId(userFound.id);
-      const walletsData = await walletService.getUserWallets(userFound.id);
-      setRecipientWallets(walletsData);
-      setMessage(`Usuário encontrado: ${userFound.name}`);
+      const walletsData = await walletService.getUserWallets(Number(userFound.id));
+      setRecipientWallets(walletsData || []);
+      setToWalletId(""); // deixa vazio para fallback na carteira padrão
+      setMessage(`Usuário encontrado: ${userFound.name || userFound.email}`);
     } catch (err) {
       console.error(err);
       setMessage("Erro ao buscar usuário.");
+      setRecipientUserId(null);
+      setRecipientWallets([]);
+      setToWalletId("");
     }
   };
 
@@ -66,16 +78,18 @@ export default function TransferToUserForm({ walletId, onClose, onSuccess }: Tra
     try {
       setLoading(true);
 
-      await walletService.transfer({
+      const payload = {
         fromUserId: Number(user?.id),
         toUserId: recipientUserId,
         fromWalletId: walletId,
-        toWalletId, //ADD WALLET USER VAZIO
-        symbol,
+        toWalletId: toWalletId || undefined, // undefined → backend usa carteira padrão
+        symbol: symbol.toUpperCase(),
         amount,
-      });
+      };
 
-      setMessage(`Transferência de ${amount} ${symbol} realizada com sucesso!`);
+      await walletService.transfer(payload);
+
+      setMessage(`Transferência de ${amount} ${symbol.toUpperCase()} realizada com sucesso!`);
       await onSuccess();
 
       // Reset
@@ -87,7 +101,8 @@ export default function TransferToUserForm({ walletId, onClose, onSuccess }: Tra
       setAmount(0);
     } catch (err: any) {
       console.error(err);
-      setMessage(err.response?.data || "Erro ao realizar transferência.");
+      const msg = err?.response?.data?.error || "Erro ao realizar transferência.";
+      setMessage(msg);
     } finally {
       setLoading(false);
     }
@@ -106,7 +121,6 @@ export default function TransferToUserForm({ walletId, onClose, onSuccess }: Tra
         </div>
 
         <div className="flex flex-col gap-4 text-white">
-
           {/* Email */}
           <label>
             <span className="font-semibold">Email do Destinatário:</span>
@@ -138,7 +152,7 @@ export default function TransferToUserForm({ walletId, onClose, onSuccess }: Tra
                 className="w-full px-3 py-2 rounded-md bg-[#0f1a45] border border-white/30 mt-1 text-white"
               >
                 <option value="">Carteira padrão</option>
-                {recipientWallets.map(w => (
+                {recipientWallets.map((w: any) => (
                   <option key={w.walletId} value={w.walletId}>
                     {w.walletId.substring(0, 8)}
                   </option>
@@ -173,10 +187,12 @@ export default function TransferToUserForm({ walletId, onClose, onSuccess }: Tra
 
           {/* Mensagem */}
           {message && (
-            <div className={`text-center px-3 py-2 rounded-md border 
-              ${message.includes("sucesso") || message.includes("Encontrado")
-                ? "text-green-400 bg-green-900/30 border-green-400"
-                : "text-red-400 bg-red-900/30 border-red-400"}`}>
+            <div
+              className={`text-center px-3 py-2 rounded-md border 
+              ${message.toLowerCase().includes("sucesso") || message.toLowerCase().includes("encontrado")
+                  ? "text-green-400 bg-green-900/30 border-green-400"
+                  : "text-red-400 bg-red-900/30 border-red-400"}`}
+            >
               {message}
             </div>
           )}
