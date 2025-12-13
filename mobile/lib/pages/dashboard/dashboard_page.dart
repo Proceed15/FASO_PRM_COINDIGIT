@@ -115,6 +115,12 @@ class _DashboardPageState extends State<DashboardPage> {
               label: "ChatBot",
               onTap: () => Navigator.pushNamed(context, "/chatbot"),
             ),
+            // WALLET
+            _menuButton(
+              icon: Icons.account_balance_wallet_outlined,
+              label: "Wallet",
+              onTap: () => Navigator.pushNamed(context, "/wallets"),
+            ),
           ],
         ),
       ),
