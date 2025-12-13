@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
+
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -23,11 +24,12 @@ public class UserController : ControllerBase
         {
             return BadRequest(new { error = ex.Message });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             return StatusCode(500, new { error = "Erro interno do servidor." });
         }
     }
+
 
     [HttpGet]
     public IActionResult getAllUsers()
@@ -43,15 +45,12 @@ public class UserController : ControllerBase
         return user != null ? Ok(user) : NotFound();
     }
 
-    [HttpGet("by-email")] // <— ADD
-    public IActionResult GetUserByEmail([FromQuery] string email)
-    {
-        if (string.IsNullOrWhiteSpace(email))
-            return BadRequest(new { error = "Email é obrigatório." });
-
-        var user = _userService.GetUserByEmail(email);
-        return user != null ? Ok(user) : NotFound(new { error = "Usuário não encontrado." });
-    }
+    // [HttpGet("email/{email}")]
+    // public IActionResult GetUserByEmail(string email)
+    // {
+    //     var user = _userService.GetUserByEmail(email);
+    //     return user != null ? Ok(user) : NotFound();
+    // }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(int id)

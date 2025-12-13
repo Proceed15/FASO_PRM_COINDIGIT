@@ -89,22 +89,6 @@ public class UserService : IUserService
         }).ToList();
     }
 
-    public UserDTO? GetUserByEmail(string email)
-    {
-        var user = _userRepository.GetByEmail(email);
-        if (user == null) return null;
-        return new UserDTO
-        {
-            Id = user.Id,
-            Name = user.Name,
-            Email = user.Email,
-            Phone = user.Phone,
-            Address = user.Address,
-            Password = user.Password,
-            Photo = user.Photo
-        };
-    }
-
     public UserDTO? UpdateUser(int id, UserDTO userDto)
     {
         var user = _userRepository.GetById(id);
