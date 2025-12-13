@@ -7,6 +7,9 @@ import 'pages/auth/register_page.dart';
 // Dashboard
 import 'pages/dashboard/dashboard_page.dart';
 
+//wallet
+import 'pages/wallets/wallets_page.dart';
+
 // Currencies
 import 'pages/currencies/currency_list_page.dart';
 import 'pages/currencies/currency_view_page.dart';
@@ -48,4 +51,8 @@ final Map<String, WidgetBuilder> appRoutes = {
 
   // Chatbot
   '/chatbot': (context) => const ChatbotPage(),
+
+    // Wallet
+  '/wallets': (context) => const WalletsPage(),
+
 };
